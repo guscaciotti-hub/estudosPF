@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulado __ID__ — Agente PF</title>
+<style>
+:root{
+  color-scheme: dark;
+  --surface-1:#1a1a19; --plane:#0d0d0d;
+  --ink:#ffffff; --ink-2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,.10);
+  --pos:#3987e5; --neg:#e66767; --mid:#383835;
+  --good:#0ca30c; --crit:#d03b3b; --warn:#fab219;
+  --sans: system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --surface-1:#fcfcfb; --plane:#f9f9f7;
+  --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,.10);
+  --pos:#2a78d6; --neg:#e34948; --mid:#f0efec;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --surface-1:#fcfcfb; --plane:#f9f9f7;
+    --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+    --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,.10);
+    --pos:#2a78d6; --neg:#e34948; --mid:#f0efec;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--plane);color:var(--ink);font-family:var(--sans);
+  font-size:17px;line-height:1.55;-webkit-text-size-adjust:100%}
+.wrap{max-width:780px;margin:0 auto;padding:24px 16px 72px}
+.card{background:var(--surface-1);border:1px solid var(--ring);border-radius:14px;padding:24px}
+h1{font-size:26px;line-height:1.2;margin:0 0 6px}
+h2{font-size:19px;margin:28px 0 10px}
+h3{font-size:15px;margin:22px 0 8px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em}
+p{margin:0 0 12px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 20px}
+.rule{border:0;border-top:1px solid var(--grid);margin:22px 0}
+.pill{display:inline-block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-2);border:1px solid var(--ring);border-radius:999px;padding:3px 10px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;margin-bottom:14px}
+.prog{height:3px;background:var(--grid);border-radius:2px;overflow:hidden;margin-bottom:22px}
+.prog i{display:block;height:100%;background:var(--ink-2);border-radius:2px;transition:width .2s}
+.enun{font-size:19px;line-height:1.6;margin:14px 0 26px}
+.btns{display:flex;flex-direction:column;gap:10px}
+button{font-family:inherit;font-size:16px;cursor:pointer;border-radius:10px;
+  border:1px solid var(--ring);background:var(--surface-1);color:var(--ink);
+  padding:14px 18px;transition:background .12s,border-color .12s}
+button:hover{background:var(--grid)}
+button.primary{background:var(--ink);color:var(--surface-1);border-color:var(--ink);font-weight:600}
+button.primary:hover{opacity:.88;background:var(--ink)}
+button.ghost{border-color:transparent;color:var(--muted);font-size:14px;padding:8px 0;text-align:left}
+button.ghost:hover{background:transparent;color:var(--ink)}
+button:disabled{opacity:.35;cursor:not-allowed}
+.hero{font-size:64px;line-height:1;font-weight:700;letter-spacing:-.02em;margin:4px 0 2px}
+.hero.pos{color:var(--pos)} .hero.neg{color:var(--neg)}
+.stats{display:flex;gap:28px;flex-wrap:wrap;margin:18px 0 4px}
+.stat .k{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.stat .v{font-size:24px;font-weight:600;font-variant-numeric:tabular-nums}
+.row{display:grid;grid-template-columns:132px 1fr 62px;gap:12px;align-items:center;
+  padding:7px 6px;border-radius:8px}
+.row:hover{background:var(--grid)}
+.row .lbl{font-size:14px;color:var(--ink-2);text-align:right}
+.row .val{font-size:14px;font-variant-numeric:tabular-nums;font-weight:600}
+.track{position:relative;height:22px;background:var(--mid);border-radius:4px}
+.track .zero{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--axis)}
+.track .fill{position:absolute;top:0;bottom:0;background:var(--pos);border-radius:0 4px 4px 0}
+.track .fill.neg{background:var(--neg);border-radius:4px 0 0 4px}
+.scale{display:grid;grid-template-columns:132px 1fr 62px;gap:12px;margin-top:6px}
+.scale .ax{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--grid)}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.item{border-top:1px solid var(--grid);padding:18px 0}
+.item .head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
+.item .num{font-weight:700;font-variant-numeric:tabular-nums}
+.item .meta{font-size:12px;color:var(--muted)}
+.tag{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.04em}
+.tag.ok{background:rgba(12,163,12,.16);color:var(--good)}
+.tag.no{background:rgba(208,59,59,.16);color:var(--crit)}
+.tag.br{background:var(--grid);color:var(--muted)}
+.item .q{margin:0 0 12px}
+.lab{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+  display:block;margin-bottom:2px}
+.exp{margin:0 0 12px;color:var(--ink-2);font-size:15px}
+.cil{margin:0;font-size:15px;border-left:2px solid var(--warn);padding-left:12px;color:var(--ink-2)}
+.flag{font-size:13px;color:var(--warn);margin:10px 0 0}
+pre{background:var(--plane);border:1px solid var(--ring);border-radius:10px;padding:16px;
+  overflow-x:auto;font-size:12.5px;line-height:1.5;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre}
+.note{font-size:14px;color:var(--muted)}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="intro" class="card">
+  <span class="pill">Marco zero</span>
+  <h1 style="margin-top:14px">Simulado __ID__</h1>
+  <p class="sub">Agente da Polícia Federal · 30 itens · __DATABR__</p>
+  <p>Trinta afirmações para julgar <strong>Certo</strong> ou <strong>Errado</strong>,
+     distribuídas pelos pesos reais da prova de Agente.</p>
+  <p><strong>Acerto +1 · Erro −1 · Branco 0.</strong> Chutar custa ponto. Deixar em
+     branco não custa nada. Responda em branco quando de fato não souber — o
+     número só serve se for honesto.</p>
+  <p class="note">Sem gabarito durante a prova. Sem tempo limite. Dá para voltar e
+     trocar a resposta antes de finalizar. Reserve cerca de 45 minutos.</p>
+  <hr class="rule">
+  <button class="primary" id="go" style="width:100%">Começar</button>
+</section>
+
+<section id="prova" class="card hide">
+  <div class="topbar">
+    <span id="pos">1 / 30</span>
+    <span id="mat"></span>
+    <span id="clock">00:00</span>
+  </div>
+  <div class="prog"><i id="bar" style="width:0%"></i></div>
+  <p class="enun" id="enun"></p>
+  <div class="btns">
+    <button data-r="C">Certo</button>
+    <button data-r="E">Errado</button>
+    <button data-r="B">Deixar em branco</button>
+  </div>
+  <button class="ghost" id="prev" style="margin-top:16px">← questão anterior</button>
+</section>
+
+<section id="confirmar" class="card hide">
+  <h1>Fim dos 30 itens</h1>
+  <p id="confTxt" class="sub"></p>
+  <div class="btns">
+    <button class="primary" id="fin">Finalizar e ver o resultado</button>
+    <button id="volta">Voltar e revisar as respostas</button>
+  </div>
+</section>
+
+<section id="resultado" class="card hide">
+  <span class="pill">Resultado · __ID__ · marco zero</span>
+  <h3 style="margin-top:20px">Índice líquido</h3>
+  <div class="hero" id="heroIdx">0,00</div>
+  <p class="note" id="heroTxt"></p>
+  <div class="stats">
+    <div class="stat"><div class="k">Saldo líquido</div><div class="v" id="sSaldo">0</div></div>
+    <div class="stat"><div class="k">Certas</div><div class="v" id="sC">0</div></div>
+    <div class="stat"><div class="k">Erradas</div><div class="v" id="sE">0</div></div>
+    <div class="stat"><div class="k">Brancos</div><div class="v" id="sB">0</div></div>
+    <div class="stat"><div class="k">Tempo</div><div class="v" id="sT">00:00</div></div>
+  </div>
+
+  <h2>Rendimento por matéria</h2>
+  <p class="note" style="margin-bottom:14px">Índice líquido de cada matéria, de −1 a +1.
+     A linha central é o zero: à esquerda dela a matéria <em>subtrai</em> ponto na prova.</p>
+  <div id="bars"></div>
+  <div class="scale"><div></div><div class="ax"><span>−1</span><span>0</span><span>+1</span></div><div></div></div>
+
+  <h3>Os mesmos números em tabela</h3>
+  <table><thead><tr><th>Matéria</th><th>Itens</th><th>C</th><th>E</th><th>B</th><th>Índice</th></tr></thead>
+  <tbody id="tab"></tbody></table>
+
+  <h2>Comparação com o simulado anterior</h2>
+  <div id="comp"></div>
+
+  <h2>Revisão item a item</h2>
+  <p class="note">Agora o gabarito está liberado.</p>
+  <div id="rev"></div>
+
+  <h2>Bloco para o <code>/registrar</code></h2>
+  <p class="note">Copie o bloco inteiro e cole no Claude Code depois de rodar
+     <code>/registrar</code>.</p>
+  <button class="primary" id="cp" style="width:100%;margin-bottom:12px">Copiar bloco</button>
+  <pre id="blk"></pre>
+</section>
+
+</div>
+<script>
+var SIM = {id:"__ID__", data:"__DATA__", anterior:null};
+
+var DISP = {Informatica:"Informática", ContabilidadeGeral:"Contabilidade Geral",
+            Portugues:"Português", RLM:"Raciocínio Lógico", Matematica:"Matemática",
+            RedacaoOficial:"Redação Oficial", Estatistica:"Estatística",
+            ContabilidadePublica:"Contabilidade Pública",
+            DireitoConstitucional:"Direito Constitucional",
+            DireitoAdministrativo:"Direito Administrativo", DireitoPenal:"Direito Penal",
+            DireitoProcessualPenal:"Direito Processual Penal",
+            LegislacaoFederal:"Legislação Federal", DireitoAmbiental:"Direito Ambiental"};
+var ORDEM = ["Informatica","ContabilidadeGeral","Portugues","RLM","Matematica",
+             "RedacaoOficial","Estatistica","ContabilidadePublica","DireitoConstitucional",
+             "DireitoAdministrativo","DireitoPenal","DireitoProcessualPenal",
+             "LegislacaoFederal","DireitoAmbiental"];
+
+var Q = __DADOS__;
+
+var MECD = {"par de conceitos":"par de conceitos","palavra absoluta":"palavra absoluta",
+  "premissa e conclusao":"premissa e conclusão","duas metades":"duas metades",
+  "numero na hipotese":"número na hipótese","aparencia literal":"aparência literal"};
+
+var resp = new Array(Q.length).fill(null);
+var i = 0, t0 = 0, tick = null, elapsed = 0;
+
+var $ = function(id){return document.getElementById(id);};
+function show(id){["intro","prova","confirmar","resultado"].forEach(function(s){
+  $(s).classList.toggle("hide", s !== id);});window.scrollTo(0,0);}
+function hhmmss(s){var h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
+  var p=function(n){return String(n).padStart(2,"0");};
+  return (h>0? p(h)+":":"")+p(m)+":"+p(x);}
+
+$("go").onclick = function(){
+  t0 = Date.now();
+  tick = setInterval(function(){
+    elapsed = Math.floor((Date.now()-t0)/1000);
+    $("clock").textContent = hhmmss(elapsed);
+  }, 1000);
+  show("prova"); render();
+};
+
+function render(){
+  var q = Q[i];
+  $("pos").textContent = (i+1) + " / " + Q.length;
+  $("mat").textContent = q.md;
+  $("bar").style.width = ((i)/Q.length*100) + "%";
+  $("enun").textContent = q.t;
+  $("prev").disabled = (i === 0);
+  document.querySelectorAll("#prova .btns button").forEach(function(b){
+    b.style.borderColor = (resp[i] === b.dataset.r) ? "var(--ink)" : "var(--ring)";
+  });
+}
+
+document.querySelectorAll("#prova .btns button").forEach(function(b){
+  b.onclick = function(){
+    resp[i] = b.dataset.r;
+    if (i < Q.length-1){ i++; render(); }
+    else { confirmar(); }
+  };
+});
+$("prev").onclick = function(){ if(i>0){ i--; render(); } };
+
+function confirmar(){
+  var br = resp.filter(function(r){return r==="B";}).length;
+  var nulos = resp.filter(function(r){return r===null;}).length;
+  $("confTxt").textContent = "Respondidas: " + (Q.length-br-nulos) +
+    " · em branco: " + (br+nulos) + " · tempo: " + hhmmss(elapsed) +
+    ". Depois de finalizar, o gabarito é liberado e nada mais muda.";
+  show("confirmar");
+}
+$("volta").onclick = function(){ i = Q.length-1; show("prova"); render(); };
+$("fin").onclick = function(){ if(tick) clearInterval(tick); resultado(); };
+
+function resultado(){
+  var tot = {c:0,e:0,b:0}, porMat = {}, porAss = {};
+  ORDEM.forEach(function(m){ porMat[m] = {total:0,c:0,e:0,b:0}; });
+
+  Q.forEach(function(q,k){
+    var r = resp[k], res;
+    if (r === null || r === "B"){ res = 0; tot.b++; porMat[q.m].b++; }
+    else if (r === q.g){ res = 1; tot.c++; porMat[q.m].c++; }
+    else { res = -1; tot.e++; porMat[q.m].e++; }
+    porMat[q.m].total++;
+    if(!porAss[q.pt]) porAss[q.pt] = {m:q.m,c:0,e:0,b:0};
+    if(res === 1) porAss[q.pt].c++; else if(res === -1) porAss[q.pt].e++; else porAss[q.pt].b++;
+    q._res = res; q._resp = (r === null ? "B" : r);
+  });
+
+  var saldo = tot.c - tot.e;
+  var idx = saldo / Q.length;
+  var fmt = function(v){ return (v>0?"+":v<0?"−":"") + Math.abs(v).toFixed(2).replace(".",","); };
+
+  $("heroIdx").textContent = fmt(idx);
+  $("heroIdx").className = "hero " + (idx >= 0 ? "pos" : "neg");
+  $("heroTxt").textContent = idx < 0
+    ? "Negativo. Nesta prova você subtraiu pontos: errou mais do que acertou."
+    : idx < 0.30 ? "Entre 0 e 0,30: não sustenta. É o território do chute com verniz."
+    : idx < 0.60 ? "Entre 0,30 e 0,60: em construção." : "Acima de 0,60: consolidado.";
+  $("sSaldo").textContent = (saldo>0?"+":"") + saldo;
+  $("sC").textContent = tot.c; $("sE").textContent = tot.e; $("sB").textContent = tot.b;
+  $("sT").textContent = hhmmss(elapsed);
+
+  var bars = "", tab = "";
+  ORDEM.forEach(function(m){
+    var d = porMat[m], li = d.total ? (d.c-d.e)/d.total : 0;
+    if (!d.total) return;
+    var w = Math.abs(li)*50, neg = li < 0;
+    var tip = DISP[m]+" — "+d.total+" itens · "+d.c+"C "+d.e+"E "+d.b+"B · índice "+fmt(li);
+    bars += '<div class="row" title="'+tip+'">'
+         +  '<div class="lbl">'+DISP[m]+'</div>'
+         +  '<div class="track"><div class="fill'+(neg?" neg":"")+'" style="'
+         +  (neg ? "right:50%;" : "left:50%;") + "width:" + w + '%"></div>'
+         +  '<div class="zero"></div></div>'
+         +  '<div class="val" style="color:'+(neg?"var(--neg)":"var(--pos)")+'">'+fmt(li)+'</div></div>';
+    if (d.total) tab += "<tr><td>"+DISP[m]+"</td><td>"+d.total+"</td><td>"+d.c+"</td><td>"+d.e
+        +  "</td><td>"+d.b+"</td><td>"+fmt(li)+"</td></tr>";
+  });
+  $("bars").innerHTML = bars;
+  $("tab").innerHTML = tab;
+
+  $("comp").innerHTML = SIM.anterior
+    ? ""
+    : '<p class="note">Marco zero — não há simulado anterior, portanto não existe comparação '
+    + 'possível. Este resultado é a linha de base contra a qual o próximo simulado, daqui a '
+    + '20 dias, vai ser medido. Sem esta medição, evolução seria só sensação.</p>';
+
+  var rev = "";
+  Q.forEach(function(q,k){
+    var tg = q._res === 1 ? '<span class="tag ok">+1</span>'
+           : q._res === -1 ? '<span class="tag no">−1</span>'
+           : '<span class="tag br">0</span>';
+    rev += '<div class="item"><div class="head"><span class="num">'
+        +  String(k+1).padStart(2,"0")+'</span>'+tg
+        +  '<span class="meta">'+q.md+' · '+q.pt+' · formato: '+MECD[q.mec]+'</span></div>'
+        +  '<p class="q">'+q.t+'</p>'
+        +  '<p class="exp"><span class="lab">Gabarito: '
+        +  (q.g === "C" ? "CERTO" : "ERRADO") + ' · você marcou: '
+        +  (q._resp === "C" ? "Certo" : q._resp === "E" ? "Errado" : "Branco") + '</span>'
+        +  q.e + '</p>'
+        +  '<p class="cil"><span class="lab">A cilada</span>'+q.c+'</p>'
+        +  (q.cf ? '<p class="flag">⚠ Item dependente de norma. A fonte oficial não pôde ser '
+        +  'consultada no ambiente em que este simulado foi gerado (rede bloqueada). Confira '
+        +  'no texto legal antes de fixar.</p>' : '')
+        +  '</div>';
+  });
+  $("rev").innerHTML = rev;
+
+  var L = [];
+  L.push("=== PF-AGENTE SIMULADO " + SIM.id + " ===");
+  L.push("data: " + SIM.data);
+  L.push("questoes: " + Q.length);
+  L.push("tempo: " + hhmmss(elapsed));
+  L.push("certas: " + tot.c + "  erradas: " + tot.e + "  brancos: " + tot.b);
+  L.push("saldo_liquido: " + saldo);
+  L.push("indice_liquido: " + idx.toFixed(3));
+  L.push("--- por materia ---");
+  ORDEM.forEach(function(m){ var d = porMat[m], li = d.total ? (d.c-d.e)/d.total : 0;
+    if (d.total) L.push(m+"|"+d.total+"|"+d.c+"|"+d.e+"|"+d.b+"|"+li.toFixed(3)); });
+  L.push("--- por assunto ---");
+  Object.keys(porAss).forEach(function(a){ var d = porAss[a];
+    L.push(a+"|"+d.m+"|"+d.c+"|"+d.e+"|"+d.b); });
+  L.push("--- itens ---");
+  L.push("# NN|materia|passo|gabarito|resposta|resultado|formato");
+  Q.forEach(function(q,k){ L.push(String(k+1).padStart(2,"0")+"|"+q.m+"|"+q.pt+"|"+q.g+"|"
+    +q._resp+"|"+q._res+"|"+q.mec); });
+  L.push("=== FIM ===");
+  $("blk").textContent = L.join("\n");
+
+  show("resultado");
+}
+
+$("cp").onclick = function(){
+  var txt = $("blk").textContent, ok = function(){ $("cp").textContent = "Copiado ✓";
+    setTimeout(function(){ $("cp").textContent = "Copiar bloco"; }, 2000); };
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(ok, sel);
+  } else { sel(); }
+  function sel(){ var r = document.createRange(); r.selectNode($("blk"));
+    var s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    try { document.execCommand("copy"); ok(); } catch(err){
+      $("cp").textContent = "Selecione o bloco abaixo e copie com Ctrl+C"; } }
+};
+</script>
+</body>
+</html>

@@ -22,6 +22,12 @@
 > programa aproximado serve para organizar prioridade; não serve para
 > inventar norma.
 
+> **Pesos atualizados em 23/09/2026** para a distribuição em itens da prova
+> objetiva de 120 questões, informada pelo Gustavo em auditoria. Ela também
+> não pôde ser conferida na fonte. Os assuntos abaixo seguem agrupados por
+> matéria do edital; a unidade de estudo da plataforma são os 26 **passos
+> estratégicos** de `docs/dados.js`, que reagrupam estes assuntos.
+
 **Status:** `[ ]` não iniciado · `[~]` em andamento · `[x]` consolidado
 
 Regra de promoção (ver `CLAUDE.md` §5): `[~]` a partir da primeira questão
@@ -30,7 +36,7 @@ assunto. Índice que cai abaixo de 0,60 devolve o assunto para `[~]`.
 
 ---
 
-## Informática — peso 30%
+## Informática — 36 itens
 
 - [ ] Conceitos de hardware: processador, memória, barramentos, dispositivos de E/S
 - [ ] Conceitos de software: sistema operacional, aplicativos, licenciamento
@@ -59,7 +65,7 @@ assunto. Índice que cai abaixo de 0,60 devolve o assunto para `[~]`.
 - [ ] Backup: tipos (completo, incremental, diferencial), políticas, RPO/RTO
 - [ ] Noções de banco de dados e big data
 
-## Língua Portuguesa — peso 20%
+## Língua Portuguesa — 18 itens
 
 - [ ] Compreensão e interpretação de textos
 - [ ] Tipologia e gêneros textuais
@@ -83,7 +89,7 @@ assunto. Índice que cai abaixo de 0,60 devolve o assunto para `[~]`.
 - [ ] Redação oficial: demais expedientes (exposição de motivos, mensagem, correio eletrônico)
 - [ ] Redação oficial: formatação e apresentação dos documentos
 
-## Contabilidade Geral — peso 17%
+## Contabilidade Geral — 20 itens
 
 - [ ] Conceito, objeto, campo de aplicação e finalidade da contabilidade
 - [ ] Usuários da informação contábil
@@ -110,7 +116,7 @@ assunto. Índice que cai abaixo de 0,60 devolve o assunto para `[~]`.
 - [ ] Análise de balanços: índices de rentabilidade
 - [ ] Análise horizontal e vertical
 
-## Raciocínio Lógico-Matemático — peso 13%
+## Raciocínio Lógico-Matemático — 12 itens (RLM) + 8 itens (Matemática)
 
 - [ ] Proposições: conceito, valor lógico, proposições simples e compostas
 - [ ] Conectivos e tabelas-verdade
@@ -130,7 +136,7 @@ assunto. Índice que cai abaixo de 0,60 devolve o assunto para `[~]`.
 - [ ] Problemas de raciocínio: ordenação, associação, verdades e mentiras
 - [ ] Geometria básica: áreas, perímetros, volumes
 
-## Estatística — peso 10%
+## Estatística — 4 itens
 
 - [ ] População, amostra e tipos de amostragem
 - [ ] Tipos de variáveis: qualitativas e quantitativas
@@ -147,7 +153,7 @@ assunto. Índice que cai abaixo de 0,60 devolve o assunto para `[~]`.
 - [ ] Correlação e regressão linear simples
 - [ ] Números-índice
 
-## Direito — peso 10%
+## Direito — 12 itens, repartidos em seis blocos
 
 ### Noções de Direito Constitucional
 - [ ] Princípios fundamentais
@@ -202,3 +208,27 @@ assunto. Índice que cai abaixo de 0,60 devolve o assunto para `[~]`.
 - [ ] Lei 8.069/1990 — ECA (disposições penais)
 - [ ] Lei 13.445/2017 — Lei de Migração
 - [ ] Lei 7.716/1989 — Crimes de preconceito e racismo
+
+## Matemática — 8 itens
+
+- [ ] Razão, proporção, regra de três, porcentagem
+- [ ] Juros simples e compostos
+- [ ] Análise combinatória: arranjo, combinação, permutação
+- [ ] Probabilidade: conceitos, eventos, probabilidade condicional
+
+> Estes assuntos também constam do bloco de Raciocínio Lógico-Matemático
+> acima. Na contagem de itens da prova eles são medidos à parte, como
+> Matemática, e é assim que a plataforma os pesa.
+
+## Contabilidade Pública — 4 itens
+
+- [ ] Orçamento público: princípios e ciclo orçamentário (PPA, LDO, LOA)
+- [ ] Receita pública: classificação e estágios
+- [ ] Despesa pública: classificação e estágios
+- [ ] Restos a pagar e regime contábil público
+- [ ] Exercício financeiro e Lei 4.320/1964
+
+## Direito Ambiental — 1 item
+
+- [ ] Direito Ambiental: princípios e competências
+- [ ] Direito Ambiental: crimes ambientais e responsabilidade

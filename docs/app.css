@@ -146,3 +146,54 @@ code{font-family:var(--mono);font-size:.92em;background:var(--raise);padding:1px
   .hero{font-size:50px}
   .card{padding:18px}
 }
+
+/* ---- passo estrategico ---- */
+.passo{background:var(--surface-1);border:1px solid var(--ring);border-radius:14px;
+  padding:18px;margin-top:12px}
+.passo-h{display:flex;gap:12px;align-items:flex-start}
+.passo-t{flex:1;min-width:0}
+.ord{flex:0 0 30px;height:30px;border-radius:8px;background:var(--raise);color:var(--ink-2);
+  display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;
+  font-variant-numeric:tabular-nums}
+.badge{flex:0 0 auto;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  border:1px solid;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.passo-m{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  font-size:13px;color:var(--muted);margin:12px 0 8px}
+.passo-m b{font-variant-numeric:tabular-nums}
+.meter{position:relative;height:6px;background:var(--grid);border-radius:3px;margin-bottom:14px}
+.meter i{display:block;height:100%;border-radius:3px;transition:width .2s}
+.meter-l{position:absolute;top:10px;left:0;font-size:11px;color:var(--muted)}
+.passo .btns{margin-top:26px}
+
+/* ---- caderno ---- */
+details.teoria{background:var(--surface-1);border:1px solid var(--ring);border-radius:14px;
+  padding:16px 18px;margin-top:10px}
+details.teoria summary{cursor:pointer;list-style:none;font-size:15px}
+details.teoria summary::-webkit-details-marker{display:none}
+details.teoria summary::before{content:"▸ ";color:var(--muted)}
+details.teoria[open] summary::before{content:"▾ "}
+.teoria-b{margin-top:14px;font-size:16px;line-height:1.65}
+.teoria-b p{margin:0 0 12px}
+.teoria-b strong{color:var(--ink)}
+.teoria-b ul.lista{margin:0 0 12px}
+
+/* ---- linha do tempo ---- */
+.spark{width:100%;height:auto;max-width:420px;display:block;margin:0 auto 4px}
+
+/* ---- avisos ---- */
+.flag2{display:block;margin-top:8px;color:var(--warn)}
+.note.alerta{color:var(--warn)}
+h2 .note{font-size:14px;font-weight:400}
+
+/* os tres botoes do passo nao cabem lado a lado em tela de celular */
+.passo .btns.row button.b{flex:1 1 auto;min-width:0;font-size:14px;padding:11px 12px}
+@media (max-width:560px){
+  .passo .btns.row{flex-direction:column}
+  .passo .btns.row button.b{width:100%;flex:none}
+}
+
+/* nomes de materia como "Direito Processual Penal" precisam de mais coluna */
+@media (max-width:480px){
+  .row,.scale{grid-template-columns:104px 1fr 50px}
+  .row .lbl{font-size:13px}
+}

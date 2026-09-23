@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Agente PF — plataforma de estudo</title>
-<meta name="description" content="Plataforma pessoal de preparação para Agente da Polícia Federal, banca Cebraspe. Questões certo/errado com penalidade, índice líquido e simulados de etapa.">
+<meta name="description" content="Preparação para Agente da Polícia Federal, banca Cebraspe. Passo estratégico, teoria, questões certo/errado com penalidade e simulados de etapa.">
 <meta name="theme-color" content="#0d0d0d">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
@@ -19,8 +19,10 @@
   </div>
   <nav>
     <button data-v="painel" aria-current="true">Painel</button>
+    <button data-v="passos">Passo estratégico</button>
     <button data-v="sessao">Sessão</button>
     <button data-v="simulado">Simulado</button>
+    <button data-v="caderno">Caderno</button>
     <button data-v="dados">Dados</button>
   </nav>
 </header>
@@ -29,50 +31,76 @@
 
   <!-- PAINEL -->
   <section id="v-painel">
-    <div class="card" id="pnAlerta" hidden></div>
-
-    <div class="card">
-      <h3>Hoje</h3>
-      <h1 id="pnTarefa">—</h1>
-      <p class="sub" id="pnMotivo"></p>
-      <button class="b primary" id="pnAcao">Começar</button>
-    </div>
-
-    <div class="card">
-      <h3>Índice líquido geral</h3>
-      <div class="hero zero" id="pnIdx">sem medição</div>
-      <p class="note" id="pnIdxTxt">Acerto +1, erro −1, branco 0. O índice replica a regra da prova e vai de −1 a +1.</p>
-      <div class="stats">
-        <div class="stat"><div class="k">Respondidas</div><div class="v" id="pnResp">0</div></div>
-        <div class="stat"><div class="k">Saldo líquido</div><div class="v" id="pnSaldo">0</div></div>
-        <div class="stat"><div class="k">Sessões</div><div class="v" id="pnSes">0</div></div>
-        <div class="stat"><div class="k">Simulados</div><div class="v" id="pnSim">0</div></div>
+    <div id="pnVazio" class="hide">
+      <div class="card">
+        <h1>O marco zero ainda não foi feito.</h1>
+        <p class="sub">Sem uma medição inicial não existe evolução — existe sensação. Antes dela, qualquer número neste painel seria zero inventado.</p>
+        <div class="btns">
+          <button class="b primary" id="pnVaziaAcao">Fazer o simulado marco zero · 30 itens</button>
+          <button class="b" id="pnVaziaPasso">Ver o passo estratégico</button>
+        </div>
       </div>
-      <h2>Por matéria</h2>
-      <div id="pnBars"></div>
-      <div class="scale"><div></div><div class="ax"><span>−1</span><span>0</span><span>+1</span></div><div></div></div>
-      <h3>Os mesmos números em tabela</h3>
-      <table><thead><tr><th>Matéria</th><th>Peso</th><th>Resp.</th><th>C</th><th>E</th><th>B</th><th>Índice</th></tr></thead>
-        <tbody id="pnTab"></tbody></table>
     </div>
 
-    <div class="card">
-      <h3>Fila de prioridade</h3>
-      <p class="note">Peso da matéria × déficit medido. Assunto nunca tocado entra com déficit 0,9;
-         assunto com índice negativo chega a 1,0 — erro medido vem antes de ignorância presumida.</p>
-      <div id="pnFila"></div>
-    </div>
+    <div id="pnCheio" class="hide">
+      <div class="card">
+        <h3>Hoje</h3>
+        <p id="pnHoje"></p>
+        <button class="b primary" id="pnHojeBtn">Começar</button>
+      </div>
 
-    <div class="card">
-      <h3>Cobertura do edital</h3>
-      <div id="pnCob"></div>
-      <p class="note" id="pnBanco"></p>
-    </div>
+      <div class="card">
+        <h3>Distância do corte</h3>
+        <div class="hero zero" id="pnDist">—</div>
+        <p class="note" id="pnDistTxt"></p>
+      </div>
 
-    <div class="card">
-      <h3>Próximo simulado de etapa</h3>
-      <div id="pnProx"></div>
+      <div class="card">
+        <h3>Linha do tempo</h3>
+        <div id="pnLinha"></div>
+      </div>
+
+      <div class="card">
+        <h3>Por matéria, na ordem de prioridade</h3>
+        <div id="pnBars"></div>
+        <div class="scale"><div></div><div class="ax"><span>−1</span><span>0</span><span>+1</span></div><div></div></div>
+        <h3>Os mesmos números em tabela</h3>
+        <table><thead><tr><th>Matéria</th><th>Itens</th><th>C</th><th>E</th><th>B</th><th>Índice</th></tr></thead>
+          <tbody id="pnTab"></tbody></table>
+      </div>
+
+      <div class="card">
+        <h3>Sequência</h3>
+        <div class="hero pos" id="pnSeq">0</div>
+        <p class="note">dias seguidos com sessão feita</p>
+        <p class="note" id="pnSeqTxt"></p>
+      </div>
+
+      <div class="card">
+        <h3>O preço do chute</h3>
+        <div class="hero neg" id="pnChute">0</div>
+        <p class="note" id="pnChuteTxt"></p>
+      </div>
+
+      <div class="card">
+        <h3>Fila de revisão espaçada</h3>
+        <div id="pnRev"></div>
+      </div>
     </div>
+  </section>
+
+  <!-- PASSO ESTRATEGICO -->
+  <section id="v-passos" class="hide">
+    <div class="card">
+      <h1>Passo estratégico</h1>
+      <p class="sub">Os 26 passos na ordem em que valem a pena ser atacados. A ordem é recalculada
+         a cada questão respondida: <strong>itens na prova × déficit × swing</strong>.</p>
+      <p class="note">Um passo fica <strong>aceitável</strong> com índice líquido ≥ 0,60 em pelo menos
+         6 questões respondidas. Marque a teoria como estudada, martele as questões, e ele sai da
+         frente sozinho quando o nível chegar lá.</p>
+      <div id="psResumo" style="margin-top:14px"></div>
+    </div>
+    <div id="psLista"></div>
   </section>
 
   <!-- SESSAO -->
@@ -80,14 +108,17 @@
     <div id="seInicio">
       <div class="card">
         <h1>Sessão do dia</h1>
-        <p class="sub">8 questões, uma por vez, 20 a 30 minutos. Gabarito só depois de responder.</p>
-        <div id="seEscolha"></div>
-        <button class="b primary" id="seGo" style="margin-top:14px">Começar a sessão</button>
+        <p class="sub">20 a 30 minutos. Teoria, questões novas e revisão.</p>
+        <div id="seCab"></div>
         <hr class="rule">
-        <p class="note">Ou escolha a matéria, se quiser contrariar a fila:</p>
-        <div class="btns row" id="seMat"></div>
+        <div class="btns">
+          <button class="b primary" id="seGo">Começar a sessão</button>
+          <button class="b" id="seOutro">Escolher outro passo</button>
+        </div>
       </div>
     </div>
+
+    <div id="seTeoria" class="hide"></div>
 
     <div id="seProva" class="hide">
       <div class="card">
@@ -112,12 +143,12 @@
       <div class="card">
         <h1 id="siTit">Simulado de etapa</h1>
         <p class="sub" id="siSub"></p>
-        <p>Trinta itens distribuídos pelos pesos reais da prova de Agente: Informática 9,
-           Português 6, Contabilidade 5, RLM 4, Estatística 3, Direito 3.</p>
-        <p><strong>Acerto +1 · Erro −1 · Branco 0.</strong> Chutar custa ponto, branco não custa
-           nada. O simulado só serve se as respostas forem honestas — ele é a régua, não o treino.</p>
-        <p class="note">Sem gabarito durante a prova. Dá para voltar e trocar a resposta antes de
-           finalizar. Reserve cerca de 45 minutos e faça de uma vez só.</p>
+        <p><strong>Acerto +1 · Erro −1 · Branco 0.</strong> Chutar custa ponto, branco não custa nada.
+           O simulado é a régua, não o treino: só serve se as respostas forem honestas.</p>
+        <h3>Distribuição dos 30 itens</h3>
+        <div id="siDist"></div>
+        <p class="note" style="margin-top:12px">Pelos pesos reais da prova objetiva de 120 itens.
+           Os blocos de Direito entram por rodízio, pela prioridade do momento.</p>
         <hr class="rule">
         <button class="b primary" id="siGo">Começar o simulado</button>
       </div>
@@ -152,24 +183,33 @@
     <div id="siRes" class="hide"></div>
   </section>
 
+  <!-- CADERNO -->
+  <section id="v-caderno" class="hide">
+    <div class="card">
+      <h1>Caderno de teoria</h1>
+      <p class="sub">Um resumo denso por passo, entre 270 e 360 palavras. É o material de revisão
+         do projeto — escrito na medida do que a prova cobra, sem enrolação de apostila.</p>
+    </div>
+    <div id="cdLista"></div>
+  </section>
+
   <!-- DADOS -->
   <section id="v-dados" class="hide">
     <div class="card">
       <h3>Backup</h3>
-      <p class="note">O histórico fica guardado neste navegador, neste aparelho. Limpar os dados do
-         site apaga tudo. Exporte de vez em quando — e sempre antes de trocar de celular.</p>
+      <p class="note">O histórico fica neste navegador, neste aparelho. Limpar os dados do site apaga
+         tudo. Exporte de vez em quando — e sempre antes de trocar de celular.</p>
       <div class="btns row">
         <button class="b" id="dExp">Baixar backup</button>
         <button class="b" id="dCopy">Copiar histórico</button>
-        <button class="b" id="dImpBtn">Restaurar backup</button>
       </div>
     </div>
 
     <div class="card">
-      <h3>Importar simulado feito offline</h3>
-      <p class="note">Cole aqui o bloco <code>=== PF-AGENTE SIMULADO ... ===</code> gerado pelo
-         arquivo HTML do simulado, ou um backup completo em JSON.</p>
-      <textarea id="dTxt" placeholder="Cole o bloco ou o JSON aqui"></textarea>
+      <h3>Importar</h3>
+      <p class="note">Cole um backup em JSON ou o bloco <code>=== PF-AGENTE SIMULADO ... ===</code>
+         gerado por um simulado feito offline.</p>
+      <textarea id="dTxt" placeholder="Cole o backup ou o bloco aqui"></textarea>
       <button class="b primary" id="dImp" style="margin-top:12px">Importar</button>
       <p class="note" id="dMsg"></p>
     </div>
@@ -181,18 +221,18 @@
 
     <div class="card">
       <h3>Apagar tudo</h3>
-      <p class="note">Zera histórico, sessões e simulados neste aparelho. Não tem como desfazer.</p>
+      <p class="note">Zera histórico, sessões, simulados, teoria lida e fila de revisão. Não tem como desfazer.</p>
       <button class="b" id="dReset">Apagar todo o histórico</button>
     </div>
 
     <div class="card">
       <h3>Como esta plataforma decide</h3>
       <ul class="lista note">
-        <li><b>Métrica única:</b> índice líquido = (certas − erradas) ÷ respondidas. Nunca percentual bruto de acerto, porque percentual bruto premia chute e a prova não premia.</li>
-        <li><b>Prioridade:</b> peso da matéria × déficit. Contabilidade e Estatística vêm antes de Direito, sempre.</li>
-        <li><b>Status:</b> <code>[~]</code> a partir da primeira questão; <code>[x]</code> com índice ≥ 0,60 e 8 ou mais respondidas. Cair abaixo de 0,60 devolve para <code>[~]</code>.</li>
-        <li><b>Calibragem:</b> toda questão usa um dos seis mecanismos da Cebraspe, com ≈60% de gabaritos Errado e ao menos um item de literalidade limpa por bloco.</li>
-        <li><b>Anti-repetição:</b> questões já vistas só voltam quando o banco do assunto se esgota, e aí vêm marcadas como revisão.</li>
+        <li><b>Métrica única:</b> índice líquido = (certas − erradas) ÷ respondidas. Nunca percentual bruto de acerto — percentual bruto premia chute, e a prova não premia.</li>
+        <li><b>Prioridade:</b> itens na prova × déficit × swing, com déficit 0,9 para passo nunca tocado e swing = 1 + erros ÷ (erros + brancos). Erro vale 2 pontos de virada, branco vale 1: errar num passo pesado é oportunidade, não fracasso.</li>
+        <li><b>Aceitável:</b> índice ≥ 0,60 em pelo menos 6 questões do passo. <b>Consolidado:</b> aceitável e fora da fila de revisão.</li>
+        <li><b>Revisão espaçada:</b> errou, o passo entra na fila e volta em 3, 7, 21 e 60 dias. Sai depois de duas passagens consecutivas sem erro.</li>
+        <li><b>Calibragem:</b> o mecanismo de cilada nunca prediz o gabarito. Os seis formatos aparecem tanto em item Certo quanto em Errado, com no mínimo 30% da minoria em cada um.</li>
       </ul>
       <p class="note" id="dVer"></p>
     </div>
@@ -200,6 +240,7 @@
 
 </div>
 
+<script src="dados.js"></script>
 <script src="banco.js"></script>
 <script src="app.js"></script>
 </body>

@@ -29,19 +29,37 @@ Esse diagnóstico é **declarado, não medido**. A partir do simulado S01 ele é
 substituído pelos dados de `dados/perfil.json`. Dado medido sempre vence
 percepção.
 
-### Pesos na prova (base: prova de Agente 2021, 120 itens)
+### Pesos na prova (prova objetiva de Agente, 120 itens)
 
-| Matéria | Peso |
-|---|---|
-| Informática | 30% |
-| Português | 20% |
-| Contabilidade Geral | 17% |
-| RLM | 13% |
-| Estatística | 10% |
-| Direito | 10% |
+| Matéria | Itens | Matéria | Itens |
+|---|---|---|---|
+| Informática | 36 | Estatística | 4 |
+| Contabilidade Geral | 20 | Contabilidade Pública | 4 |
+| Português | 18 | Direito Constitucional | 3 |
+| Raciocínio Lógico | 12 | Direito Administrativo | 3 |
+| Matemática | 8 | Direito Penal | 2 |
+| Redação Oficial | 6 | Direito Processual Penal | 2 |
+| | | Legislação Federal | 1 |
+| | | Direito Ambiental | 1 |
 
-Esses pesos governam a distribuição de todo simulado e a fila de prioridade
-de todo estudo.
+Soma: **120 itens**. Essa distribuição foi informada pelo Gustavo em auditoria
+do repositório e **não pôde ser conferida no edital nem no caderno de prova**,
+porque o ambiente de geração não tem acesso de rede a gov.br nem ao Cebraspe.
+Ela substitui a estimativa percentual anterior. Confirme quando o PDF entrar.
+
+Os pesos governam a distribuição de todo simulado e a fila de prioridade de
+todo estudo. **Sempre em itens de prova, nunca em percentual** — o número de
+itens é a unidade em que o resultado é contado.
+
+### Os 26 passos estratégicos
+
+A unidade de estudo não é o assunto solto, é o **passo**: um tema com resumo
+teórico próprio e questões suficientes para medir nível. O peso de cada passo
+em itens de prova é o peso da matéria repartido proporcionalmente às questões
+que o passo tem nela. A soma dos 26 passos é exatamente 120.
+
+Assunto solto continua existindo como metadado, para rastrear o edital. Mas
+prioridade, teoria, revisão e nível de domínio operam por passo.
 
 ---
 
@@ -69,34 +87,56 @@ antes de a atual ser respondida.
 
 ## 2. Calibragem de dificuldade
 
-Toda questão precisa usar **pelo menos um** destes seis mecanismos — são os
-que a Cebraspe realmente emprega:
+### Os seis mecanismos são FORMATOS, não tipos de erro
 
-1. **Troca de rótulos** — dois conceitos que andam em par, definições
-   corretas, nomes trocados.
-2. **Palavra absoluta** — "somente", "necessariamente", "sempre",
-   "qualquer", "exclusivamente", "invariavelmente".
-3. **Premissa verdadeira, conclusão falsa** — ligadas por "razão pela qual",
-   "de modo que", "por isso".
-4. **Item de duas metades** — primeira oração correta, segunda incorreta.
-5. **Número verdadeiro deslocado** — valor real da norma aplicado à hipótese
-   errada.
-6. **Literalidade limpa** — item transcrito da fonte sem alteração, gabarito
-   Certo, cuja única armadilha é a desconfiança do candidato.
+Toda questão usa pelo menos um destes seis formatos. **Cada formato admite os
+dois gabaritos**, e essa é a regra estrutural mais importante do projeto:
 
-Registre o mecanismo usado em cada questão no arquivo de sessão e em
-`dados/questoes-usadas.jsonl`.
+1. **Par de conceitos** — dois conceitos irmãos definidos na mesma frase.
+   *Certo*: atribuição correta. *Errado*: nomes trocados.
+2. **Palavra absoluta** — "sempre", "nunca", "somente", "necessariamente".
+   *Certo*: a regra é mesmo absoluta. *Errado*: a regra comporta exceção.
+3. **Premissa e conclusão** — duas orações ligadas por "razão pela qual".
+   *Certo*: a conclusão decorre mesmo da premissa. *Errado*: não decorre.
+4. **Duas metades** — duas afirmações coordenadas.
+   *Certo*: as duas verdadeiras. *Errado*: a segunda falha.
+5. **Número na hipótese** — valor numérico aplicado a uma hipótese.
+   *Certo*: valor e hipótese corretos. *Errado*: valor real, hipótese errada.
+6. **Aparência literal** — item com cara de transcrição fiel da fonte.
+   *Certo*: é fiel mesmo. *Errado*: um único termo trocado no meio.
 
-### Distribuição de gabaritos
+### O mecanismo NUNCA pode predizer o gabarito
 
-Aproximadamente **60% Errado e 40% Certo**. É a proporção que força leitura
-atenta em vez de aposta.
+Esta é regra permanente, e violá-la invalida qualquer medição feita com o
+banco.
 
-**Todo bloco precisa de pelo menos um item de literalidade limpa.** Sem ele,
-o Gustavo aprende a marcar Errado por reflexo — o que é exatamente o vício
-que a Cebraspe cobra caro.
+Se todo item Certo for escrito como afirmação limpa e todo item Errado como
+armadilha, **a aparência do item passa a entregar a resposta**. O candidato
+gabarita o banco aprendendo "parece limpo, marco Certo; tem reviravolta, marco
+Errado", sem saber nada do conteúdo — e descobre no dia da prova que aprendeu
+o padrão do banco, não o da Cebraspe. Na prova real há itens Certos longos,
+cheios de ressalvas e de aspecto capcioso, e itens Errados curtos e de
+aparência inocente.
 
----
+Limites a respeitar em toda geração de questão:
+
+- **Cada formato precisa aparecer nos dois gabaritos**, com no mínimo **30%**
+  da minoria dentro do formato.
+- **Nenhum formato pode passar de 80%** em um único gabarito.
+- Proporção global perto de **45% Certo e 55% Errado**.
+- Todo bloco precisa de pelo menos um item de **aparência literal**, de
+  qualquer gabarito.
+
+**Ao final de toda geração, imprima a tabela cruzada formato × gabarito e
+confira os dois limites.** Se algum formato falhar, refaça aqueles itens — não
+troque o rótulo do mecanismo para a tabela fechar. O rótulo descreve a forma
+real do item; mexer nele para maquiar a validação é pior que o defeito
+original, porque esconde o vazamento em vez de corrigi-lo.
+
+Escreva deliberadamente os itens que a intuição não produz sozinha: Certos com
+palavra absoluta legítima, Certos de duas metades ambas verdadeiras, Certos
+com número correto na hipótese correta, e Errados de aparência limpa em que o
+erro é um só termo trocado no meio de uma transcrição aparentemente fiel.
 
 ## 3. Anti-repetição
 
@@ -133,43 +173,67 @@ avise o Gustavo na hora. Nunca deixe isso implícito.
 
 ## 5. Progressão de conteúdo
 
-A ordem de ataque vem do **peso na prova cruzado com o índice líquido
-medido**.
-
-Fórmula de prioridade:
+A ordem de ataque cruza **peso na prova** com **déficit medido** e com o
+**tipo de não-acerto**.
 
 ```
-deficit  = (1 - indice_liquido) / 2        # índice ∈ [-1, 1] → déficit ∈ [0, 1]
-deficit  = 0.9                             # se o assunto nunca foi respondido
-score    = peso_da_materia × deficit
+prioridade = itens_na_prova × deficit × swing
+
+deficit = (1 - indice_liquido) / 2        # indice ∈ [-1,1] → deficit ∈ [0,1]
+deficit = 0.9                             # passo nunca respondido
+swing   = 1 + erros / (erros + brancos)   # 1 quando erros + brancos = 0
 ```
 
-Maior `score` vem primeiro. Consequências, que são regra e não sugestão:
+**Por que o swing existe.** Erro e branco não valem a mesma coisa:
 
-- **Assunto nunca tocado tem déficit 0,9** — abaixo de um assunto com índice
-  comprovadamente negativo (déficit até 1,0). Erro medido dói mais que
-  ignorância presumida, porque erro medido significa conceito torto na
-  cabeça.
-- **Contabilidade e Estatística vêm antes de Direito, sempre.** Por mais que
-  Direito pareça mais "de polícia", ele vale 10% e o Gustavo não está
-  negativo nele por ignorância — está no mesmo zero. Contabilidade vale 17%.
-  A conta não admite discussão.
-- Um assunto com índice líquido **negativo** volta na sessão seguinte.
-  Revisão imediata, enquanto o erro ainda está quente.
-- Um assunto com índice líquido **positivo** espera pelo menos 3 dias antes
-  de voltar.
+- **Erro** significa que você quase sabia e marcou. Consertar transforma −1
+  em +1: **ganho de 2 pontos** por item.
+- **Branco** significa que não sabia e pulou. Aprender transforma 0 em +1:
+  **ganho de 1 ponto**.
 
-### Status no verticalizado
+Um passo em que se erra muito tem mais pontos disponíveis do que um passo em
+que se deixa tudo em branco, com o mesmo índice. Por isso ele sobe na fila.
 
-- `[ ]` não iniciado
-- `[~]` em andamento — já respondeu questões, índice líquido ainda ≤ 0,60
-- `[x]` consolidado — índice líquido ≥ 0,60 com pelo menos 8 questões
-  respondidas no assunto
+**Erro é sinal de oportunidade, não de fracasso.** Quando o Gustavo errar
+muito num passo de peso alto, esse passo sobe — e o que se diz a ele é onde
+estão os pontos, não um sermão sobre o erro. A fila é um mapa de onde o
+retorno é maior, não um boletim.
 
-Consolidado não é definitivo: se um simulado derrubar o índice abaixo de
-0,60, o assunto **volta** para `[~]`.
+Consequências que são regra:
 
----
+- **Passo nunca tocado entra com déficit 0,9** — abaixo de um passo com
+  índice comprovadamente negativo, que chega a 1,0. Erro medido dói mais que
+  ignorância presumida, porque erro medido significa conceito torto na cabeça.
+- Passo **aceitável** tem o score multiplicado por 0,15; **consolidado**, por
+  0,05. Sai da frente sem sumir da lista.
+
+### Níveis do passo
+
+| Nível | Critério |
+|---|---|
+| **não iniciado** | nenhuma questão respondida, teoria não marcada |
+| **teoria lida** | marcou que estudou o resumo, ainda sem questões |
+| **em treino** | tem questões respondidas, ainda não aceitável |
+| **aceitável** | índice líquido ≥ **0,60** com pelo menos **6** questões no passo |
+| **consolidado** | aceitável, teoria lida e fora da fila de revisão |
+
+Aceitável não é definitivo: se o índice cair abaixo de 0,60, o passo volta.
+
+### Revisão espaçada
+
+Passo em que houve **qualquer erro** na sessão entra na fila e volta em
+**3, 7, 21 e 60 dias**. Erro devolve o passo ao início da fila. **Duas
+passagens consecutivas sem erro tiram o passo dela.**
+
+### Forma da sessão diária
+
+```
+1. Resumo teórico do passo do dia         ~5 min
+2. 6 questões novas desse passo           ~15 min
+3. 3 questões de revisão da fila          ~7 min
+```
+
+Fila de revisão vazia: 8 questões novas, sem o bloco 3.
 
 ## 6. A métrica única
 
@@ -196,19 +260,33 @@ Referências de leitura do índice:
 
 ## 7. Arquivos e escrita
 
+### A plataforma online — `docs/`
+
+Publicada pelo GitHub Pages. É onde se estuda.
+
 | Arquivo | Regra |
 |---|---|
-| `dados/historico.jsonl` | Append-only. Uma linha por questão respondida. Nunca reescreva, nunca edite linha antiga. |
-| `dados/questoes-usadas.jsonl` | Append-only. Uma linha por questão gerada, respondida ou não. |
-| `dados/perfil.json` | **Recalculado a partir do histórico, nunca chutado.** Se o histórico e o perfil divergirem, o histórico está certo. |
-| `edital/verticalizado.md` | Só o marcador de status muda. O conteúdo programático só muda quando um edital novo entrar. |
-| `sessoes/AAAA-MM-DD.md` | Um por dia de estudo. |
-| `simulados/SNN-AAAA-MM-DD.html` | Autocontido, offline, sem CDN, sem fonte externa, sem fetch. |
+| `docs/banco.js` | `const BANCO`. Toda alteração passa pela validação da tabela cruzada da seção 2. |
+| `docs/dados.js` | `MATERIAS` (pesos em itens), `PASSOS` (os 26, com peso e assuntos) e `CADERNO` (um resumo por passo). |
+| `docs/app.js` | perfil derivado do histórico, fila de prioridade, seleção, revisão espaçada, painel. |
+| `docs/sw.js` | **Ao mexer em banco, dados, app ou css, incremente `VERSAO`.** Sem isso, quem já abriu o site continua no cache antigo. |
 
-Commit ao fim de cada sessão e de cada simulado, com mensagem descrevendo o
-que mudou nos dados.
+O histórico do Gustavo vive no `localStorage` do aparelho dele — nunca neste
+repositório. Só ele pode exportá-lo, pela aba Dados.
 
----
+### O projeto no Claude Code — a raiz
+
+| Arquivo | Regra |
+|---|---|
+| `dados/historico.jsonl` | Append-only. Uma linha por questão respondida. Nunca reescreva linha antiga. |
+| `dados/questoes-usadas.jsonl` | Append-only. Uma linha por questão gerada. |
+| `dados/perfil.json` | **Recalculado a partir do histórico, nunca chutado.** Divergiu? O histórico está certo. |
+| `edital/verticalizado.md` | Só o marcador de status muda. |
+| `sessoes/AAAA-MM-DD.md` | Um por dia de estudo conduzido aqui. |
+| `simulados/SNN-AAAA-MM-DD.html` | Autocontido, offline, sem CDN e sem fetch. |
+
+Commit ao fim de cada sessão, de cada simulado e de cada alteração no banco,
+com mensagem que descreva o que mudou nos dados.
 
 ## 8. Como falar com o Gustavo
 
@@ -231,7 +309,11 @@ que mudou nos dados.
 
 | Comando | O que faz |
 |---|---|
-| `/estudar [assunto]` | Sessão diária de 20–30 min. 8 questões inéditas, uma por vez. |
-| `/simulado [n]` | Simulado de etapa. Padrão 40 questões. Gera HTML offline. |
-| `/registrar` | Recebe o bloco de texto do simulado e atualiza perfil, verticalizado e prioridades. |
+| `/estudar [passo]` | Sessão diária: teoria, 6 questões novas e 3 de revisão. |
+| `/simulado [n]` | Simulado de etapa pelos pesos em itens. Gera HTML offline. |
+| `/registrar` | Recebe o bloco do simulado e atualiza perfil, níveis e prioridades. |
 | `/status` | Panorama curto e a única coisa a fazer hoje. |
+| `/banco` | Audita o banco: tabela cruzada, cobertura por passo, itens sem fonte conferida. |
+
+Questões novas nascem aqui, pelo Claude Code, e entram em `docs/banco.js`.
+A plataforma online aplica; ela não gera.

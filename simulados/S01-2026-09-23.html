@@ -1,3 +1,12 @@
+equilibrio: falha 0 — perfeito
+itens: 30 | 14C / 16E (47% Certo)
+  aparencia literal      C=3 E=3
+  duas metades           C=2 E=3
+  numero na hipotese     C=2 E=3
+  palavra absoluta       C=3 E=3
+  par de conceitos       C=2 E=2
+  premissa e conclusao   C=2 E=2
+  materias: {"Portugues":4,"ContabilidadePublica":1,"RLM":3,"ContabilidadeGeral":5,"Informatica":9,"DireitoConstitucional":1,"Matematica":2,"DireitoProcessualPenal":1,"RedacaoOficial":2,"Estatistica":1,"DireitoAdministrativo":1}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -185,165 +194,24 @@ pre{background:var(--plane);border:1px solid var(--ring);border-radius:10px;padd
 <script>
 var SIM = {id:"S01", data:"2026-09-23", anterior:null};
 
-var DISP = {Informatica:"Informática", Portugues:"Português", Contabilidade:"Contabilidade",
-            RLM:"RLM", Estatistica:"Estatística", Direito:"Direito"};
-var ORDEM = ["Informatica","Portugues","Contabilidade","RLM","Estatistica","Direito"];
+var DISP = {Informatica:"Informática", ContabilidadeGeral:"Contabilidade Geral",
+            Portugues:"Português", RLM:"Raciocínio Lógico", Matematica:"Matemática",
+            RedacaoOficial:"Redação Oficial", Estatistica:"Estatística",
+            ContabilidadePublica:"Contabilidade Pública",
+            DireitoConstitucional:"Direito Constitucional",
+            DireitoAdministrativo:"Direito Administrativo", DireitoPenal:"Direito Penal",
+            DireitoProcessualPenal:"Direito Processual Penal",
+            LegislacaoFederal:"Legislação Federal", DireitoAmbiental:"Direito Ambiental"};
+var ORDEM = ["Informatica","ContabilidadeGeral","Portugues","RLM","Matematica",
+             "RedacaoOficial","Estatistica","ContabilidadePublica","DireitoConstitucional",
+             "DireitoAdministrativo","DireitoPenal","DireitoProcessualPenal",
+             "LegislacaoFederal","DireitoAmbiental"];
 
-var Q = [
-{n:1,m:"Informatica",a:"Modelo OSI: as sete camadas e suas funções",mec:"troca de rotulos",g:"E",
- t:"No modelo OSI, a camada de transporte é responsável pelo endereçamento lógico e pela determinação da rota dos pacotes entre redes distintas, ao passo que a camada de rede assegura a entrega ordenada e o controle de fluxo fim a fim.",
- e:"As funções estão invertidas. Endereçamento lógico e roteamento são da camada de rede (camada 3). Entrega ordenada, controle de fluxo e confiabilidade fim a fim são da camada de transporte (camada 4).",
- c:"As duas definições estão tecnicamente corretas — só foram trocadas de dono. Você lê, reconhece cada descrição como verdadeira, sente que 'está certo' e marca Certo sem conferir a qual camada cada uma pertence. É o item mais barato da Cebraspe e o que mais derruba quem sabe a matéria na prática."},
+var Q = [{"n":1,"m":"Portugues","md":"Português","p":"P13","pt":"Crase, colocação pronominal e ortografia","mec":"palavra absoluta","g":"E","t":"A crase é obrigatória sempre que a preposição 'a' anteceder substantivo feminino.","e":"É preciso também que o substantivo admita o artigo feminino naquele contexto. Em 'Refiro-me a pessoas interessadas', há preposição e substantivo feminino, e não há crase.","c":"É a regra decorada pela metade, e a metade decorada funciona na maioria dos casos — o que a torna resistente. O 'sempre' é o sinal, mas o conteúdo parece tão familiar que o sinal não dispara.","cf":0},{"n":2,"m":"ContabilidadePublica","md":"Contabilidade Pública","p":"P23","pt":"Orçamento público, receita e despesa","mec":"aparencia literal","g":"E","t":"São estágios da despesa pública, nessa ordem: empenho, pagamento e liquidação.","e":"A ordem correta é empenho, liquidação e pagamento. A liquidação apura o direito do credor e precede necessariamente o pagamento.","c":"Os três estágios estão todos ali, com os nomes certos — só a ordem foi embaralhada. Enumeração completa desarma a conferência, porque a memória confirma os elementos e não a sequência.","cf":1},{"n":3,"m":"RLM","md":"Raciocínio Lógico","p":"P16","pt":"Proposições, conectivos e tabelas-verdade","mec":"premissa e conclusao","g":"E","t":"A conjunção é verdadeira quando pelo menos uma de suas proposições componentes é verdadeira, razão pela qual 'p e q' é verdadeira se apenas p for verdadeira.","e":"A conjunção exige as duas partes verdadeiras. Bastar uma é característica da disjunção. O item aplicou a regra do 'ou' ao conectivo 'e'.","c":"É uma regra correta atribuída ao conectivo errado, e a conclusão coerente com a premissa falsa reforça a impressão de solidez. Quando o item traz regra e aplicação, confira a regra primeiro — se ela cair, a aplicação cai junto, por mais bem feita que esteja.","cf":0},{"n":4,"m":"Portugues","md":"Português","p":"P14","pt":"Sintaxe, vozes verbais e pontuação","mec":"aparencia literal","g":"C","t":"Na oração 'Vendem-se imóveis', o verbo concorda com 'imóveis' porque a partícula 'se' é apassivadora e 'imóveis' exerce a função de sujeito paciente.","e":"O verbo é transitivo direto, o que caracteriza o 'se' como partícula apassivadora. A oração equivale a 'Imóveis são vendidos', com 'imóveis' como sujeito — daí o plural.","c":"A placa errada em vitrine de imobiliária é tão comum que a forma correta parece a estranha. Some-se a isso o fato de a explicação do item ser longa e técnica, e o instinto manda procurar defeito onde há apenas precisão.","cf":0},{"n":5,"m":"ContabilidadeGeral","md":"Contabilidade Geral","p":"P08","pt":"Patrimônio, contas e partidas dobradas","mec":"par de conceitos","g":"C","t":"Nas contas do ativo, o débito representa aumento e o crédito, redução; nas contas do passivo e do patrimônio líquido, essa lógica se inverte.","e":"É a regra das partidas dobradas: ativo aumenta a débito, passivo e patrimônio líquido aumentam a crédito.","c":"A palavra 'débito' carrega a ideia de perda por causa do extrato bancário, e o item afirma o contrário disso. Quem decide pela intuição do banco marca Errado num item correto.","cf":0},{"n":6,"m":"ContabilidadeGeral","md":"Contabilidade Geral","p":"P11","pt":"Imobilizado, estoques, provisões e análise de balanços","mec":"par de conceitos","g":"E","t":"A análise vertical compara os valores de uma mesma conta em períodos sucessivos, ao passo que a análise horizontal estabelece a participação percentual de cada conta em relação a um total de referência.","e":"Trocados. A vertical calcula a participação de cada conta em um total do mesmo período. A horizontal acompanha a evolução de uma conta ao longo do tempo.","c":"Os nomes são espaciais e a intuição visual atrapalha: tempo corre na horizontal num gráfico, mas as contas se empilham na vertical de um balanço. Quem tenta deduzir pelo nome, sem fixar a definição, acerta metade das vezes.","cf":0},{"n":7,"m":"Informatica","md":"Informática","p":"P07","pt":"Sistemas operacionais e aplicativos","mec":"palavra absoluta","g":"E","t":"No Windows, os arquivos excluídos de uma unidade de rede mapeada são sempre enviados para a Lixeira, de onde podem ser restaurados pelo usuário.","e":"A Lixeira é um recurso local. Arquivos excluídos de unidade de rede são removidos diretamente, sem passar por ela.","c":"O 'sempre' deveria bastar, mas a experiência diária contradiz o alarme: você exclui arquivos o dia inteiro e eles vão para a Lixeira. O item cobra justamente a exceção que quase ninguém testa de propósito, e que costuma ser descoberta da pior forma.","cf":0},{"n":8,"m":"ContabilidadeGeral","md":"Contabilidade Geral","p":"P11","pt":"Imobilizado, estoques, provisões e análise de balanços","mec":"premissa e conclusao","g":"E","t":"A depreciação é despesa que não representa desembolso de caixa no período, razão pela qual não afeta o resultado do exercício.","e":"A premissa é verdadeira: depreciação não movimenta caixa. Mas ela é despesa e, como tal, reduz o lucro apurado na demonstração do resultado. O que ela não afeta é o caixa, não o resultado.","c":"Caixa e resultado são coisas distintas, e esse é o divisor de águas entre quem entendeu contabilidade e quem decorou nomes de contas. O item aposta que 'não sai dinheiro' e 'não tem efeito' sejam lidos como sinônimos.","cf":0},{"n":9,"m":"Portugues","md":"Português","p":"P14","pt":"Sintaxe, vozes verbais e pontuação","mec":"palavra absoluta","g":"C","t":"O sujeito de uma oração na voz passiva é sempre o paciente da ação expressa pelo verbo.","e":"É o que define a voz passiva: o sujeito sofre a ação em vez de praticá-la. Quem pratica, quando aparece, é agente da passiva.","c":"'Sempre' num item de gramática é convite a lembrar de exceção. Aqui não há: a relação entre sujeito e ação é o critério que separa as vozes verbais.","cf":0},{"n":10,"m":"ContabilidadeGeral","md":"Contabilidade Geral","p":"P11","pt":"Imobilizado, estoques, provisões e análise de balanços","mec":"duas metades","g":"E","t":"A depreciação é o reconhecimento sistemático da perda de capacidade de geração de benefícios econômicos de um bem do ativo imobilizado ao longo de sua vida útil; por essa razão, aplica-se igualmente aos terrenos, que também integram o ativo imobilizado.","e":"A primeira metade define depreciação corretamente. A segunda está errada: terrenos não se depreciam, porque têm vida útil indeterminada. Um prédio construído sobre o terreno deprecia; o terreno, não.","c":"Item de duas metades no formato clássico: a primeira oração é uma definição impecável e consome toda a sua atenção. Quando chega ao 'por essa razão', você já decidiu. A regra prática é mecânica: em item longo, o veredito está quase sempre depois do conectivo, não antes dele.","cf":0},{"n":11,"m":"RLM","md":"Raciocínio Lógico","p":"P17","pt":"Equivalências, negações e argumentação","mec":"duas metades","g":"E","t":"Um argumento é válido quando a conclusão decorre necessariamente das premissas; por essa razão, todo argumento válido possui premissas verdadeiras.","e":"A primeira metade define validade corretamente. A segunda confunde validade com solidez: a validade é uma relação de forma entre premissas e conclusão, e existe mesmo quando as premissas são falsas.","c":"A palavra 'válido' carrega aprovação no uso comum, e aprovação sugere verdade. Em lógica, validade é só encadeamento correto — um argumento pode ser impecavelmente válido partindo de premissas absurdas.","cf":0},{"n":12,"m":"DireitoConstitucional","md":"Direito Constitucional","p":"P24","pt":"Constitucional e Administrativo","mec":"numero na hipotese","g":"E","t":"A Polícia Federal exerce, com exclusividade, as funções de polícia judiciária da União e das unidades federativas.","e":"A exclusividade da Polícia Federal alcança as funções de polícia judiciária da União. A polícia judiciária dos estados e do Distrito Federal cabe às polícias civis.","c":"O item pega a expressão exata da Constituição — 'exercer, com exclusividade, as funções de polícia judiciária da União' — e acrescenta três palavras no fim. Tudo que você reconhece está correto, e o reconhecimento encerra a leitura antes do acréscimo. É o mesmo mecanismo do IPv6: termo verdadeiro estendido a hipótese que ele não cobre.","cf":1},{"n":13,"m":"Matematica","md":"Matemática","p":"P18","pt":"Porcentagem, razão, proporção e juros","mec":"par de conceitos","g":"E","t":"Razão é a igualdade entre duas proporções, ao passo que proporção é o quociente entre duas grandezas.","e":"Invertido. Razão é o quociente entre duas grandezas; proporção é a igualdade entre duas razões.","c":"Os dois termos são usados como sinônimos na linguagem comum, então nenhum dos dois tem definição firme na cabeça de quem não revisou. Par de conceitos sem definição fixada é troca garantida.","cf":0},{"n":14,"m":"Informatica","md":"Informática","p":"P05","pt":"Segurança: criptografia, assinatura e hash","mec":"aparencia literal","g":"E","t":"O certificado digital emitido no âmbito da ICP-Brasil contém a chave privada de seu titular, o que permite a terceiros verificar as assinaturas por ele produzidas.","e":"O certificado contém a chave pública. A privada nunca é distribuída — se estivesse no certificado, qualquer um poderia assinar pelo titular.","c":"Troca de uma palavra no meio de uma frase correta, e a troca destrói o próprio sentido do sistema. A segunda metade do item, que está certa, só funciona se a chave for pública.","cf":0},{"n":15,"m":"DireitoProcessualPenal","md":"Direito Processual Penal","p":"P25","pt":"Penal e Processual Penal","mec":"duas metades","g":"E","t":"A prisão em flagrante pode ser efetuada por qualquer pessoa do povo; por essa razão, dispensa a comunicação imediata ao juiz competente.","e":"A primeira metade está correta: o flagrante é facultativo para qualquer pessoa e obrigatório para a autoridade policial. A segunda é falsa: a prisão de qualquer pessoa deve ser comunicada imediatamente ao juiz competente e à família do preso ou pessoa por ele indicada.","c":"A primeira oração é verdadeira e amplamente conhecida, e o 'por essa razão' finge que a informalidade da captura dispensa a formalidade do controle. São coisas independentes: quem pode prender não tem relação com quem precisa ser avisado.","cf":1},{"n":16,"m":"RedacaoOficial","md":"Redação Oficial","p":"P21","pt":"Padrão ofício e características da redação oficial","mec":"aparencia literal","g":"C","t":"A redação oficial caracteriza-se pela impessoalidade, pelo uso do padrão culto da linguagem, pela clareza, pela concisão, pela formalidade e pela uniformidade.","e":"É a enumeração das características fundamentais da redação oficial.","c":"Lista longa e correta. Item enumerativo é onde a banca costuma inserir um intruso, e você sabe disso — então passa a lista inteira procurando o estranho. Não achar não deveria assustar, mas assusta.","cf":1},{"n":17,"m":"RedacaoOficial","md":"Redação Oficial","p":"P20","pt":"Tratamento, vocativos e fechos","mec":"palavra absoluta","g":"C","t":"Os pronomes de tratamento exigem sempre concordância verbal e pronominal na terceira pessoa, ainda que se dirijam diretamente à pessoa com quem se fala.","e":"É a regra: escreve-se 'Vossa Senhoria enviou seu parecer', nunca 'enviaste teu parecer'. A referência é à segunda pessoa, mas a concordância é na terceira.","c":"'Sempre' mais uma concessiva é a receita dos itens falsos, e a intuição empurra para a segunda pessoa porque 'Vossa' soa a interlocução direta. As duas coisas conspiram contra um item correto.","cf":1},{"n":18,"m":"Informatica","md":"Informática","p":"P02","pt":"Redes: endereçamento e equipamentos","mec":"numero na hipotese","g":"C","t":"O endereço IPv6 é composto de 128 bits, ante os 32 bits do IPv4, ampliação que responde ao esgotamento do espaço de endereçamento da versão anterior.","e":"Os dois valores estão corretos e associados às versões certas.","c":"Item com dois números na mesma frase: o formato em que a banca costuma deslocar um deles. Aqui nenhum foi deslocado, e conferir os dois é mais rápido do que desconfiar.","cf":0},{"n":19,"m":"Informatica","md":"Informática","p":"P02","pt":"Redes: endereçamento e equipamentos","mec":"palavra absoluta","g":"C","t":"Em uma rede IPv4, o endereço em que todos os bits da porção de host estão ligados é sempre reservado ao broadcast, não podendo ser atribuído a nenhuma estação.","e":"Dentro de cada sub-rede, o primeiro endereço identifica a rede e o último é o de broadcast. Nenhum dos dois é atribuível a host.","c":"'Sempre' e 'nenhuma' na mesma frase disparam o alarme, mas a reserva é estrutural do protocolo. A regra é absoluta porque decorre da própria aritmética do endereçamento.","cf":0},{"n":20,"m":"Informatica","md":"Informática","p":"P05","pt":"Segurança: criptografia, assinatura e hash","mec":"premissa e conclusao","g":"C","t":"A chave privada permanece sob guarda exclusiva de seu titular, razão pela qual a assinatura gerada com ela permite atribuir a autoria do documento a esse titular.","e":"É a base do não repúdio: se só o titular possui a chave privada, só ele poderia ter produzido aquela assinatura.","c":"Premissa verdadeira e conclusão que decorre de fato. O 'razão pela qual' virou sinal de armadilha, e esse reflexo derruba justamente os itens em que a lógica está correta.","cf":0},{"n":21,"m":"Informatica","md":"Informática","p":"P02","pt":"Redes: endereçamento e equipamentos","mec":"duas metades","g":"C","t":"O roteador interliga redes distintas e decide o encaminhamento com base no endereço IP, e o switch segmenta domínios de colisão dentro de uma mesma rede local.","e":"As duas afirmações estão corretas: roteamento entre redes na camada 3 e comutação com segmentação de colisão na camada 2.","c":"Duas metades, ambas verdadeiras. O formato ensinou você a caçar o defeito depois da conjunção — e quando não há defeito, a caça vira o erro.","cf":0},{"n":22,"m":"Portugues","md":"Português","p":"P15","pt":"Compreensão, coesão e coerência","mec":"duas metades","g":"C","t":"Um texto pode ser coeso e, ainda assim, incoerente, e a coerência não depende exclusivamente dos conectivos nele empregados.","e":"As duas afirmações estão corretas: é possível encadear frases com conectivos impecáveis e ainda assim produzir um texto sem sentido.","c":"Duas metades verdadeiras, com uma concessiva e um 'exclusivamente' no caminho — três gatilhos de desconfiança num item que não tem defeito nenhum.","cf":0},{"n":23,"m":"Informatica","md":"Informática","p":"P07","pt":"Sistemas operacionais e aplicativos","mec":"par de conceitos","g":"C","t":"No Linux, o diretório /etc concentra os arquivos de configuração do sistema, ao passo que o /var armazena dados variáveis, como registros de log e filas de impressão.","e":"É a função de cada um na hierarquia padrão: /etc guarda configuração, /var guarda o que cresce e muda durante a operação.","c":"Par de diretórios com atribuição correta, em assunto que quem não administra Linux só conhece de leitura. Sem prática, a única defesa é ter fixado a hierarquia.","cf":0},{"n":24,"m":"Estatistica","md":"Estatística","p":"P22","pt":"Estatística descritiva e distribuição normal","mec":"numero na hipotese","g":"E","t":"Em uma distribuição normal, aproximadamente 95% das observações situam-se no intervalo compreendido entre a média menos um desvio padrão e a média mais um desvio padrão.","e":"No intervalo de um desvio padrão em torno da média estão cerca de 68% das observações. Os 95% correspondem a dois desvios padrão.","c":"Os dois números são verdadeiros e pertencem à mesma regra — só foram pareados errado. Como 95% é o percentual mais citado em qualquer texto sobre estatística, ele tem prioridade na memória e gruda no primeiro intervalo que aparecer.","cf":0},{"n":25,"m":"RLM","md":"Raciocínio Lógico","p":"P16","pt":"Proposições, conectivos e tabelas-verdade","mec":"numero na hipotese","g":"C","t":"A tabela-verdade de uma proposição composta por três proposições simples distintas possui oito linhas.","e":"O número de linhas é 2 elevado ao número de proposições simples: 2³ = 8.","c":"Número certo na hipótese certa. Quem já viu um item com o mesmo oito aplicado a quatro proposições passa a tratar o oito como suspeito, em vez de refazer a conta de dois segundos.","cf":0},{"n":26,"m":"Informatica","md":"Informática","p":"P05","pt":"Segurança: criptografia, assinatura e hash","mec":"aparencia literal","g":"C","t":"As funções de hash criptográfico são unidirecionais: a partir do resumo gerado não é computacionalmente viável recuperar a mensagem que lhe deu origem.","e":"É a propriedade da unidirecionalidade, que sustenta o uso de hash em verificação de integridade e em armazenamento de senhas.","c":"A expressão 'não é computacionalmente viável' parece uma ressalva, e ressalva costuma indicar que o item está se protegendo de um erro. Aqui é o contrário: é a formulação tecnicamente precisa, porque a impossibilidade é prática, não matemática.","cf":0},{"n":27,"m":"Matematica","md":"Matemática","p":"P19","pt":"Combinatória e probabilidade","mec":"aparencia literal","g":"E","t":"O número de combinações simples de n elementos tomados p a p é dado por n! dividido por (n − p)!.","e":"Essa é a fórmula do arranjo simples. A combinação divide ainda por p!, resultando em n! / [p!(n − p)!], justamente porque despreza a ordem.","c":"A fórmula é real e está escrita sem nenhum erro de notação — só pertence ao outro conceito. Falta um fatorial no denominador, e fatorial ausente é o tipo de coisa que a leitura rápida não registra.","cf":0},{"n":28,"m":"Informatica","md":"Informática","p":"P02","pt":"Redes: endereçamento e equipamentos","mec":"numero na hipotese","g":"E","t":"O endereço IPv4 é composto de 32 bits e o endereço IPv6, de 64 bits, ampliação que tornou possível superar o esgotamento do espaço de endereçamento da versão anterior.","e":"IPv4 tem 32 bits — essa parte está certa. IPv6 tem 128 bits, não 64.","c":"O número verdadeiro vem primeiro e serve de âncora. Você confere o 32, confirma, e o '64' entra de carona porque soa plausível: é o dobro, tem cara de evolução técnica, e 64 é um número que aparece em toda parte em informática. Número certo ao lado de número errado é a forma mais econômica de comprar a sua confiança.","cf":0},{"n":29,"m":"DireitoAdministrativo","md":"Direito Administrativo","p":"P24","pt":"Constitucional e Administrativo","mec":"palavra absoluta","g":"E","t":"Os atos administrativos gozam de presunção absoluta de legitimidade, razão pela qual não podem ser invalidados pela própria Administração sem prévia decisão judicial.","e":"A presunção de legitimidade é relativa: admite prova em contrário. E a Administração pode anular os próprios atos ilegais por iniciativa própria, em decorrência do poder de autotutela — não depende de decisão judicial para isso.","c":"Dois erros num item só, e o segundo se esconde atrás do primeiro. Você pode até notar que 'absoluta' está forte demais, mas o 'razão pela qual' já encadeou uma conclusão que soa garantista e cuidadosa — exigir decisão judicial parece sempre a resposta mais segura. Em direito administrativo, 'mais garantista' não é sinônimo de correto.","cf":1},{"n":30,"m":"ContabilidadeGeral","md":"Contabilidade Geral","p":"P11","pt":"Imobilizado, estoques, provisões e análise de balanços","mec":"premissa e conclusao","g":"C","t":"A depreciação distribui o custo do bem ao longo de sua vida útil, razão pela qual um bem totalmente depreciado que continue em uso não gera mais despesa de depreciação.","e":"Esgotado o valor depreciável, não há mais o que distribuir. O bem permanece registrado no imobilizado, com depreciação acumulada igual ao valor depreciável, e deixa de gerar despesa.","c":"A premissa é verdadeira e a conclusão decorre dela, mas exige perceber que a despesa acaba mesmo com o bem ainda funcionando. Parece injusto — e é esse desconforto, não a norma, que empurra para Errado.","cf":0}];
 
-{n:2,m:"Informatica",a:"Protocolos: IP, TCP, UDP, HTTP, HTTPS, DNS, DHCP, FTP, SMTP, POP3, IMAP",mec:"literalidade limpa",g:"C",
- t:"O protocolo UDP não oferece garantia de entrega, controle de fluxo nem retransmissão de segmentos perdidos, o que o torna adequado a aplicações de transmissão contínua de áudio e vídeo.",
- e:"É a definição correta do UDP: protocolo de transporte não orientado a conexão, sem confirmação de recebimento, sem ordenação e sem retransmissão. A ausência desse overhead é justamente o que o torna adequado a streaming, onde latência baixa importa mais que perda eventual de pacote.",
- c:"Item certo, redação limpa, nenhuma pegadinha — e é por isso que ele pega. Você passa a prova inteira caçando armadilha, encontra um item sem defeito e começa a inventar um: 'será que streaming não usa TCP às vezes?'. A desconfiança treinada vira o próprio erro."},
-
-{n:3,m:"Informatica",a:"Protocolos: IP, TCP, UDP, HTTP, HTTPS, DNS, DHCP, FTP, SMTP, POP3, IMAP",mec:"palavra absoluta",g:"E",
- t:"Em uma rede que utiliza o protocolo DHCP, o endereço IP atribuído automaticamente a uma estação é necessariamente permanente, somente podendo ser alterado mediante reconfiguração manual do administrador.",
- e:"O DHCP atribui endereços por concessão temporária, com prazo de validade. Terminado o prazo, o endereço é renovado ou devolvido ao conjunto disponível — sem intervenção manual nenhuma.",
- c:"Duas palavras absolutas empilhadas: 'necessariamente' e 'somente'. Quem conhece DHCP de uso diário lembra que na prática o IP da máquina 'nunca muda' e valida o item pela experiência. A prática confirma o hábito da rede doméstica; a teoria descreve o mecanismo. A Cebraspe cobra o mecanismo."},
-
-{n:4,m:"Informatica",a:"Protocolos: IP, TCP, UDP, HTTP, HTTPS, DNS, DHCP, FTP, SMTP, POP3, IMAP",mec:"premissa-conclusao",g:"E",
- t:"O protocolo HTTPS cifra os dados trocados entre o navegador e o servidor por meio de TLS, razão pela qual garante que o conteúdo publicado no sítio acessado seja autêntico e livre de código malicioso.",
- e:"A primeira parte é verdadeira: o HTTPS protege o tráfego em trânsito contra interceptação e adulteração. Mas ele não diz nada sobre o conteúdo do sítio. Uma página de phishing com certificado válido é servida por HTTPS exatamente como qualquer outra.",
- c:"A premissa verdadeira empurra a conclusão. O 'razão pela qual' é a dobradiça do item: ele transforma uma garantia de transporte numa garantia de conteúdo, e o cérebro aceita porque a primeira metade já foi validada. Toda vez que ler 'razão pela qual', separe as duas orações e julgue a segunda sozinha."},
-
-{n:5,m:"Informatica",a:"Firewall, IDS/IPS, VPN, proxy",mec:"literalidade limpa",g:"C",
- t:"O firewall do tipo stateful mantém uma tabela de estados das conexões ativas, o que lhe permite decidir sobre um pacote considerando o contexto da sessão à qual ele pertence, e não apenas as informações isoladas de seu cabeçalho.",
- e:"É exatamente a diferença entre filtro de pacotes stateless e firewall stateful. O stateful guarda o estado de cada conexão e avalia se o pacote faz sentido dentro dela; o stateless julga cada pacote como se fosse o primeiro.",
- c:"Item correto e sem sobra. O risco aqui é o inverso do de sempre: como o enunciado é longo e técnico, você procura o defeito na segunda metade por hábito, não acha, e marca Errado por insegurança. Enunciado comprido não é sinônimo de enunciado torto."},
-
-{n:6,m:"Informatica",a:"Segurança da informação: pilares (confidencialidade, integridade, disponibilidade, autenticidade, não repúdio)",mec:"troca de rotulos",g:"E",
- t:"Em segurança da informação, integridade é a garantia de que a informação esteja acessível aos usuários autorizados sempre que for necessária, ao passo que disponibilidade é a garantia de que a informação não sofreu alteração indevida.",
- e:"Trocados. Integridade é a garantia de que a informação não foi alterada de forma não autorizada. Disponibilidade é a garantia de acesso quando necessário.",
- c:"Mesma armadilha do item 1, em outra matéria — e é proposital. Os dois conceitos andam colados em qualquer material de estudo, as duas definições estão corretas, e o par 'certo/certo' desliga a conferência. Sempre que um item definir dois conceitos irmãos na mesma frase, leia de trás para frente: pegue a definição e pergunte de quem ela é."},
-
-{n:7,m:"Informatica",a:"Assinatura digital, certificado digital, ICP-Brasil, funções de hash",mec:"literalidade limpa",g:"C",
- t:"Na criptografia assimétrica, a assinatura digital de um documento é gerada com a chave privada do signatário e pode ser verificada por qualquer interessado mediante o uso da chave pública correspondente.",
- e:"É o funcionamento padrão da assinatura digital: assina-se com a chave privada — que só o signatário possui, o que garante autenticidade e não repúdio — e verifica-se com a chave pública, que é distribuída livremente.",
- c:"A cilada é a simetria invertida da cifragem. Para cifrar uma mensagem para alguém, usa-se a chave pública do destinatário; para assinar, usa-se a própria chave privada. Os dois processos usam o mesmo par de chaves em ordens opostas, e quem decorou 'chave pública cifra' aplica a regra no caso errado e marca Errado."},
-
-{n:8,m:"Informatica",a:"Endereçamento: IPv4, IPv6, máscara, sub-redes, NAT",mec:"numero deslocado",g:"E",
- t:"O endereço IPv4 é composto de 32 bits e o endereço IPv6, de 64 bits, ampliação que tornou possível superar o esgotamento do espaço de endereçamento da versão anterior.",
- e:"IPv4 tem 32 bits — essa parte está certa. IPv6 tem 128 bits, não 64.",
- c:"O número verdadeiro vem primeiro e serve de âncora. Você confere o 32, confirma, e o '64' entra de carona porque soa plausível: é o dobro, tem cara de evolução técnica, e 64 é um número que aparece em toda parte em informática. Número certo ao lado de número errado é a forma mais econômica de comprar a sua confiança."},
-
-{n:9,m:"Informatica",a:"Planilhas eletrônicas (Excel e LibreOffice Calc): fórmulas, funções, referências",mec:"literalidade limpa",g:"C",
- t:"No Microsoft Excel em português, a fórmula =SOMA(A1:A3;B1) retorna a soma dos valores contidos nas células A1, A2, A3 e B1.",
- e:"Os dois pontos definem um intervalo contínuo (A1 até A3, ou seja, A1, A2 e A3). O ponto e vírgula separa argumentos independentes da função. A fórmula soma, portanto, quatro células.",
- c:"O item mistura os dois separadores na mesma fórmula justamente para embaralhar. Quem usa planilha todo dia lê rápido, vê 'A1:A3;B1' e traduz mentalmente para 'de A1 até B1', somando células que não estão ali. Familiaridade acelera a leitura — e acelerar a leitura é o que a Cebraspe cobra."},
-
-{n:10,m:"Portugues",a:"Redação oficial: vocativos, endereçamento e fechos",mec:"troca de rotulos",g:"E",cf:1,
- t:"Conforme o Manual de Redação da Presidência da República, emprega-se o fecho 'Atenciosamente' nas comunicações dirigidas a autoridades de hierarquia superior e o fecho 'Respeitosamente' nas dirigidas a autoridades de mesma hierarquia ou de hierarquia inferior.",
- e:"Está invertido. 'Respeitosamente' é o fecho para autoridades de hierarquia superior. 'Atenciosamente' é para autoridades de mesma hierarquia ou de hierarquia inferior.",
- c:"Só existem dois fechos, e é exatamente por isso que o item funciona: você sabe que são esses dois, reconhece os dois no enunciado e a memória registra 'os termos certos estão aqui'. Reconhecer o vocabulário não é conferir a atribuição. Com pares fechados, a troca de rótulos tem 50% de chance de passar batida."},
-
-{n:11,m:"Portugues",a:"Redação oficial: vocativos, endereçamento e fechos",mec:"literalidade limpa",g:"C",cf:1,
- t:"De acordo com o Manual de Redação da Presidência da República, o vocativo 'Excelentíssimo Senhor', seguido do cargo respectivo, é reservado ao Presidente da República, ao Presidente do Congresso Nacional e ao Presidente do Supremo Tribunal Federal; às demais autoridades emprega-se o vocativo 'Senhor', seguido do cargo.",
- e:"É a regra do Manual, sem alteração. 'Excelentíssimo Senhor' fica restrito aos três chefes de Poder. Para todas as outras autoridades, inclusive ministros e governadores, o vocativo é 'Senhor' seguido do cargo.",
- c:"É a literalidade limpa do bloco de Português, e ela pega pelo excesso de zelo. O item lista três cargos específicos e você começa a testar exceções: 'e o Vice-Presidente? e um ministro do STF?'. A regra é fechada e o item a transcreveu inteira. Quando um item cita a norma completa, procurar o que falta é procurar erro onde não há."},
-
-{n:12,m:"Portugues",a:"Redação oficial: pronomes de tratamento e concordância",mec:"palavra absoluta",g:"E",cf:1,
- t:"Os pronomes de tratamento exigem sempre a concordância dos verbos e dos pronomes possessivos na segunda pessoa, ainda que se refiram à terceira pessoa do discurso.",
- e:"É o contrário: embora se dirijam à segunda pessoa (a quem se fala), os pronomes de tratamento levam verbos e possessivos para a terceira pessoa. Escreve-se 'Vossa Senhoria enviou seu parecer', nunca 'enviaste teu parecer'.",
- c:"O item embute a explicação correta na oração concessiva — 'ainda que se refiram à terceira pessoa' — e inverte só a regra principal. Ler a justificativa certa no fim da frase dá a sensação de que o conjunto fecha. Além disso, 'Vossa' soa a segunda pessoa, e a intuição empurra para lá. Aqui a intuição está errada por construção."},
-
-{n:13,m:"Portugues",a:"Concordância nominal e verbal",mec:"premissa-conclusao",g:"E",
- t:"Na oração 'Fazem dez anos que o servidor ingressou na carreira policial', o verbo está corretamente flexionado no plural, pois concorda com o sujeito 'dez anos'.",
- e:"O verbo 'fazer' indicando tempo decorrido é impessoal: não tem sujeito e fica invariavelmente na terceira pessoa do singular. O correto é 'Faz dez anos'. 'Dez anos' é objeto direto, não sujeito.",
- c:"A cilada é a justificativa gramatical de aparência técnica. 'Concorda com o sujeito' é uma frase que soa a regra de concordância bem aplicada, e o item a oferece pronta para você validar. Além disso, 'Fazem dez anos' é o que praticamente todo mundo fala. O item apoia a forma errada em duas muletas: o uso corrente e um pseudoargumento formal."},
-
-{n:14,m:"Portugues",a:"Concordância nominal e verbal",mec:"literalidade limpa",g:"C",
- t:"Na oração 'Precisa-se de auxiliares administrativos', o verbo permanece na terceira pessoa do singular porque a partícula 'se' funciona como índice de indeterminação do sujeito, e não como partícula apassivadora, dado que o verbo é transitivo indireto.",
- e:"Com verbo transitivo indireto, o 'se' é índice de indeterminação do sujeito e o verbo fica obrigatoriamente no singular. A partícula apassivadora só ocorre com verbo transitivo direto, caso em que haveria sujeito paciente e concordância ('Vendem-se casas').",
- c:"Item certo com raciocínio completo à mostra — e o paralelo com 'Vendem-se casas' é o que desestabiliza. As duas construções parecem gêmeas, mas a regência muda tudo: 'precisar de' é indireto, 'vender' é direto. Quem decorou o exemplo sem decorar o critério aplica o plural por analogia e marca Errado."},
-
-{n:15,m:"Portugues",a:"Redação oficial: o padrão ofício — estrutura e partes",mec:"premissa-conclusao",g:"E",cf:1,
- t:"O memorando é o expediente adequado à comunicação entre unidades administrativas de um mesmo órgão, razão pela qual sua estrutura própria foi mantida no Manual de Redação da Presidência da República, em paralelo ao padrão ofício.",
- e:"A edição vigente do Manual unificou aviso, ofício e memorando em um único expediente — o padrão ofício. O memorando deixou de existir como documento autônomo; a comunicação interna também se faz por ofício.",
- c:"A premissa descreve corretamente o que o memorando era, e a memória de quem já trabalhou em repartição confirma. O item então usa esse passado verdadeiro para afirmar um presente falso. Em redação oficial, a pergunta nunca é 'isso existe?', e sim 'isso continua no Manual depois da unificação?'."},
-
-{n:16,m:"Contabilidade",a:"Método das partidas dobradas: débito, crédito e saldo",mec:"troca de rotulos",g:"E",
- t:"No método das partidas dobradas, o débito representa invariavelmente a redução de um ativo e o crédito, o seu aumento.",
- e:"Invertido. Nas contas do ativo, débito aumenta e crédito reduz. A lógica se inverte no passivo e no patrimônio líquido, onde crédito aumenta e débito reduz.",
- c:"O vocabulário do banco atrapalha de propósito. No extrato bancário, 'débito' é dinheiro saindo — e essa associação é diária, automática e mais forte que qualquer estudo recente. Só que o extrato é escrito do ponto de vista do banco, para quem você é passivo. Em contabilidade, débito não significa perda: significa lado esquerdo."},
-
-{n:17,m:"Contabilidade",a:"Equação patrimonial e patrimônio líquido",mec:"literalidade limpa",g:"C",
- t:"O patrimônio líquido corresponde à diferença entre o ativo e o passivo exigível da entidade; caso o passivo exigível supere o ativo, verifica-se situação de passivo a descoberto.",
- e:"É a equação patrimonial: PL = Ativo − Passivo. Quando as obrigações superam os bens e direitos, o patrimônio líquido fica negativo — situação chamada de passivo a descoberto.",
- c:"É o item de literalidade limpa da Contabilidade e ele pega justamente por ser fácil. Você está do zero na matéria, reconhece a fórmula do primeiro capítulo, desconfia que 'não pode ser tão simples numa prova da PF' e marca Errado. A Cebraspe distribui itens elementares de propósito; quem chega à prova só esperando dificuldade perde ponto no que sabe."},
-
-{n:18,m:"Contabilidade",a:"Ativo imobilizado: reconhecimento, depreciação, amortização, exaustão",mec:"duas metades",g:"E",
- t:"A depreciação é o reconhecimento sistemático da perda de capacidade de geração de benefícios econômicos de um bem do ativo imobilizado ao longo de sua vida útil; por essa razão, aplica-se igualmente aos terrenos, que também integram o ativo imobilizado.",
- e:"A primeira metade define depreciação corretamente. A segunda está errada: terrenos não se depreciam, porque têm vida útil indeterminada. Um prédio construído sobre o terreno deprecia; o terreno, não.",
- c:"Item de duas metades no formato clássico: a primeira oração é uma definição impecável e consome toda a sua atenção. Quando chega ao 'por essa razão', você já decidiu. A regra prática é mecânica: em item longo, o veredito está quase sempre depois do conectivo, não antes dele."},
-
-{n:19,m:"Contabilidade",a:"Balanço Patrimonial: estrutura, ativo e passivo, critérios de classificação",mec:"premissa-conclusao",g:"E",
- t:"A conta Duplicatas a Receber representa direitos da entidade perante terceiros, razão pela qual seu saldo deve ser classificado no ativo não circulante, independentemente do prazo de realização.",
- e:"A natureza da conta define se é ativo; o prazo define em qual grupo ela entra. Duplicatas realizáveis em até doze meses, ou dentro do ciclo operacional, vão para o ativo circulante. Só o que ultrapassa esse horizonte vai para o não circulante.",
- c:"A premissa é verdadeira e irrelevante para a conclusão — esse é o truque. 'Representa direitos' é uma afirmação correta que não tem nenhuma relação com o critério de classificação, mas o 'razão pela qual' finge que tem. E o 'independentemente do prazo' está ali de graça: é exatamente o critério que o item nega, escancarado, e ainda assim passa despercebido."},
-
-{n:20,m:"Contabilidade",a:"Regimes contábeis: caixa e competência",mec:"literalidade limpa",g:"C",
- t:"Pelo regime de competência, a receita deve ser reconhecida no período em que é auferida, ainda que o correspondente recebimento em dinheiro somente venha a ocorrer em exercício posterior.",
- e:"É a definição do regime de competência: receitas e despesas são reconhecidas no período do fato gerador, independentemente do movimento de caixa. O regime de caixa é o que amarra o reconhecimento ao recebimento ou pagamento efetivo.",
- c:"Item certo cuja armadilha é a concessiva 'ainda que'. Esse conectivo é o lugar favorito da banca para plantar erro, e você aprende a desconfiar dele. Aqui ele está usado corretamente — a concessão é exatamente o que define o regime de competência. Desconfiar do conectivo não substitui entender o conceito."},
-
-{n:21,m:"RLM",a:"Negação de quantificadores (todo, algum, nenhum)",mec:"troca de rotulos",g:"E",
- t:"A negação da proposição 'Todos os agentes foram aprovados no teste físico' é 'Nenhum agente foi aprovado no teste físico'.",
- e:"A negação de 'todo A é B' é 'existe pelo menos um A que não é B' — ou seja, 'algum agente não foi aprovado'. 'Nenhum' é a contrária, não a contraditória: 'todos' e 'nenhum' podem ser ambas falsas ao mesmo tempo, o que já mostra que uma não nega a outra.",
- c:"Negar parece inverter, e 'nenhum' é o oposto visual de 'todos'. A cilada é confundir oposto com negação. O teste que resolve em dois segundos: se 'todos foram aprovados' é falso porque um único agente reprovou, 'nenhum foi aprovado' também é falso. Duas proposições falsas ao mesmo tempo não podem ser negação uma da outra."},
-
-{n:22,m:"RLM",a:"Equivalências lógicas (condicional, contrapositiva, De Morgan)",mec:"literalidade limpa",g:"C",
- t:"A proposição 'Não é verdade que o servidor foi promovido e transferido' é logicamente equivalente a 'O servidor não foi promovido ou não foi transferido'.",
- e:"É a lei de De Morgan: a negação de uma conjunção equivale à disjunção das negações. Negar 'p e q' resulta em 'não p ou não q' — basta que uma das duas falhe para que a conjunção seja falsa.",
- c:"O incômodo aqui é o 'ou'. Negar uma frase com 'e' e receber uma frase com 'ou' parece que o enunciado trocou de assunto, e a intuição quer responder 'não foi promovido e não foi transferido'. Essa resposta intuitiva é a negação da disjunção, não da conjunção. É exatamente o ponto em que formalização fraca custa ponto."},
-
-{n:23,m:"RLM",a:"Equivalências lógicas (condicional, contrapositiva, De Morgan)",mec:"troca de rotulos",g:"E",
- t:"A proposição 'Se o inquérito for instaurado, então o delegado será comunicado' é logicamente equivalente a 'Se o delegado for comunicado, então o inquérito foi instaurado'.",
- e:"A segunda é a recíproca, e recíproca não é equivalente. A equivalente de 'se p, então q' é a contrapositiva: 'se não q, então não p' — aqui, 'se o delegado não foi comunicado, então o inquérito não foi instaurado'.",
- c:"Inverter condicional é o erro mais natural do raciocínio humano — a cabeça trata 'se p então q' como se fosse 'p se e somente se q'. O item não precisa de nenhuma sofisticação: só troca a ordem e espera. Para não cair, teste com um caso absurdo: 'se chove, a rua molha' não autoriza concluir que a rua molhada implica chuva."},
-
-{n:24,m:"RLM",a:"Equivalências lógicas (condicional, contrapositiva, De Morgan)",mec:"literalidade limpa",g:"C",
- t:"A proposição 'Se o servidor for exonerado, então perderá o cargo' é logicamente equivalente a 'O servidor não será exonerado ou perderá o cargo'.",
- e:"É a equivalência entre condicional e disjunção: 'se p, então q' equivale a 'não p ou q'. A condicional só é falsa quando p é verdadeira e q é falsa — que é exatamente o único caso em que 'não p ou q' também é falsa.",
- c:"A frase resultante soa estranha em português e a estranheza vira suspeita. Some-se a isso o fato de a formalização ser seca — não há conteúdo jurídico para ancorar a intuição, só estrutura. É o tipo de item em que 'parece esquisito' não é argumento: ou você monta a tabela-verdade, ou você chuta."},
-
-{n:25,m:"Estatistica",a:"Medidas de posição: média, mediana, moda, quartis e percentis",mec:"troca de rotulos",g:"E",
- t:"A mediana é a medida de posição mais sensível à presença de valores extremos, razão pela qual a média aritmética é preferida na descrição de distribuições fortemente assimétricas.",
- e:"Invertido. A média é que é arrastada por valores extremos, porque incorpora o valor de cada observação. A mediana depende da posição, não da magnitude, e por isso é a medida preferida em distribuições assimétricas.",
- c:"Duas armadilhas empilhadas: a troca de rótulos entre média e mediana e um 'razão pela qual' que transforma a inversão em conclusão de aparência técnica. O item soa como parágrafo de livro. Pense num exemplo concreto — uma sala com dez salários de 3 mil e um de 5 milhões — e a inversão fica óbvia em um segundo."},
-
-{n:26,m:"Estatistica",a:"Medidas de dispersão: amplitude, variância, desvio padrão, coeficiente de variação",mec:"literalidade limpa",g:"C",
- t:"O coeficiente de variação, obtido pela razão entre o desvio padrão e a média, é uma medida de dispersão relativa e permite comparar a variabilidade de conjuntos de dados expressos em unidades de medida distintas.",
- e:"É a definição correta. Por ser um quociente entre duas grandezas na mesma unidade, o coeficiente de variação é adimensional — e é justamente isso que permite comparar a dispersão de conjuntos medidos em unidades diferentes.",
- c:"A palavra 'permite comparar' soa forte demais para quem está começando, e a tentação é marcar Errado achando que existe alguma restrição escondida. Não existe: comparar variabilidade entre unidades distintas é a razão de ser do coeficiente. Aqui a insegurança na matéria, e não a armadilha, é o que derruba."},
-
-{n:27,m:"Estatistica",a:"Medidas de posição: média, mediana, moda, quartis e percentis",mec:"palavra absoluta",g:"E",
- t:"Em qualquer distribuição de frequências, a moda é única e coincide necessariamente com a média e com a mediana.",
- e:"Um conjunto pode ser amodal, bimodal ou multimodal. E as três medidas só coincidem em distribuições simétricas e unimodais — numa distribuição assimétrica elas se separam, e essa separação é a própria medida da assimetria.",
- c:"'Qualquer' e 'necessariamente' na mesma frase deveriam disparar o alarme sozinhos. O que desarma o alarme é a lembrança da curva normal: o desenho simétrico com as três medidas no centro é a imagem que todo mundo tem na cabeça, e o item aposta que você vai generalizar o caso particular mais bonito para o universo inteiro."},
-
-{n:28,m:"Direito",a:"Segurança pública (art. 144) e atribuições da Polícia Federal",mec:"literalidade limpa",g:"C",cf:1,
- t:"Nos termos da Constituição Federal, compete à Polícia Federal apurar infrações penais contra a ordem política e social ou em detrimento de bens, serviços e interesses da União ou de suas entidades autárquicas e empresas públicas, bem como outras infrações cuja prática tenha repercussão interestadual ou internacional e exija repressão uniforme, segundo se dispuser em lei.",
- e:"É a redação do art. 144, § 1º, inciso I, da Constituição Federal, sem alteração.",
- c:"É a literalidade limpa do bloco de Direito. Item longo, transcrito da norma, e nenhuma palavra fora do lugar — e é o comprimento que assusta. Quanto mais extenso o item, mais lugares você imagina que a banca poderia ter mexido, e maior a chance de marcar Errado por precaução. Em item longo, ou você localiza o defeito, ou não há defeito."},
-
-{n:29,m:"Direito",a:"Segurança pública (art. 144) e atribuições da Polícia Federal",mec:"numero deslocado",g:"E",cf:1,
- t:"A Polícia Federal exerce, com exclusividade, as funções de polícia judiciária da União e das unidades federativas.",
- e:"A exclusividade da Polícia Federal alcança as funções de polícia judiciária da União. A polícia judiciária dos estados e do Distrito Federal cabe às polícias civis.",
- c:"O item pega a expressão exata da Constituição — 'exercer, com exclusividade, as funções de polícia judiciária da União' — e acrescenta três palavras no fim. Tudo que você reconhece está correto, e o reconhecimento encerra a leitura antes do acréscimo. É o mesmo mecanismo do IPv6: termo verdadeiro estendido a hipótese que ele não cobre."},
-
-{n:30,m:"Direito",a:"Atos administrativos: conceito, requisitos, atributos, espécies, extinção",mec:"palavra absoluta",g:"E",cf:1,
- t:"Os atos administrativos gozam de presunção absoluta de legitimidade, razão pela qual não podem ser invalidados pela própria Administração sem prévia decisão judicial.",
- e:"A presunção de legitimidade é relativa: admite prova em contrário. E a Administração pode anular os próprios atos ilegais por iniciativa própria, em decorrência do poder de autotutela — não depende de decisão judicial para isso.",
- c:"Dois erros num item só, e o segundo se esconde atrás do primeiro. Você pode até notar que 'absoluta' está forte demais, mas o 'razão pela qual' já encadeou uma conclusão que soa garantista e cuidadosa — exigir decisão judicial parece sempre a resposta mais segura. Em direito administrativo, 'mais garantista' não é sinônimo de correto."}
-];
-
-var MECD = {"troca de rotulos":"troca de rótulos","palavra absoluta":"palavra absoluta",
-  "premissa-conclusao":"premissa verdadeira, conclusão falsa","duas metades":"item de duas metades",
-  "numero deslocado":"número verdadeiro deslocado","literalidade limpa":"literalidade limpa"};
+var MECD = {"par de conceitos":"par de conceitos","palavra absoluta":"palavra absoluta",
+  "premissa e conclusao":"premissa e conclusão","duas metades":"duas metades",
+  "numero na hipotese":"número na hipótese","aparencia literal":"aparência literal"};
 
 var resp = new Array(Q.length).fill(null);
 var i = 0, t0 = 0, tick = null, elapsed = 0;
@@ -367,7 +235,7 @@ $("go").onclick = function(){
 function render(){
   var q = Q[i];
   $("pos").textContent = (i+1) + " / " + Q.length;
-  $("mat").textContent = DISP[q.m];
+  $("mat").textContent = q.md;
   $("bar").style.width = ((i)/Q.length*100) + "%";
   $("enun").textContent = q.t;
   $("prev").disabled = (i === 0);
@@ -406,8 +274,8 @@ function resultado(){
     else if (r === q.g){ res = 1; tot.c++; porMat[q.m].c++; }
     else { res = -1; tot.e++; porMat[q.m].e++; }
     porMat[q.m].total++;
-    if(!porAss[q.a]) porAss[q.a] = {m:q.m,c:0,e:0,b:0};
-    if(res === 1) porAss[q.a].c++; else if(res === -1) porAss[q.a].e++; else porAss[q.a].b++;
+    if(!porAss[q.pt]) porAss[q.pt] = {m:q.m,c:0,e:0,b:0};
+    if(res === 1) porAss[q.pt].c++; else if(res === -1) porAss[q.pt].e++; else porAss[q.pt].b++;
     q._res = res; q._resp = (r === null ? "B" : r);
   });
 
@@ -428,6 +296,7 @@ function resultado(){
   var bars = "", tab = "";
   ORDEM.forEach(function(m){
     var d = porMat[m], li = d.total ? (d.c-d.e)/d.total : 0;
+    if (!d.total) return;
     var w = Math.abs(li)*50, neg = li < 0;
     var tip = DISP[m]+" — "+d.total+" itens · "+d.c+"C "+d.e+"E "+d.b+"B · índice "+fmt(li);
     bars += '<div class="row" title="'+tip+'">'
@@ -436,7 +305,7 @@ function resultado(){
          +  (neg ? "right:50%;" : "left:50%;") + "width:" + w + '%"></div>'
          +  '<div class="zero"></div></div>'
          +  '<div class="val" style="color:'+(neg?"var(--neg)":"var(--pos)")+'">'+fmt(li)+'</div></div>';
-    tab += "<tr><td>"+DISP[m]+"</td><td>"+d.total+"</td><td>"+d.c+"</td><td>"+d.e
+    if (d.total) tab += "<tr><td>"+DISP[m]+"</td><td>"+d.total+"</td><td>"+d.c+"</td><td>"+d.e
         +  "</td><td>"+d.b+"</td><td>"+fmt(li)+"</td></tr>";
   });
   $("bars").innerHTML = bars;
@@ -455,7 +324,7 @@ function resultado(){
            : '<span class="tag br">0</span>';
     rev += '<div class="item"><div class="head"><span class="num">'
         +  String(k+1).padStart(2,"0")+'</span>'+tg
-        +  '<span class="meta">'+DISP[q.m]+' · '+q.a+' · mecanismo: '+MECD[q.mec]+'</span></div>'
+        +  '<span class="meta">'+q.md+' · '+q.pt+' · formato: '+MECD[q.mec]+'</span></div>'
         +  '<p class="q">'+q.t+'</p>'
         +  '<p class="exp"><span class="lab">Gabarito: '
         +  (q.g === "C" ? "CERTO" : "ERRADO") + ' · você marcou: '
@@ -479,12 +348,13 @@ function resultado(){
   L.push("indice_liquido: " + idx.toFixed(3));
   L.push("--- por materia ---");
   ORDEM.forEach(function(m){ var d = porMat[m], li = d.total ? (d.c-d.e)/d.total : 0;
-    L.push(m+"|"+d.total+"|"+d.c+"|"+d.e+"|"+d.b+"|"+li.toFixed(3)); });
+    if (d.total) L.push(m+"|"+d.total+"|"+d.c+"|"+d.e+"|"+d.b+"|"+li.toFixed(3)); });
   L.push("--- por assunto ---");
   Object.keys(porAss).forEach(function(a){ var d = porAss[a];
     L.push(a+"|"+d.m+"|"+d.c+"|"+d.e+"|"+d.b); });
   L.push("--- itens ---");
-  Q.forEach(function(q,k){ L.push(String(k+1).padStart(2,"0")+"|"+q.a+"|"+q.g+"|"
+  L.push("# NN|materia|passo|gabarito|resposta|resultado|formato");
+  Q.forEach(function(q,k){ L.push(String(k+1).padStart(2,"0")+"|"+q.m+"|"+q.pt+"|"+q.g+"|"
     +q._resp+"|"+q._res+"|"+q.mec); });
   L.push("=== FIM ===");
   $("blk").textContent = L.join("\n");

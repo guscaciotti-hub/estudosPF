@@ -1,25 +1,649 @@
 {
   "atualizado_em": "2026-09-23",
-  "_metrica": "indice_liquido = (certas - erradas) / respondidas. Varia de -1 a +1. Nunca usar percentual bruto de acerto.",
-  "_regra": "Este arquivo e RECALCULADO a partir de dados/historico.jsonl. Nunca preencher a mao. Se perfil e historico divergirem, o historico esta certo.",
-  "_schema_assunto": {
-    "materia": "Informatica | Portugues | Contabilidade | RLM | Estatistica | Direito",
+  "_metrica": "indice_liquido = (certas - erradas) / respondidas. Varia de -1 a +1. Nunca percentual bruto de acerto.",
+  "_prioridade": "itens_na_prova x deficit x swing. deficit=(1-indice)/2, ou 0.9 se nunca respondido. swing=1+erros/(erros+brancos).",
+  "_regra": "RECALCULADO a partir de dados/historico.jsonl. Nunca preencher a mao. Se perfil e historico divergirem, o historico esta certo.",
+  "_fonte_pesos": "Distribuicao informada pelo Gustavo em auditoria (prova objetiva de Agente, 120 itens). Nao conferida no edital nem no caderno de prova: o ambiente de geracao nao tem acesso de rede a gov.br nem ao Cebraspe.",
+  "corte_2025_pontos": 82,
+  "total_itens": 120,
+  "nivel_aceitavel": {
+    "indice_liquido": 0.6,
+    "questoes_minimas": 6
+  },
+  "revisao_espacada_dias": [
+    3,
+    7,
+    21,
+    60
+  ],
+  "materias": {
+    "Informatica": {
+      "nome": "Informática",
+      "itens_na_prova": 36,
+      "cota_simulado_30": 9,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "ContabilidadeGeral": {
+      "nome": "Contabilidade Geral",
+      "itens_na_prova": 20,
+      "cota_simulado_30": 5,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "Portugues": {
+      "nome": "Português",
+      "itens_na_prova": 18,
+      "cota_simulado_30": 4,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "RLM": {
+      "nome": "Raciocínio Lógico",
+      "itens_na_prova": 12,
+      "cota_simulado_30": 3,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "Matematica": {
+      "nome": "Matemática",
+      "itens_na_prova": 8,
+      "cota_simulado_30": 2,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "RedacaoOficial": {
+      "nome": "Redação Oficial",
+      "itens_na_prova": 6,
+      "cota_simulado_30": 2,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "Estatistica": {
+      "nome": "Estatística",
+      "itens_na_prova": 4,
+      "cota_simulado_30": 1,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "ContabilidadePublica": {
+      "nome": "Contabilidade Pública",
+      "itens_na_prova": 4,
+      "cota_simulado_30": 1,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "DireitoConstitucional": {
+      "nome": "Direito Constitucional",
+      "itens_na_prova": 3,
+      "cota_simulado_30": 0,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "DireitoAdministrativo": {
+      "nome": "Direito Administrativo",
+      "itens_na_prova": 3,
+      "cota_simulado_30": 0,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "DireitoPenal": {
+      "nome": "Direito Penal",
+      "itens_na_prova": 2,
+      "cota_simulado_30": 0,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "DireitoProcessualPenal": {
+      "nome": "Direito Processual Penal",
+      "itens_na_prova": 2,
+      "cota_simulado_30": 0,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "LegislacaoFederal": {
+      "nome": "Legislação Federal",
+      "itens_na_prova": 1,
+      "cota_simulado_30": 0,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    },
+    "DireitoAmbiental": {
+      "nome": "Direito Ambiental",
+      "itens_na_prova": 1,
+      "cota_simulado_30": 0,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0
+    }
+  },
+  "passos": {
+    "P01": {
+      "titulo": "Redes: modelo OSI e arquitetura TCP/IP",
+      "materias": [
+        "Informatica"
+      ],
+      "itens": 4.94,
+      "questoes_no_banco": 7,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P02": {
+      "titulo": "Redes: endereçamento e equipamentos",
+      "materias": [
+        "Informatica"
+      ],
+      "itens": 4.94,
+      "questoes_no_banco": 7,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P03": {
+      "titulo": "Internet, intranet, nuvem e navegadores",
+      "materias": [
+        "Informatica"
+      ],
+      "itens": 7.06,
+      "questoes_no_banco": 10,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P04": {
+      "titulo": "Segurança: pilares, malware e ataques",
+      "materias": [
+        "Informatica"
+      ],
+      "itens": 4.24,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P05": {
+      "titulo": "Segurança: criptografia, assinatura e hash",
+      "materias": [
+        "Informatica"
+      ],
+      "itens": 4.24,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P06": {
+      "titulo": "Segurança: firewall, VPN, proxy e backup",
+      "materias": [
+        "Informatica"
+      ],
+      "itens": 4.24,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P07": {
+      "titulo": "Sistemas operacionais e aplicativos",
+      "materias": [
+        "Informatica"
+      ],
+      "itens": 6.35,
+      "questoes_no_banco": 9,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P08": {
+      "titulo": "Patrimônio, contas e partidas dobradas",
+      "materias": [
+        "ContabilidadeGeral"
+      ],
+      "itens": 4.29,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P09": {
+      "titulo": "Fatos contábeis e regimes contábeis",
+      "materias": [
+        "ContabilidadeGeral"
+      ],
+      "itens": 4.29,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P10": {
+      "titulo": "Demonstrações contábeis: BP, DRE e DFC",
+      "materias": [
+        "ContabilidadeGeral"
+      ],
+      "itens": 4.29,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P11": {
+      "titulo": "Imobilizado, estoques, provisões e análise de balanços",
+      "materias": [
+        "ContabilidadeGeral"
+      ],
+      "itens": 7.14,
+      "questoes_no_banco": 10,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P12": {
+      "titulo": "Concordância e regência",
+      "materias": [
+        "Portugues"
+      ],
+      "itens": 5.04,
+      "questoes_no_banco": 7,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P13": {
+      "titulo": "Crase, colocação pronominal e ortografia",
+      "materias": [
+        "Portugues"
+      ],
+      "itens": 4.32,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P14": {
+      "titulo": "Sintaxe, vozes verbais e pontuação",
+      "materias": [
+        "Portugues"
+      ],
+      "itens": 4.32,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P15": {
+      "titulo": "Compreensão, coesão e coerência",
+      "materias": [
+        "Portugues"
+      ],
+      "itens": 4.32,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P16": {
+      "titulo": "Proposições, conectivos e tabelas-verdade",
+      "materias": [
+        "RLM"
+      ],
+      "itens": 5.14,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P17": {
+      "titulo": "Equivalências, negações e argumentação",
+      "materias": [
+        "RLM"
+      ],
+      "itens": 6.86,
+      "questoes_no_banco": 8,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P18": {
+      "titulo": "Porcentagem, razão, proporção e juros",
+      "materias": [
+        "Matematica"
+      ],
+      "itens": 4,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P19": {
+      "titulo": "Combinatória e probabilidade",
+      "materias": [
+        "Matematica"
+      ],
+      "itens": 4,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P20": {
+      "titulo": "Tratamento, vocativos e fechos",
+      "materias": [
+        "RedacaoOficial"
+      ],
+      "itens": 3,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P21": {
+      "titulo": "Padrão ofício e características da redação oficial",
+      "materias": [
+        "RedacaoOficial"
+      ],
+      "itens": 3,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P22": {
+      "titulo": "Estatística descritiva e distribuição normal",
+      "materias": [
+        "Estatistica"
+      ],
+      "itens": 4,
+      "questoes_no_banco": 7,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P23": {
+      "titulo": "Orçamento público, receita e despesa",
+      "materias": [
+        "ContabilidadePublica"
+      ],
+      "itens": 4,
+      "questoes_no_banco": 8,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P24": {
+      "titulo": "Constitucional e Administrativo",
+      "materias": [
+        "DireitoAdministrativo",
+        "DireitoConstitucional"
+      ],
+      "itens": 6,
+      "questoes_no_banco": 10,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P25": {
+      "titulo": "Penal e Processual Penal",
+      "materias": [
+        "DireitoProcessualPenal",
+        "DireitoPenal"
+      ],
+      "itens": 4,
+      "questoes_no_banco": 7,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    },
+    "P26": {
+      "titulo": "Legislação especial e Direito Ambiental",
+      "materias": [
+        "LegislacaoFederal",
+        "DireitoAmbiental"
+      ],
+      "itens": 2,
+      "questoes_no_banco": 6,
+      "respondidas": 0,
+      "certas": 0,
+      "erradas": 0,
+      "brancos": 0,
+      "indice_liquido": 0,
+      "estado": "nao_iniciado",
+      "teoria_lida": null,
+      "ultima_sessao": null,
+      "proxima_revisao": null,
+      "ciladas_recorrentes": []
+    }
+  },
+  "_schema_passo": {
+    "itens": 0,
+    "questoes_no_banco": 0,
     "respondidas": 0,
     "certas": 0,
     "erradas": 0,
     "brancos": 0,
-    "indice_liquido": 0.0,
+    "indice_liquido": 0,
+    "estado": "nao_iniciado",
+    "teoria_lida": null,
     "ultima_sessao": null,
+    "proxima_revisao": null,
     "ciladas_recorrentes": []
   },
-  "pesos_materia": {
-    "Informatica": 0.30,
-    "Portugues": 0.20,
-    "Contabilidade": 0.17,
-    "RLM": 0.13,
-    "Estatistica": 0.10,
-    "Direito": 0.10
-  },
-  "assuntos": {},
   "simulados": []
 }

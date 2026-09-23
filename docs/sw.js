@@ -1,6 +1,6 @@
 /* Cache offline. Troque VERSAO ao publicar mudanca para invalidar o cache antigo. */
-var VERSAO = "pfagente-v2";
-var ARQUIVOS = ['.', 'index.html', 'app.css', 'app.js', 'banco.js', 'icone.svg', 'manifest.webmanifest'];
+var VERSAO = "pfagente-v4";
+var ARQUIVOS = ['.', 'index.html', 'app.css', 'app.js', 'dados.js', 'banco.js', 'icone.svg', 'manifest.webmanifest'];
 
 self.addEventListener('install', function(e){
   e.waitUntil(caches.open(VERSAO).then(function(c){ return c.addAll(ARQUIVOS); }).then(function(){ return self.skipWaiting(); }));

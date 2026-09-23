@@ -12,45 +12,55 @@ só a segunda importa na hora da prova.
 |---|---|
 | Arquivo | `simulados/S01-2026-09-23.html` |
 | Questões | 30 |
-| Distribuição | Informática 9 · Português 6 · Contabilidade 5 · RLM 4 · Estatística 3 · Direito 3 |
-| Gabaritos | 18 Errado / 12 Certo (60/40) |
-| Mecanismos | os seis presentes |
-| Status | gerado, aguardando execução e `/registrar` |
+| Distribuição | Informática 9 · Contabilidade Geral 5 · Português 4 · RLM 3 · Matemática 2 · Redação Oficial 2 · Estatística 1 · Contabilidade Pública 1 · Direito 3 |
+| Gabaritos | 14 Certo / 16 Errado (47% Certo) |
+| Formatos | os seis, **cada um com os dois gabaritos** |
+| Status | regenerado em 23/09/2026 com o banco corrigido, aguardando execução |
 
-**Exceção aplicada:** como nenhum assunto estava `[~]` ou `[x]` no
-verticalizado, este simulado sorteou do programa inteiro, respeitando os
-pesos. É a exceção do marco zero, prevista em `.claude/commands/simulado.md`.
-**Vale uma vez só.** A partir do S02 valem apenas assuntos já iniciados.
+**Regenerado.** A versão anterior foi descartada porque o banco de onde ela
+saiu tinha vazamento de gabarito: todo item Certo era uma transcrição limpa e
+todo item Errado uma armadilha, de modo que a aparência do item entregava a
+resposta. Como aquele simulado ainda não tinha sido respondido, a troca não
+custou nenhuma medição.
+
+O simulado é reproduzível: `node scripts/gera-simulado.js S01 2026-09-23`.
+O gerador rejeita qualquer recorte em que um formato com 3 ou mais itens
+apareça com um único gabarito.
+
+**Exceção do marco zero:** como nenhum passo estava iniciado, este simulado
+sorteou de todo o banco, respeitando os pesos. Vale uma vez só.
 
 ---
 
 ## S02 — 13/10/2026 · 20 dias depois
 
-Para que a comparação signifique alguma coisa, o S02 replica o S01 em tudo,
-menos nas questões:
+Replica o S01 em tudo, menos nas questões:
 
 | Parâmetro | Valor — não alterar |
 |---|---|
 | Questões | **30** |
 | Informática | **9** |
-| Português | **6** |
-| Contabilidade | **5** |
-| RLM | **4** |
-| Estatística | **3** |
-| Direito | **3** |
-| Proporção de gabaritos | **≈ 60% Errado / 40% Certo** |
-| Mecanismos | os seis, com ao menos um item de literalidade limpa por matéria |
-| Questões | **inéditas** — anti-repetição contra `dados/questoes-usadas.jsonl` |
+| Contabilidade Geral | **5** |
+| Português | **4** |
+| Raciocínio Lógico | **3** |
+| Matemática | **2** |
+| Redação Oficial | **2** |
+| Estatística | **1** |
+| Contabilidade Pública | **1** |
+| Blocos de Direito | **3**, por rodízio |
+| Proporção de gabaritos | **≈ 45% Certo / 55% Errado** |
+| Formatos | os seis, cada um com os dois gabaritos |
+| Questões | **inéditas** |
 
 Mudar o número de questões, a distribuição ou a calibragem entre um simulado
-e outro quebra a comparação: a variação no índice líquido passa a refletir a
-mudança da prova, não a mudança do candidato. Se em 13/10 houver vontade de
-"aumentar para 40 porque estou melhor", a resposta é não. Aumenta-se no S03,
-e aí o S03 vira a nova linha de base.
+e outro quebra a comparação: a variação no índice passa a refletir a mudança
+da prova, não a do candidato. Se em 13/10 houver vontade de "aumentar para 40
+porque estou melhor", a resposta é não. Aumenta-se no S03, e o S03 vira a
+nova linha de base.
 
-O S02 embute os números do S01 na tela de resultado, para comparação direta.
-Isso só funciona se o S01 tiver sido registrado com `/registrar` — sem
-registro, não há com o que comparar.
+A plataforma online também aplica o simulado, com as mesmas cotas, e guarda o
+resultado sozinha. O HTML offline continua servindo para fazer a prova sem
+internet e sem depender do navegador do celular.
 
 ---
 

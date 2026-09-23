@@ -9,37 +9,43 @@ Leia `CLAUDE.md` inteiro antes de começar.
 
 ## Passo 1 — Montar a distribuição
 
-Distribua as N questões pelos pesos reais da prova, arredondando para que a
-soma bata exatamente em N:
+Pelos **itens de prova** de `dados/perfil.json` → `materias`, nunca por
+percentual estimado. Em 30 itens:
 
-| Matéria | Peso | Em 40 | Em 30 |
+| Matéria | Em 30 | Matéria | Em 30 |
 |---|---|---|---|
-| Informática | 30% | 12 | 9 |
-| Português | 20% | 8 | 6 |
-| Contabilidade | 17% | 7 | 5 |
-| RLM | 13% | 5 | 4 |
-| Estatística | 10% | 4 | 3 |
-| Direito | 10% | 4 | 3 |
+| Informática | 9 | Estatística | 1 |
+| Contabilidade Geral | 5 | Contabilidade Pública | 1 |
+| Português | 4 | Blocos de Direito | 3 |
+| Raciocínio Lógico | 3 | | |
+| Matemática | 2 | | |
+| Redação Oficial | 2 | | |
 
-**Só entram assuntos marcados `[~]` ou `[x]` no verticalizado.**
+Os 3 itens de Direito entram por **rodízio** entre Constitucional,
+Administrativo, Penal, Processual Penal, Legislação Federal e Ambiental,
+escolhidos pela prioridade do momento — são 12 itens de prova repartidos em
+seis blocos pequenos, e sortear todos em todo simulado inflaria Direito.
 
-*Exceção única — o marco zero:* se **nenhum** assunto estiver `[~]` ou `[x]`
-(primeiro simulado do projeto), sorteie do programa inteiro, respeitando os
-pesos. Registre isso dentro do HTML e no `AGENDA.md`. Essa exceção vale uma
-vez só; a partir do S02 a regra normal manda.
+Para outros tamanhos, proporcione a partir dos itens de prova e feche a soma
+exatamente em N.
 
-Dentro de cada matéria, priorize os assuntos de menor índice líquido — o
-simulado mede, e o que precisa de medição é o que está torto.
+**Só entram passos com nível diferente de `não iniciado`.**
+
+*Exceção única — o marco zero:* se nenhum passo tiver sido iniciado, sorteie
+de todos, respeitando os pesos. Registre isso no HTML e no `AGENDA.md`. Vale
+uma vez só.
+
+Dentro de cada matéria, priorize os passos de menor índice líquido.
 
 ## Passo 2 — Gerar as questões
 
 Mesma calibragem do `/estudar` (`CLAUDE.md` §2), aplicada ao simulado
 inteiro:
 
-- Cada questão usa ao menos um dos seis mecanismos.
-- Os seis mecanismos aparecem no simulado.
-- ≈ 60% gabarito Errado, 40% Certo.
-- **Ao menos um item de literalidade limpa por matéria.**
+- Cada item usa um dos seis **formatos**, e o formato **não pode predizer o
+  gabarito** — confira a tabela cruzada com `/banco` antes de gerar o HTML.
+- ≈ 55% gabarito Errado, 45% Certo.
+- **Ao menos um item de aparência literal por matéria**, de qualquer gabarito.
 - Anti-repetição contra `dados/questoes-usadas.jsonl` (leia antes).
 - Nenhuma norma sem confirmação em fonte.
 

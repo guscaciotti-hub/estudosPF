@@ -35,28 +35,48 @@ moram, onde questões novas são escritas e onde o banco cresce.
   precisa de confirmação em fonte. Sem confirmação, troca-se de assunto — e o
   que foi gerado sem conferir aparece sinalizado.
 
-## Pesos na prova
+## Pesos na prova — 120 itens
 
-Base: prova de Agente de 2021, 120 itens.
+| Matéria | Itens | Matéria | Itens |
+|---|---|---|---|
+| Informática | 36 | Estatística | 4 |
+| Contabilidade Geral | 20 | Contabilidade Pública | 4 |
+| Português | 18 | Direito Constitucional | 3 |
+| Raciocínio Lógico | 12 | Direito Administrativo | 3 |
+| Matemática | 8 | Direito Penal | 2 |
+| Redação Oficial | 6 | Direito Processual Penal | 2 |
+| | | Legislação Federal | 1 |
+| | | Direito Ambiental | 1 |
 
-| Matéria | Peso |
-|---|---|
-| Informática | 30% |
-| Português | 20% |
-| Contabilidade Geral | 17% |
-| RLM | 13% |
-| Estatística | 10% |
-| Direito | 10% |
+## Os 26 passos estratégicos
+
+A unidade de estudo não é o assunto solto — é o **passo**: um tema com resumo
+teórico próprio e questões suficientes para medir nível. O peso de cada passo
+em itens de prova é o peso da matéria repartido proporcionalmente às questões
+que o passo tem nela; a soma dos 26 é exatamente 120.
+
+Cada passo passa por cinco níveis: não iniciado → teoria lida → em treino →
+**aceitável** (índice ≥ 0,60 em pelo menos 6 questões) → consolidado.
+
+A aba **Passo estratégico** lista os 26 na ordem de prioridade, recalculada a
+cada questão respondida. Você lê a teoria, marca como estudado e martela
+questões até o passo sair da frente sozinho.
 
 ## Limites conhecidos
 
-- **O banco tem 120 questões**, o que sustenta cerca de 15 sessões de material
-  inédito. Depois disso as questões começam a voltar, marcadas como revisão.
+- **O banco tem 188 questões** em 26 passos, o que sustenta cerca de 23 sessões
+  de material inédito. Depois disso as questões voltam, marcadas como revisão.
   O banco cresce escrevendo questões novas pelo Claude Code, com `/estudar`.
+- **A distribuição de itens por matéria e o corte de 82 pontos** foram
+  informados pelo Gustavo em auditoria e **não puderam ser conferidos** no
+  edital nem no caderno de prova: o ambiente de geração não tem acesso de rede
+  a gov.br nem ao Cebraspe.
 - **O verticalizado foi reconstruído de memória** do programa das últimas
-  edições do concurso, porque não havia PDF do edital na pasta e o ambiente de
-  geração não tinha acesso à rede para consultar a fonte. O aviso está no topo
-  do arquivo. Substitua assim que tiver o edital.
-- **19 questões dependem de norma** e foram geradas sem consulta à fonte
-  oficial pelo mesmo motivo. Elas aparecem sinalizadas com ⚠ na revisão.
-  Confira antes de fixar.
+  edições, pelo mesmo motivo. O aviso está no topo do arquivo.
+- **27 questões dependem de norma** e foram geradas sem consulta à fonte
+  oficial. Aparecem sinalizadas com ⚠ na revisão. Confira antes de fixar.
+- **A regra de saída da revisão espaçada** é a que o Gustavo definiu: duas
+  passagens consecutivas sem erro. Com ela, os intervalos de 21 e 60 dias só
+  são alcançados por passos que voltam a errar depois de avançar. Se a
+  intenção for percorrer os quatro intervalos sempre, a regra de saída precisa
+  mudar — é uma linha em `atualizaRevisao()`.
