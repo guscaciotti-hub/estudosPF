@@ -1,0 +1,14 @@
+{
+  "name": "Agente PF — plataforma de estudo",
+  "short_name": "Agente PF",
+  "description": "Preparação para Agente da Polícia Federal, banca Cebraspe.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#0d0d0d",
+  "lang": "pt-BR",
+  "icons": [
+    {"src": "icone.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}
+  ]
+}

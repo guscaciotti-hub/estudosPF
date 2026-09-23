@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agente PF — plataforma de estudo</title>
+<meta name="description" content="Plataforma pessoal de preparação para Agente da Polícia Federal, banca Cebraspe. Questões certo/errado com penalidade, índice líquido e simulados de etapa.">
+<meta name="theme-color" content="#0d0d0d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <div class="brand">Agente PF <span>· Cebraspe</span></div>
+    <button class="iconbtn" id="tema" title="Alternar tema">tema</button>
+  </div>
+  <nav>
+    <button data-v="painel" aria-current="true">Painel</button>
+    <button data-v="sessao">Sessão</button>
+    <button data-v="simulado">Simulado</button>
+    <button data-v="dados">Dados</button>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <!-- PAINEL -->
+  <section id="v-painel">
+    <div class="card" id="pnAlerta" hidden></div>
+
+    <div class="card">
+      <h3>Hoje</h3>
+      <h1 id="pnTarefa">—</h1>
+      <p class="sub" id="pnMotivo"></p>
+      <button class="b primary" id="pnAcao">Começar</button>
+    </div>
+
+    <div class="card">
+      <h3>Índice líquido geral</h3>
+      <div class="hero zero" id="pnIdx">sem medição</div>
+      <p class="note" id="pnIdxTxt">Acerto +1, erro −1, branco 0. O índice replica a regra da prova e vai de −1 a +1.</p>
+      <div class="stats">
+        <div class="stat"><div class="k">Respondidas</div><div class="v" id="pnResp">0</div></div>
+        <div class="stat"><div class="k">Saldo líquido</div><div class="v" id="pnSaldo">0</div></div>
+        <div class="stat"><div class="k">Sessões</div><div class="v" id="pnSes">0</div></div>
+        <div class="stat"><div class="k">Simulados</div><div class="v" id="pnSim">0</div></div>
+      </div>
+      <h2>Por matéria</h2>
+      <div id="pnBars"></div>
+      <div class="scale"><div></div><div class="ax"><span>−1</span><span>0</span><span>+1</span></div><div></div></div>
+      <h3>Os mesmos números em tabela</h3>
+      <table><thead><tr><th>Matéria</th><th>Peso</th><th>Resp.</th><th>C</th><th>E</th><th>B</th><th>Índice</th></tr></thead>
+        <tbody id="pnTab"></tbody></table>
+    </div>
+
+    <div class="card">
+      <h3>Fila de prioridade</h3>
+      <p class="note">Peso da matéria × déficit medido. Assunto nunca tocado entra com déficit 0,9;
+         assunto com índice negativo chega a 1,0 — erro medido vem antes de ignorância presumida.</p>
+      <div id="pnFila"></div>
+    </div>
+
+    <div class="card">
+      <h3>Cobertura do edital</h3>
+      <div id="pnCob"></div>
+      <p class="note" id="pnBanco"></p>
+    </div>
+
+    <div class="card">
+      <h3>Próximo simulado de etapa</h3>
+      <div id="pnProx"></div>
+    </div>
+  </section>
+
+  <!-- SESSAO -->
+  <section id="v-sessao" class="hide">
+    <div id="seInicio">
+      <div class="card">
+        <h1>Sessão do dia</h1>
+        <p class="sub">8 questões, uma por vez, 20 a 30 minutos. Gabarito só depois de responder.</p>
+        <div id="seEscolha"></div>
+        <button class="b primary" id="seGo" style="margin-top:14px">Começar a sessão</button>
+        <hr class="rule">
+        <p class="note">Ou escolha a matéria, se quiser contrariar a fila:</p>
+        <div class="btns row" id="seMat"></div>
+      </div>
+    </div>
+
+    <div id="seProva" class="hide">
+      <div class="card">
+        <div class="topbar"><span id="sePos"></span><span id="seAss"></span></div>
+        <div class="prog"><i id="seBar"></i></div>
+        <p class="enun" id="seEnun"></p>
+        <div class="btns" id="seBtns">
+          <button class="b" data-r="C">Certo</button>
+          <button class="b" data-r="E">Errado</button>
+          <button class="b" data-r="B">Não sei — deixar em branco</button>
+        </div>
+        <div id="seFb"></div>
+      </div>
+    </div>
+
+    <div id="seFim" class="hide"></div>
+  </section>
+
+  <!-- SIMULADO -->
+  <section id="v-simulado" class="hide">
+    <div id="siInicio">
+      <div class="card">
+        <h1 id="siTit">Simulado de etapa</h1>
+        <p class="sub" id="siSub"></p>
+        <p>Trinta itens distribuídos pelos pesos reais da prova de Agente: Informática 9,
+           Português 6, Contabilidade 5, RLM 4, Estatística 3, Direito 3.</p>
+        <p><strong>Acerto +1 · Erro −1 · Branco 0.</strong> Chutar custa ponto, branco não custa
+           nada. O simulado só serve se as respostas forem honestas — ele é a régua, não o treino.</p>
+        <p class="note">Sem gabarito durante a prova. Dá para voltar e trocar a resposta antes de
+           finalizar. Reserve cerca de 45 minutos e faça de uma vez só.</p>
+        <hr class="rule">
+        <button class="b primary" id="siGo">Começar o simulado</button>
+      </div>
+      <div class="card" id="siHist"></div>
+    </div>
+
+    <div id="siProva" class="hide">
+      <div class="card">
+        <div class="topbar"><span id="siPos"></span><span id="siMat"></span><span id="siClock">00:00</span></div>
+        <div class="prog"><i id="siBar"></i></div>
+        <p class="enun" id="siEnun"></p>
+        <div class="btns" id="siBtns">
+          <button class="b" data-r="C">Certo</button>
+          <button class="b" data-r="E">Errado</button>
+          <button class="b" data-r="B">Deixar em branco</button>
+        </div>
+        <button class="ghost" id="siPrev" style="margin-top:14px">← questão anterior</button>
+      </div>
+    </div>
+
+    <div id="siConf" class="hide">
+      <div class="card">
+        <h1>Fim dos 30 itens</h1>
+        <p class="sub" id="siConfTxt"></p>
+        <div class="btns">
+          <button class="b primary" id="siFin">Finalizar e ver o resultado</button>
+          <button class="b" id="siVolta">Voltar e revisar as respostas</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="siRes" class="hide"></div>
+  </section>
+
+  <!-- DADOS -->
+  <section id="v-dados" class="hide">
+    <div class="card">
+      <h3>Backup</h3>
+      <p class="note">O histórico fica guardado neste navegador, neste aparelho. Limpar os dados do
+         site apaga tudo. Exporte de vez em quando — e sempre antes de trocar de celular.</p>
+      <div class="btns row">
+        <button class="b" id="dExp">Baixar backup</button>
+        <button class="b" id="dCopy">Copiar histórico</button>
+        <button class="b" id="dImpBtn">Restaurar backup</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Importar simulado feito offline</h3>
+      <p class="note">Cole aqui o bloco <code>=== PF-AGENTE SIMULADO ... ===</code> gerado pelo
+         arquivo HTML do simulado, ou um backup completo em JSON.</p>
+      <textarea id="dTxt" placeholder="Cole o bloco ou o JSON aqui"></textarea>
+      <button class="b primary" id="dImp" style="margin-top:12px">Importar</button>
+      <p class="note" id="dMsg"></p>
+    </div>
+
+    <div class="card">
+      <h3>Histórico</h3>
+      <div id="dHist"></div>
+    </div>
+
+    <div class="card">
+      <h3>Apagar tudo</h3>
+      <p class="note">Zera histórico, sessões e simulados neste aparelho. Não tem como desfazer.</p>
+      <button class="b" id="dReset">Apagar todo o histórico</button>
+    </div>
+
+    <div class="card">
+      <h3>Como esta plataforma decide</h3>
+      <ul class="lista note">
+        <li><b>Métrica única:</b> índice líquido = (certas − erradas) ÷ respondidas. Nunca percentual bruto de acerto, porque percentual bruto premia chute e a prova não premia.</li>
+        <li><b>Prioridade:</b> peso da matéria × déficit. Contabilidade e Estatística vêm antes de Direito, sempre.</li>
+        <li><b>Status:</b> <code>[~]</code> a partir da primeira questão; <code>[x]</code> com índice ≥ 0,60 e 8 ou mais respondidas. Cair abaixo de 0,60 devolve para <code>[~]</code>.</li>
+        <li><b>Calibragem:</b> toda questão usa um dos seis mecanismos da Cebraspe, com ≈60% de gabaritos Errado e ao menos um item de literalidade limpa por bloco.</li>
+        <li><b>Anti-repetição:</b> questões já vistas só voltam quando o banco do assunto se esgota, e aí vêm marcadas como revisão.</li>
+      </ul>
+      <p class="note" id="dVer"></p>
+    </div>
+  </section>
+
+</div>
+
+<script src="banco.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
