@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulado S01 — Agente PF</title>
+<style>
+:root{
+  color-scheme: dark;
+  --surface-1:#1a1a19; --plane:#0d0d0d;
+  --ink:#ffffff; --ink-2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,.10);
+  --pos:#3987e5; --neg:#e66767; --mid:#383835;
+  --good:#0ca30c; --crit:#d03b3b; --warn:#fab219;
+  --sans: system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --surface-1:#fcfcfb; --plane:#f9f9f7;
+  --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,.10);
+  --pos:#2a78d6; --neg:#e34948; --mid:#f0efec;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme: light;
+    --surface-1:#fcfcfb; --plane:#f9f9f7;
+    --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+    --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,.10);
+    --pos:#2a78d6; --neg:#e34948; --mid:#f0efec;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--plane);color:var(--ink);font-family:var(--sans);
+  font-size:17px;line-height:1.55;-webkit-text-size-adjust:100%}
+.wrap{max-width:780px;margin:0 auto;padding:24px 16px 72px}
+.card{background:var(--surface-1);border:1px solid var(--ring);border-radius:14px;padding:24px}
+h1{font-size:26px;line-height:1.2;margin:0 0 6px}
+h2{font-size:19px;margin:28px 0 10px}
+h3{font-size:15px;margin:22px 0 8px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em}
+p{margin:0 0 12px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 20px}
+.rule{border:0;border-top:1px solid var(--grid);margin:22px 0}
+.pill{display:inline-block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-2);border:1px solid var(--ring);border-radius:999px;padding:3px 10px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;margin-bottom:14px}
+.prog{height:3px;background:var(--grid);border-radius:2px;overflow:hidden;margin-bottom:22px}
+.prog i{display:block;height:100%;background:var(--ink-2);border-radius:2px;transition:width .2s}
+.enun{font-size:19px;line-height:1.6;margin:14px 0 26px}
+.btns{display:flex;flex-direction:column;gap:10px}
+button{font-family:inherit;font-size:16px;cursor:pointer;border-radius:10px;
+  border:1px solid var(--ring);background:var(--surface-1);color:var(--ink);
+  padding:14px 18px;transition:background .12s,border-color .12s}
+button:hover{background:var(--grid)}
+button.primary{background:var(--ink);color:var(--surface-1);border-color:var(--ink);font-weight:600}
+button.primary:hover{opacity:.88;background:var(--ink)}
+button.ghost{border-color:transparent;color:var(--muted);font-size:14px;padding:8px 0;text-align:left}
+button.ghost:hover{background:transparent;color:var(--ink)}
+button:disabled{opacity:.35;cursor:not-allowed}
+.hero{font-size:64px;line-height:1;font-weight:700;letter-spacing:-.02em;margin:4px 0 2px}
+.hero.pos{color:var(--pos)} .hero.neg{color:var(--neg)}
+.stats{display:flex;gap:28px;flex-wrap:wrap;margin:18px 0 4px}
+.stat .k{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.stat .v{font-size:24px;font-weight:600;font-variant-numeric:tabular-nums}
+.row{display:grid;grid-template-columns:132px 1fr 62px;gap:12px;align-items:center;
+  padding:7px 6px;border-radius:8px}
+.row:hover{background:var(--grid)}
+.row .lbl{font-size:14px;color:var(--ink-2);text-align:right}
+.row .val{font-size:14px;font-variant-numeric:tabular-nums;font-weight:600}
+.track{position:relative;height:22px;background:var(--mid);border-radius:4px}
+.track .zero{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--axis)}
+.track .fill{position:absolute;top:0;bottom:0;background:var(--pos);border-radius:0 4px 4px 0}
+.track .fill.neg{background:var(--neg);border-radius:4px 0 0 4px}
+.scale{display:grid;grid-template-columns:132px 1fr 62px;gap:12px;margin-top:6px}
+.scale .ax{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--grid)}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.item{border-top:1px solid var(--grid);padding:18px 0}
+.item .head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
+.item .num{font-weight:700;font-variant-numeric:tabular-nums}
+.item .meta{font-size:12px;color:var(--muted)}
+.tag{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.04em}
+.tag.ok{background:rgba(12,163,12,.16);color:var(--good)}
+.tag.no{background:rgba(208,59,59,.16);color:var(--crit)}
+.tag.br{background:var(--grid);color:var(--muted)}
+.item .q{margin:0 0 12px}
+.lab{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+  display:block;margin-bottom:2px}
+.exp{margin:0 0 12px;color:var(--ink-2);font-size:15px}
+.cil{margin:0;font-size:15px;border-left:2px solid var(--warn);padding-left:12px;color:var(--ink-2)}
+.flag{font-size:13px;color:var(--warn);margin:10px 0 0}
+pre{background:var(--plane);border:1px solid var(--ring);border-radius:10px;padding:16px;
+  overflow-x:auto;font-size:12.5px;line-height:1.5;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre}
+.note{font-size:14px;color:var(--muted)}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="intro" class="card">
+  <span class="pill">Marco zero</span>
+  <h1 style="margin-top:14px">Simulado S01</h1>
+  <p class="sub">Agente da Polícia Federal · 30 itens · 23/09/2026</p>
+  <p>Trinta afirmações para julgar <strong>Certo</strong> ou <strong>Errado</strong>,
+     distribuídas pelos pesos reais da prova de Agente.</p>
+  <p><strong>Acerto +1 · Erro −1 · Branco 0.</strong> Chutar custa ponto. Deixar em
+     branco não custa nada. Responda em branco quando de fato não souber — o
+     número só serve se for honesto.</p>
+  <p class="note">Sem gabarito durante a prova. Sem tempo limite. Dá para voltar e
+     trocar a resposta antes de finalizar. Reserve cerca de 45 minutos.</p>
+  <hr class="rule">
+  <button class="primary" id="go" style="width:100%">Começar</button>
+</section>
+
+<section id="prova" class="card hide">
+  <div class="topbar">
+    <span id="pos">1 / 30</span>
+    <span id="mat"></span>
+    <span id="clock">00:00</span>
+  </div>
+  <div class="prog"><i id="bar" style="width:0%"></i></div>
+  <p class="enun" id="enun"></p>
+  <div class="btns">
+    <button data-r="C">Certo</button>
+    <button data-r="E">Errado</button>
+    <button data-r="B">Deixar em branco</button>
+  </div>
+  <button class="ghost" id="prev" style="margin-top:16px">← questão anterior</button>
+</section>
+
+<section id="confirmar" class="card hide">
+  <h1>Fim dos 30 itens</h1>
+  <p id="confTxt" class="sub"></p>
+  <div class="btns">
+    <button class="primary" id="fin">Finalizar e ver o resultado</button>
+    <button id="volta">Voltar e revisar as respostas</button>
+  </div>
+</section>
+
+<section id="resultado" class="card hide">
+  <span class="pill">Resultado · S01 · marco zero</span>
+  <h3 style="margin-top:20px">Índice líquido</h3>
+  <div class="hero" id="heroIdx">0,00</div>
+  <p class="note" id="heroTxt"></p>
+  <div class="stats">
+    <div class="stat"><div class="k">Saldo líquido</div><div class="v" id="sSaldo">0</div></div>
+    <div class="stat"><div class="k">Certas</div><div class="v" id="sC">0</div></div>
+    <div class="stat"><div class="k">Erradas</div><div class="v" id="sE">0</div></div>
+    <div class="stat"><div class="k">Brancos</div><div class="v" id="sB">0</div></div>
+    <div class="stat"><div class="k">Tempo</div><div class="v" id="sT">00:00</div></div>
+  </div>
+
+  <h2>Rendimento por matéria</h2>
+  <p class="note" style="margin-bottom:14px">Índice líquido de cada matéria, de −1 a +1.
+     A linha central é o zero: à esquerda dela a matéria <em>subtrai</em> ponto na prova.</p>
+  <div id="bars"></div>
+  <div class="scale"><div></div><div class="ax"><span>−1</span><span>0</span><span>+1</span></div><div></div></div>
+
+  <h3>Os mesmos números em tabela</h3>
+  <table><thead><tr><th>Matéria</th><th>Itens</th><th>C</th><th>E</th><th>B</th><th>Índice</th></tr></thead>
+  <tbody id="tab"></tbody></table>
+
+  <h2>Comparação com o simulado anterior</h2>
+  <div id="comp"></div>
+
+  <h2>Revisão item a item</h2>
+  <p class="note">Agora o gabarito está liberado.</p>
+  <div id="rev"></div>
+
+  <h2>Bloco para o <code>/registrar</code></h2>
+  <p class="note">Copie o bloco inteiro e cole no Claude Code depois de rodar
+     <code>/registrar</code>.</p>
+  <button class="primary" id="cp" style="width:100%;margin-bottom:12px">Copiar bloco</button>
+  <pre id="blk"></pre>
+</section>
+
+</div>
+<script>
+var SIM = {id:"S01", data:"2026-09-23", anterior:null};
+
+var DISP = {Informatica:"Informática", Portugues:"Português", Contabilidade:"Contabilidade",
+            RLM:"RLM", Estatistica:"Estatística", Direito:"Direito"};
+var ORDEM = ["Informatica","Portugues","Contabilidade","RLM","Estatistica","Direito"];
+
+var Q = [
+{n:1,m:"Informatica",a:"Modelo OSI: as sete camadas e suas funções",mec:"troca de rotulos",g:"E",
+ t:"No modelo OSI, a camada de transporte é responsável pelo endereçamento lógico e pela determinação da rota dos pacotes entre redes distintas, ao passo que a camada de rede assegura a entrega ordenada e o controle de fluxo fim a fim.",
+ e:"As funções estão invertidas. Endereçamento lógico e roteamento são da camada de rede (camada 3). Entrega ordenada, controle de fluxo e confiabilidade fim a fim são da camada de transporte (camada 4).",
+ c:"As duas definições estão tecnicamente corretas — só foram trocadas de dono. Você lê, reconhece cada descrição como verdadeira, sente que 'está certo' e marca Certo sem conferir a qual camada cada uma pertence. É o item mais barato da Cebraspe e o que mais derruba quem sabe a matéria na prática."},
+
+{n:2,m:"Informatica",a:"Protocolos: IP, TCP, UDP, HTTP, HTTPS, DNS, DHCP, FTP, SMTP, POP3, IMAP",mec:"literalidade limpa",g:"C",
+ t:"O protocolo UDP não oferece garantia de entrega, controle de fluxo nem retransmissão de segmentos perdidos, o que o torna adequado a aplicações de transmissão contínua de áudio e vídeo.",
+ e:"É a definição correta do UDP: protocolo de transporte não orientado a conexão, sem confirmação de recebimento, sem ordenação e sem retransmissão. A ausência desse overhead é justamente o que o torna adequado a streaming, onde latência baixa importa mais que perda eventual de pacote.",
+ c:"Item certo, redação limpa, nenhuma pegadinha — e é por isso que ele pega. Você passa a prova inteira caçando armadilha, encontra um item sem defeito e começa a inventar um: 'será que streaming não usa TCP às vezes?'. A desconfiança treinada vira o próprio erro."},
+
+{n:3,m:"Informatica",a:"Protocolos: IP, TCP, UDP, HTTP, HTTPS, DNS, DHCP, FTP, SMTP, POP3, IMAP",mec:"palavra absoluta",g:"E",
+ t:"Em uma rede que utiliza o protocolo DHCP, o endereço IP atribuído automaticamente a uma estação é necessariamente permanente, somente podendo ser alterado mediante reconfiguração manual do administrador.",
+ e:"O DHCP atribui endereços por concessão temporária, com prazo de validade. Terminado o prazo, o endereço é renovado ou devolvido ao conjunto disponível — sem intervenção manual nenhuma.",
+ c:"Duas palavras absolutas empilhadas: 'necessariamente' e 'somente'. Quem conhece DHCP de uso diário lembra que na prática o IP da máquina 'nunca muda' e valida o item pela experiência. A prática confirma o hábito da rede doméstica; a teoria descreve o mecanismo. A Cebraspe cobra o mecanismo."},
+
+{n:4,m:"Informatica",a:"Protocolos: IP, TCP, UDP, HTTP, HTTPS, DNS, DHCP, FTP, SMTP, POP3, IMAP",mec:"premissa-conclusao",g:"E",
+ t:"O protocolo HTTPS cifra os dados trocados entre o navegador e o servidor por meio de TLS, razão pela qual garante que o conteúdo publicado no sítio acessado seja autêntico e livre de código malicioso.",
+ e:"A primeira parte é verdadeira: o HTTPS protege o tráfego em trânsito contra interceptação e adulteração. Mas ele não diz nada sobre o conteúdo do sítio. Uma página de phishing com certificado válido é servida por HTTPS exatamente como qualquer outra.",
+ c:"A premissa verdadeira empurra a conclusão. O 'razão pela qual' é a dobradiça do item: ele transforma uma garantia de transporte numa garantia de conteúdo, e o cérebro aceita porque a primeira metade já foi validada. Toda vez que ler 'razão pela qual', separe as duas orações e julgue a segunda sozinha."},
+
+{n:5,m:"Informatica",a:"Firewall, IDS/IPS, VPN, proxy",mec:"literalidade limpa",g:"C",
+ t:"O firewall do tipo stateful mantém uma tabela de estados das conexões ativas, o que lhe permite decidir sobre um pacote considerando o contexto da sessão à qual ele pertence, e não apenas as informações isoladas de seu cabeçalho.",
+ e:"É exatamente a diferença entre filtro de pacotes stateless e firewall stateful. O stateful guarda o estado de cada conexão e avalia se o pacote faz sentido dentro dela; o stateless julga cada pacote como se fosse o primeiro.",
+ c:"Item correto e sem sobra. O risco aqui é o inverso do de sempre: como o enunciado é longo e técnico, você procura o defeito na segunda metade por hábito, não acha, e marca Errado por insegurança. Enunciado comprido não é sinônimo de enunciado torto."},
+
+{n:6,m:"Informatica",a:"Segurança da informação: pilares (confidencialidade, integridade, disponibilidade, autenticidade, não repúdio)",mec:"troca de rotulos",g:"E",
+ t:"Em segurança da informação, integridade é a garantia de que a informação esteja acessível aos usuários autorizados sempre que for necessária, ao passo que disponibilidade é a garantia de que a informação não sofreu alteração indevida.",
+ e:"Trocados. Integridade é a garantia de que a informação não foi alterada de forma não autorizada. Disponibilidade é a garantia de acesso quando necessário.",
+ c:"Mesma armadilha do item 1, em outra matéria — e é proposital. Os dois conceitos andam colados em qualquer material de estudo, as duas definições estão corretas, e o par 'certo/certo' desliga a conferência. Sempre que um item definir dois conceitos irmãos na mesma frase, leia de trás para frente: pegue a definição e pergunte de quem ela é."},
+
+{n:7,m:"Informatica",a:"Assinatura digital, certificado digital, ICP-Brasil, funções de hash",mec:"literalidade limpa",g:"C",
+ t:"Na criptografia assimétrica, a assinatura digital de um documento é gerada com a chave privada do signatário e pode ser verificada por qualquer interessado mediante o uso da chave pública correspondente.",
+ e:"É o funcionamento padrão da assinatura digital: assina-se com a chave privada — que só o signatário possui, o que garante autenticidade e não repúdio — e verifica-se com a chave pública, que é distribuída livremente.",
+ c:"A cilada é a simetria invertida da cifragem. Para cifrar uma mensagem para alguém, usa-se a chave pública do destinatário; para assinar, usa-se a própria chave privada. Os dois processos usam o mesmo par de chaves em ordens opostas, e quem decorou 'chave pública cifra' aplica a regra no caso errado e marca Errado."},
+
+{n:8,m:"Informatica",a:"Endereçamento: IPv4, IPv6, máscara, sub-redes, NAT",mec:"numero deslocado",g:"E",
+ t:"O endereço IPv4 é composto de 32 bits e o endereço IPv6, de 64 bits, ampliação que tornou possível superar o esgotamento do espaço de endereçamento da versão anterior.",
+ e:"IPv4 tem 32 bits — essa parte está certa. IPv6 tem 128 bits, não 64.",
+ c:"O número verdadeiro vem primeiro e serve de âncora. Você confere o 32, confirma, e o '64' entra de carona porque soa plausível: é o dobro, tem cara de evolução técnica, e 64 é um número que aparece em toda parte em informática. Número certo ao lado de número errado é a forma mais econômica de comprar a sua confiança."},
+
+{n:9,m:"Informatica",a:"Planilhas eletrônicas (Excel e LibreOffice Calc): fórmulas, funções, referências",mec:"literalidade limpa",g:"C",
+ t:"No Microsoft Excel em português, a fórmula =SOMA(A1:A3;B1) retorna a soma dos valores contidos nas células A1, A2, A3 e B1.",
+ e:"Os dois pontos definem um intervalo contínuo (A1 até A3, ou seja, A1, A2 e A3). O ponto e vírgula separa argumentos independentes da função. A fórmula soma, portanto, quatro células.",
+ c:"O item mistura os dois separadores na mesma fórmula justamente para embaralhar. Quem usa planilha todo dia lê rápido, vê 'A1:A3;B1' e traduz mentalmente para 'de A1 até B1', somando células que não estão ali. Familiaridade acelera a leitura — e acelerar a leitura é o que a Cebraspe cobra."},
+
+{n:10,m:"Portugues",a:"Redação oficial: vocativos, endereçamento e fechos",mec:"troca de rotulos",g:"E",cf:1,
+ t:"Conforme o Manual de Redação da Presidência da República, emprega-se o fecho 'Atenciosamente' nas comunicações dirigidas a autoridades de hierarquia superior e o fecho 'Respeitosamente' nas dirigidas a autoridades de mesma hierarquia ou de hierarquia inferior.",
+ e:"Está invertido. 'Respeitosamente' é o fecho para autoridades de hierarquia superior. 'Atenciosamente' é para autoridades de mesma hierarquia ou de hierarquia inferior.",
+ c:"Só existem dois fechos, e é exatamente por isso que o item funciona: você sabe que são esses dois, reconhece os dois no enunciado e a memória registra 'os termos certos estão aqui'. Reconhecer o vocabulário não é conferir a atribuição. Com pares fechados, a troca de rótulos tem 50% de chance de passar batida."},
+
+{n:11,m:"Portugues",a:"Redação oficial: vocativos, endereçamento e fechos",mec:"literalidade limpa",g:"C",cf:1,
+ t:"De acordo com o Manual de Redação da Presidência da República, o vocativo 'Excelentíssimo Senhor', seguido do cargo respectivo, é reservado ao Presidente da República, ao Presidente do Congresso Nacional e ao Presidente do Supremo Tribunal Federal; às demais autoridades emprega-se o vocativo 'Senhor', seguido do cargo.",
+ e:"É a regra do Manual, sem alteração. 'Excelentíssimo Senhor' fica restrito aos três chefes de Poder. Para todas as outras autoridades, inclusive ministros e governadores, o vocativo é 'Senhor' seguido do cargo.",
+ c:"É a literalidade limpa do bloco de Português, e ela pega pelo excesso de zelo. O item lista três cargos específicos e você começa a testar exceções: 'e o Vice-Presidente? e um ministro do STF?'. A regra é fechada e o item a transcreveu inteira. Quando um item cita a norma completa, procurar o que falta é procurar erro onde não há."},
+
+{n:12,m:"Portugues",a:"Redação oficial: pronomes de tratamento e concordância",mec:"palavra absoluta",g:"E",cf:1,
+ t:"Os pronomes de tratamento exigem sempre a concordância dos verbos e dos pronomes possessivos na segunda pessoa, ainda que se refiram à terceira pessoa do discurso.",
+ e:"É o contrário: embora se dirijam à segunda pessoa (a quem se fala), os pronomes de tratamento levam verbos e possessivos para a terceira pessoa. Escreve-se 'Vossa Senhoria enviou seu parecer', nunca 'enviaste teu parecer'.",
+ c:"O item embute a explicação correta na oração concessiva — 'ainda que se refiram à terceira pessoa' — e inverte só a regra principal. Ler a justificativa certa no fim da frase dá a sensação de que o conjunto fecha. Além disso, 'Vossa' soa a segunda pessoa, e a intuição empurra para lá. Aqui a intuição está errada por construção."},
+
+{n:13,m:"Portugues",a:"Concordância nominal e verbal",mec:"premissa-conclusao",g:"E",
+ t:"Na oração 'Fazem dez anos que o servidor ingressou na carreira policial', o verbo está corretamente flexionado no plural, pois concorda com o sujeito 'dez anos'.",
+ e:"O verbo 'fazer' indicando tempo decorrido é impessoal: não tem sujeito e fica invariavelmente na terceira pessoa do singular. O correto é 'Faz dez anos'. 'Dez anos' é objeto direto, não sujeito.",
+ c:"A cilada é a justificativa gramatical de aparência técnica. 'Concorda com o sujeito' é uma frase que soa a regra de concordância bem aplicada, e o item a oferece pronta para você validar. Além disso, 'Fazem dez anos' é o que praticamente todo mundo fala. O item apoia a forma errada em duas muletas: o uso corrente e um pseudoargumento formal."},
+
+{n:14,m:"Portugues",a:"Concordância nominal e verbal",mec:"literalidade limpa",g:"C",
+ t:"Na oração 'Precisa-se de auxiliares administrativos', o verbo permanece na terceira pessoa do singular porque a partícula 'se' funciona como índice de indeterminação do sujeito, e não como partícula apassivadora, dado que o verbo é transitivo indireto.",
+ e:"Com verbo transitivo indireto, o 'se' é índice de indeterminação do sujeito e o verbo fica obrigatoriamente no singular. A partícula apassivadora só ocorre com verbo transitivo direto, caso em que haveria sujeito paciente e concordância ('Vendem-se casas').",
+ c:"Item certo com raciocínio completo à mostra — e o paralelo com 'Vendem-se casas' é o que desestabiliza. As duas construções parecem gêmeas, mas a regência muda tudo: 'precisar de' é indireto, 'vender' é direto. Quem decorou o exemplo sem decorar o critério aplica o plural por analogia e marca Errado."},
+
+{n:15,m:"Portugues",a:"Redação oficial: o padrão ofício — estrutura e partes",mec:"premissa-conclusao",g:"E",cf:1,
+ t:"O memorando é o expediente adequado à comunicação entre unidades administrativas de um mesmo órgão, razão pela qual sua estrutura própria foi mantida no Manual de Redação da Presidência da República, em paralelo ao padrão ofício.",
+ e:"A edição vigente do Manual unificou aviso, ofício e memorando em um único expediente — o padrão ofício. O memorando deixou de existir como documento autônomo; a comunicação interna também se faz por ofício.",
+ c:"A premissa descreve corretamente o que o memorando era, e a memória de quem já trabalhou em repartição confirma. O item então usa esse passado verdadeiro para afirmar um presente falso. Em redação oficial, a pergunta nunca é 'isso existe?', e sim 'isso continua no Manual depois da unificação?'."},
+
+{n:16,m:"Contabilidade",a:"Método das partidas dobradas: débito, crédito e saldo",mec:"troca de rotulos",g:"E",
+ t:"No método das partidas dobradas, o débito representa invariavelmente a redução de um ativo e o crédito, o seu aumento.",
+ e:"Invertido. Nas contas do ativo, débito aumenta e crédito reduz. A lógica se inverte no passivo e no patrimônio líquido, onde crédito aumenta e débito reduz.",
+ c:"O vocabulário do banco atrapalha de propósito. No extrato bancário, 'débito' é dinheiro saindo — e essa associação é diária, automática e mais forte que qualquer estudo recente. Só que o extrato é escrito do ponto de vista do banco, para quem você é passivo. Em contabilidade, débito não significa perda: significa lado esquerdo."},
+
+{n:17,m:"Contabilidade",a:"Equação patrimonial e patrimônio líquido",mec:"literalidade limpa",g:"C",
+ t:"O patrimônio líquido corresponde à diferença entre o ativo e o passivo exigível da entidade; caso o passivo exigível supere o ativo, verifica-se situação de passivo a descoberto.",
+ e:"É a equação patrimonial: PL = Ativo − Passivo. Quando as obrigações superam os bens e direitos, o patrimônio líquido fica negativo — situação chamada de passivo a descoberto.",
+ c:"É o item de literalidade limpa da Contabilidade e ele pega justamente por ser fácil. Você está do zero na matéria, reconhece a fórmula do primeiro capítulo, desconfia que 'não pode ser tão simples numa prova da PF' e marca Errado. A Cebraspe distribui itens elementares de propósito; quem chega à prova só esperando dificuldade perde ponto no que sabe."},
+
+{n:18,m:"Contabilidade",a:"Ativo imobilizado: reconhecimento, depreciação, amortização, exaustão",mec:"duas metades",g:"E",
+ t:"A depreciação é o reconhecimento sistemático da perda de capacidade de geração de benefícios econômicos de um bem do ativo imobilizado ao longo de sua vida útil; por essa razão, aplica-se igualmente aos terrenos, que também integram o ativo imobilizado.",
+ e:"A primeira metade define depreciação corretamente. A segunda está errada: terrenos não se depreciam, porque têm vida útil indeterminada. Um prédio construído sobre o terreno deprecia; o terreno, não.",
+ c:"Item de duas metades no formato clássico: a primeira oração é uma definição impecável e consome toda a sua atenção. Quando chega ao 'por essa razão', você já decidiu. A regra prática é mecânica: em item longo, o veredito está quase sempre depois do conectivo, não antes dele."},
+
+{n:19,m:"Contabilidade",a:"Balanço Patrimonial: estrutura, ativo e passivo, critérios de classificação",mec:"premissa-conclusao",g:"E",
+ t:"A conta Duplicatas a Receber representa direitos da entidade perante terceiros, razão pela qual seu saldo deve ser classificado no ativo não circulante, independentemente do prazo de realização.",
+ e:"A natureza da conta define se é ativo; o prazo define em qual grupo ela entra. Duplicatas realizáveis em até doze meses, ou dentro do ciclo operacional, vão para o ativo circulante. Só o que ultrapassa esse horizonte vai para o não circulante.",
+ c:"A premissa é verdadeira e irrelevante para a conclusão — esse é o truque. 'Representa direitos' é uma afirmação correta que não tem nenhuma relação com o critério de classificação, mas o 'razão pela qual' finge que tem. E o 'independentemente do prazo' está ali de graça: é exatamente o critério que o item nega, escancarado, e ainda assim passa despercebido."},
+
+{n:20,m:"Contabilidade",a:"Regimes contábeis: caixa e competência",mec:"literalidade limpa",g:"C",
+ t:"Pelo regime de competência, a receita deve ser reconhecida no período em que é auferida, ainda que o correspondente recebimento em dinheiro somente venha a ocorrer em exercício posterior.",
+ e:"É a definição do regime de competência: receitas e despesas são reconhecidas no período do fato gerador, independentemente do movimento de caixa. O regime de caixa é o que amarra o reconhecimento ao recebimento ou pagamento efetivo.",
+ c:"Item certo cuja armadilha é a concessiva 'ainda que'. Esse conectivo é o lugar favorito da banca para plantar erro, e você aprende a desconfiar dele. Aqui ele está usado corretamente — a concessão é exatamente o que define o regime de competência. Desconfiar do conectivo não substitui entender o conceito."},
+
+{n:21,m:"RLM",a:"Negação de quantificadores (todo, algum, nenhum)",mec:"troca de rotulos",g:"E",
+ t:"A negação da proposição 'Todos os agentes foram aprovados no teste físico' é 'Nenhum agente foi aprovado no teste físico'.",
+ e:"A negação de 'todo A é B' é 'existe pelo menos um A que não é B' — ou seja, 'algum agente não foi aprovado'. 'Nenhum' é a contrária, não a contraditória: 'todos' e 'nenhum' podem ser ambas falsas ao mesmo tempo, o que já mostra que uma não nega a outra.",
+ c:"Negar parece inverter, e 'nenhum' é o oposto visual de 'todos'. A cilada é confundir oposto com negação. O teste que resolve em dois segundos: se 'todos foram aprovados' é falso porque um único agente reprovou, 'nenhum foi aprovado' também é falso. Duas proposições falsas ao mesmo tempo não podem ser negação uma da outra."},
+
+{n:22,m:"RLM",a:"Equivalências lógicas (condicional, contrapositiva, De Morgan)",mec:"literalidade limpa",g:"C",
+ t:"A proposição 'Não é verdade que o servidor foi promovido e transferido' é logicamente equivalente a 'O servidor não foi promovido ou não foi transferido'.",
+ e:"É a lei de De Morgan: a negação de uma conjunção equivale à disjunção das negações. Negar 'p e q' resulta em 'não p ou não q' — basta que uma das duas falhe para que a conjunção seja falsa.",
+ c:"O incômodo aqui é o 'ou'. Negar uma frase com 'e' e receber uma frase com 'ou' parece que o enunciado trocou de assunto, e a intuição quer responder 'não foi promovido e não foi transferido'. Essa resposta intuitiva é a negação da disjunção, não da conjunção. É exatamente o ponto em que formalização fraca custa ponto."},
+
+{n:23,m:"RLM",a:"Equivalências lógicas (condicional, contrapositiva, De Morgan)",mec:"troca de rotulos",g:"E",
+ t:"A proposição 'Se o inquérito for instaurado, então o delegado será comunicado' é logicamente equivalente a 'Se o delegado for comunicado, então o inquérito foi instaurado'.",
+ e:"A segunda é a recíproca, e recíproca não é equivalente. A equivalente de 'se p, então q' é a contrapositiva: 'se não q, então não p' — aqui, 'se o delegado não foi comunicado, então o inquérito não foi instaurado'.",
+ c:"Inverter condicional é o erro mais natural do raciocínio humano — a cabeça trata 'se p então q' como se fosse 'p se e somente se q'. O item não precisa de nenhuma sofisticação: só troca a ordem e espera. Para não cair, teste com um caso absurdo: 'se chove, a rua molha' não autoriza concluir que a rua molhada implica chuva."},
+
+{n:24,m:"RLM",a:"Equivalências lógicas (condicional, contrapositiva, De Morgan)",mec:"literalidade limpa",g:"C",
+ t:"A proposição 'Se o servidor for exonerado, então perderá o cargo' é logicamente equivalente a 'O servidor não será exonerado ou perderá o cargo'.",
+ e:"É a equivalência entre condicional e disjunção: 'se p, então q' equivale a 'não p ou q'. A condicional só é falsa quando p é verdadeira e q é falsa — que é exatamente o único caso em que 'não p ou q' também é falsa.",
+ c:"A frase resultante soa estranha em português e a estranheza vira suspeita. Some-se a isso o fato de a formalização ser seca — não há conteúdo jurídico para ancorar a intuição, só estrutura. É o tipo de item em que 'parece esquisito' não é argumento: ou você monta a tabela-verdade, ou você chuta."},
+
+{n:25,m:"Estatistica",a:"Medidas de posição: média, mediana, moda, quartis e percentis",mec:"troca de rotulos",g:"E",
+ t:"A mediana é a medida de posição mais sensível à presença de valores extremos, razão pela qual a média aritmética é preferida na descrição de distribuições fortemente assimétricas.",
+ e:"Invertido. A média é que é arrastada por valores extremos, porque incorpora o valor de cada observação. A mediana depende da posição, não da magnitude, e por isso é a medida preferida em distribuições assimétricas.",
+ c:"Duas armadilhas empilhadas: a troca de rótulos entre média e mediana e um 'razão pela qual' que transforma a inversão em conclusão de aparência técnica. O item soa como parágrafo de livro. Pense num exemplo concreto — uma sala com dez salários de 3 mil e um de 5 milhões — e a inversão fica óbvia em um segundo."},
+
+{n:26,m:"Estatistica",a:"Medidas de dispersão: amplitude, variância, desvio padrão, coeficiente de variação",mec:"literalidade limpa",g:"C",
+ t:"O coeficiente de variação, obtido pela razão entre o desvio padrão e a média, é uma medida de dispersão relativa e permite comparar a variabilidade de conjuntos de dados expressos em unidades de medida distintas.",
+ e:"É a definição correta. Por ser um quociente entre duas grandezas na mesma unidade, o coeficiente de variação é adimensional — e é justamente isso que permite comparar a dispersão de conjuntos medidos em unidades diferentes.",
+ c:"A palavra 'permite comparar' soa forte demais para quem está começando, e a tentação é marcar Errado achando que existe alguma restrição escondida. Não existe: comparar variabilidade entre unidades distintas é a razão de ser do coeficiente. Aqui a insegurança na matéria, e não a armadilha, é o que derruba."},
+
+{n:27,m:"Estatistica",a:"Medidas de posição: média, mediana, moda, quartis e percentis",mec:"palavra absoluta",g:"E",
+ t:"Em qualquer distribuição de frequências, a moda é única e coincide necessariamente com a média e com a mediana.",
+ e:"Um conjunto pode ser amodal, bimodal ou multimodal. E as três medidas só coincidem em distribuições simétricas e unimodais — numa distribuição assimétrica elas se separam, e essa separação é a própria medida da assimetria.",
+ c:"'Qualquer' e 'necessariamente' na mesma frase deveriam disparar o alarme sozinhos. O que desarma o alarme é a lembrança da curva normal: o desenho simétrico com as três medidas no centro é a imagem que todo mundo tem na cabeça, e o item aposta que você vai generalizar o caso particular mais bonito para o universo inteiro."},
+
+{n:28,m:"Direito",a:"Segurança pública (art. 144) e atribuições da Polícia Federal",mec:"literalidade limpa",g:"C",cf:1,
+ t:"Nos termos da Constituição Federal, compete à Polícia Federal apurar infrações penais contra a ordem política e social ou em detrimento de bens, serviços e interesses da União ou de suas entidades autárquicas e empresas públicas, bem como outras infrações cuja prática tenha repercussão interestadual ou internacional e exija repressão uniforme, segundo se dispuser em lei.",
+ e:"É a redação do art. 144, § 1º, inciso I, da Constituição Federal, sem alteração.",
+ c:"É a literalidade limpa do bloco de Direito. Item longo, transcrito da norma, e nenhuma palavra fora do lugar — e é o comprimento que assusta. Quanto mais extenso o item, mais lugares você imagina que a banca poderia ter mexido, e maior a chance de marcar Errado por precaução. Em item longo, ou você localiza o defeito, ou não há defeito."},
+
+{n:29,m:"Direito",a:"Segurança pública (art. 144) e atribuições da Polícia Federal",mec:"numero deslocado",g:"E",cf:1,
+ t:"A Polícia Federal exerce, com exclusividade, as funções de polícia judiciária da União e das unidades federativas.",
+ e:"A exclusividade da Polícia Federal alcança as funções de polícia judiciária da União. A polícia judiciária dos estados e do Distrito Federal cabe às polícias civis.",
+ c:"O item pega a expressão exata da Constituição — 'exercer, com exclusividade, as funções de polícia judiciária da União' — e acrescenta três palavras no fim. Tudo que você reconhece está correto, e o reconhecimento encerra a leitura antes do acréscimo. É o mesmo mecanismo do IPv6: termo verdadeiro estendido a hipótese que ele não cobre."},
+
+{n:30,m:"Direito",a:"Atos administrativos: conceito, requisitos, atributos, espécies, extinção",mec:"palavra absoluta",g:"E",cf:1,
+ t:"Os atos administrativos gozam de presunção absoluta de legitimidade, razão pela qual não podem ser invalidados pela própria Administração sem prévia decisão judicial.",
+ e:"A presunção de legitimidade é relativa: admite prova em contrário. E a Administração pode anular os próprios atos ilegais por iniciativa própria, em decorrência do poder de autotutela — não depende de decisão judicial para isso.",
+ c:"Dois erros num item só, e o segundo se esconde atrás do primeiro. Você pode até notar que 'absoluta' está forte demais, mas o 'razão pela qual' já encadeou uma conclusão que soa garantista e cuidadosa — exigir decisão judicial parece sempre a resposta mais segura. Em direito administrativo, 'mais garantista' não é sinônimo de correto."}
+];
+
+var MECD = {"troca de rotulos":"troca de rótulos","palavra absoluta":"palavra absoluta",
+  "premissa-conclusao":"premissa verdadeira, conclusão falsa","duas metades":"item de duas metades",
+  "numero deslocado":"número verdadeiro deslocado","literalidade limpa":"literalidade limpa"};
+
+var resp = new Array(Q.length).fill(null);
+var i = 0, t0 = 0, tick = null, elapsed = 0;
+
+var $ = function(id){return document.getElementById(id);};
+function show(id){["intro","prova","confirmar","resultado"].forEach(function(s){
+  $(s).classList.toggle("hide", s !== id);});window.scrollTo(0,0);}
+function hhmmss(s){var h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
+  var p=function(n){return String(n).padStart(2,"0");};
+  return (h>0? p(h)+":":"")+p(m)+":"+p(x);}
+
+$("go").onclick = function(){
+  t0 = Date.now();
+  tick = setInterval(function(){
+    elapsed = Math.floor((Date.now()-t0)/1000);
+    $("clock").textContent = hhmmss(elapsed);
+  }, 1000);
+  show("prova"); render();
+};
+
+function render(){
+  var q = Q[i];
+  $("pos").textContent = (i+1) + " / " + Q.length;
+  $("mat").textContent = DISP[q.m];
+  $("bar").style.width = ((i)/Q.length*100) + "%";
+  $("enun").textContent = q.t;
+  $("prev").disabled = (i === 0);
+  document.querySelectorAll("#prova .btns button").forEach(function(b){
+    b.style.borderColor = (resp[i] === b.dataset.r) ? "var(--ink)" : "var(--ring)";
+  });
+}
+
+document.querySelectorAll("#prova .btns button").forEach(function(b){
+  b.onclick = function(){
+    resp[i] = b.dataset.r;
+    if (i < Q.length-1){ i++; render(); }
+    else { confirmar(); }
+  };
+});
+$("prev").onclick = function(){ if(i>0){ i--; render(); } };
+
+function confirmar(){
+  var br = resp.filter(function(r){return r==="B";}).length;
+  var nulos = resp.filter(function(r){return r===null;}).length;
+  $("confTxt").textContent = "Respondidas: " + (Q.length-br-nulos) +
+    " · em branco: " + (br+nulos) + " · tempo: " + hhmmss(elapsed) +
+    ". Depois de finalizar, o gabarito é liberado e nada mais muda.";
+  show("confirmar");
+}
+$("volta").onclick = function(){ i = Q.length-1; show("prova"); render(); };
+$("fin").onclick = function(){ if(tick) clearInterval(tick); resultado(); };
+
+function resultado(){
+  var tot = {c:0,e:0,b:0}, porMat = {}, porAss = {};
+  ORDEM.forEach(function(m){ porMat[m] = {total:0,c:0,e:0,b:0}; });
+
+  Q.forEach(function(q,k){
+    var r = resp[k], res;
+    if (r === null || r === "B"){ res = 0; tot.b++; porMat[q.m].b++; }
+    else if (r === q.g){ res = 1; tot.c++; porMat[q.m].c++; }
+    else { res = -1; tot.e++; porMat[q.m].e++; }
+    porMat[q.m].total++;
+    if(!porAss[q.a]) porAss[q.a] = {m:q.m,c:0,e:0,b:0};
+    if(res === 1) porAss[q.a].c++; else if(res === -1) porAss[q.a].e++; else porAss[q.a].b++;
+    q._res = res; q._resp = (r === null ? "B" : r);
+  });
+
+  var saldo = tot.c - tot.e;
+  var idx = saldo / Q.length;
+  var fmt = function(v){ return (v>0?"+":v<0?"−":"") + Math.abs(v).toFixed(2).replace(".",","); };
+
+  $("heroIdx").textContent = fmt(idx);
+  $("heroIdx").className = "hero " + (idx >= 0 ? "pos" : "neg");
+  $("heroTxt").textContent = idx < 0
+    ? "Negativo. Nesta prova você subtraiu pontos: errou mais do que acertou."
+    : idx < 0.30 ? "Entre 0 e 0,30: não sustenta. É o território do chute com verniz."
+    : idx < 0.60 ? "Entre 0,30 e 0,60: em construção." : "Acima de 0,60: consolidado.";
+  $("sSaldo").textContent = (saldo>0?"+":"") + saldo;
+  $("sC").textContent = tot.c; $("sE").textContent = tot.e; $("sB").textContent = tot.b;
+  $("sT").textContent = hhmmss(elapsed);
+
+  var bars = "", tab = "";
+  ORDEM.forEach(function(m){
+    var d = porMat[m], li = d.total ? (d.c-d.e)/d.total : 0;
+    var w = Math.abs(li)*50, neg = li < 0;
+    var tip = DISP[m]+" — "+d.total+" itens · "+d.c+"C "+d.e+"E "+d.b+"B · índice "+fmt(li);
+    bars += '<div class="row" title="'+tip+'">'
+         +  '<div class="lbl">'+DISP[m]+'</div>'
+         +  '<div class="track"><div class="fill'+(neg?" neg":"")+'" style="'
+         +  (neg ? "right:50%;" : "left:50%;") + "width:" + w + '%"></div>'
+         +  '<div class="zero"></div></div>'
+         +  '<div class="val" style="color:'+(neg?"var(--neg)":"var(--pos)")+'">'+fmt(li)+'</div></div>';
+    tab += "<tr><td>"+DISP[m]+"</td><td>"+d.total+"</td><td>"+d.c+"</td><td>"+d.e
+        +  "</td><td>"+d.b+"</td><td>"+fmt(li)+"</td></tr>";
+  });
+  $("bars").innerHTML = bars;
+  $("tab").innerHTML = tab;
+
+  $("comp").innerHTML = SIM.anterior
+    ? ""
+    : '<p class="note">Marco zero — não há simulado anterior, portanto não existe comparação '
+    + 'possível. Este resultado é a linha de base contra a qual o próximo simulado, daqui a '
+    + '20 dias, vai ser medido. Sem esta medição, evolução seria só sensação.</p>';
+
+  var rev = "";
+  Q.forEach(function(q,k){
+    var tg = q._res === 1 ? '<span class="tag ok">+1</span>'
+           : q._res === -1 ? '<span class="tag no">−1</span>'
+           : '<span class="tag br">0</span>';
+    rev += '<div class="item"><div class="head"><span class="num">'
+        +  String(k+1).padStart(2,"0")+'</span>'+tg
+        +  '<span class="meta">'+DISP[q.m]+' · '+q.a+' · mecanismo: '+MECD[q.mec]+'</span></div>'
+        +  '<p class="q">'+q.t+'</p>'
+        +  '<p class="exp"><span class="lab">Gabarito: '
+        +  (q.g === "C" ? "CERTO" : "ERRADO") + ' · você marcou: '
+        +  (q._resp === "C" ? "Certo" : q._resp === "E" ? "Errado" : "Branco") + '</span>'
+        +  q.e + '</p>'
+        +  '<p class="cil"><span class="lab">A cilada</span>'+q.c+'</p>'
+        +  (q.cf ? '<p class="flag">⚠ Item dependente de norma. A fonte oficial não pôde ser '
+        +  'consultada no ambiente em que este simulado foi gerado (rede bloqueada). Confira '
+        +  'no texto legal antes de fixar.</p>' : '')
+        +  '</div>';
+  });
+  $("rev").innerHTML = rev;
+
+  var L = [];
+  L.push("=== PF-AGENTE SIMULADO " + SIM.id + " ===");
+  L.push("data: " + SIM.data);
+  L.push("questoes: " + Q.length);
+  L.push("tempo: " + hhmmss(elapsed));
+  L.push("certas: " + tot.c + "  erradas: " + tot.e + "  brancos: " + tot.b);
+  L.push("saldo_liquido: " + saldo);
+  L.push("indice_liquido: " + idx.toFixed(3));
+  L.push("--- por materia ---");
+  ORDEM.forEach(function(m){ var d = porMat[m], li = d.total ? (d.c-d.e)/d.total : 0;
+    L.push(m+"|"+d.total+"|"+d.c+"|"+d.e+"|"+d.b+"|"+li.toFixed(3)); });
+  L.push("--- por assunto ---");
+  Object.keys(porAss).forEach(function(a){ var d = porAss[a];
+    L.push(a+"|"+d.m+"|"+d.c+"|"+d.e+"|"+d.b); });
+  L.push("--- itens ---");
+  Q.forEach(function(q,k){ L.push(String(k+1).padStart(2,"0")+"|"+q.a+"|"+q.g+"|"
+    +q._resp+"|"+q._res+"|"+q.mec); });
+  L.push("=== FIM ===");
+  $("blk").textContent = L.join("\n");
+
+  show("resultado");
+}
+
+$("cp").onclick = function(){
+  var txt = $("blk").textContent, ok = function(){ $("cp").textContent = "Copiado ✓";
+    setTimeout(function(){ $("cp").textContent = "Copiar bloco"; }, 2000); };
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(ok, sel);
+  } else { sel(); }
+  function sel(){ var r = document.createRange(); r.selectNode($("blk"));
+    var s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    try { document.execCommand("copy"); ok(); } catch(err){
+      $("cp").textContent = "Selecione o bloco abaixo e copie com Ctrl+C"; } }
+};
+</script>
+</body>
+</html>
