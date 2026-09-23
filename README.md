@@ -73,7 +73,7 @@ questões até o passo sair da frente sozinho.
   a gov.br nem ao Cebraspe.
 - **O verticalizado foi reconstruído de memória** do programa das últimas
   edições, pelo mesmo motivo. O aviso está no topo do arquivo.
-- **27 questões dependem de norma** e foram geradas sem consulta à fonte
+- **44 questões dependem de norma** e foram geradas sem consulta à fonte
   oficial. Aparecem sinalizadas com ⚠ na revisão. Confira antes de fixar.
 - **A regra de saída da revisão espaçada** é a que o Gustavo definiu: duas
   passagens consecutivas sem erro. Com ela, os intervalos de 21 e 60 dias só
