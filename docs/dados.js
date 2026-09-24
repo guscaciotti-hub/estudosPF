@@ -509,3 +509,690 @@ const CADERNO = {
  "P25": "**Crime** é fato típico, ilícito e culpável. O **fato típico** reúne conduta, resultado, nexo causal e tipicidade. A **ilicitude** é afastada pelas excludentes: estado de necessidade, legítima defesa, estrito cumprimento de dever legal e exercício regular de direito. A **culpabilidade** exige imputabilidade, potencial consciência da ilicitude e exigibilidade de conduta diversa.\n\nDiz-se o crime **consumado** quando nele se reúnem todos os elementos de sua definição legal, e **tentado** quando, iniciada a execução, não se consuma por **circunstâncias alheias à vontade do agente**. Se o agente desiste voluntariamente, há desistência voluntária, não tentativa.\n\nNa **aplicação da lei penal no tempo**, a regra é a irretroatividade, com uma exceção que é o ponto da matéria: **só a lei mais benéfica retroage**, e retroage **inclusive** após o trânsito em julgado. A lei mais grave **nunca** alcança fato anterior à sua vigência. Trocar 'benéfica' por 'grave' é item recorrente, e a falsa condição 'desde que não haja trânsito em julgado' costuma vir junto para dar ar técnico.\n\nO **inquérito policial** é **procedimento administrativo**, de natureza **inquisitiva**, presidido pelo delegado, destinado a apurar **autoria e materialidade**. É peça **informativa e dispensável**: havendo elementos suficientes por outra via, a denúncia pode ser oferecida sem ele. E, justamente por ser inquisitivo e informativo, **vício no inquérito não contamina, em regra, a ação penal** — só a prova ilícita nele produzida é atingida. Esse efeito é o inverso do intuitivo, e é por isso que cai.\n\nNa **prisão em flagrante**, qualquer pessoa do povo **pode** prender e a autoridade policial **deve**. A prisão de qualquer pessoa e o local onde se encontre **devem ser comunicados imediatamente ao juiz competente** e à família do preso ou a pessoa por ele indicada. As duas coisas são independentes: quem pode prender não tem relação com quem precisa ser avisado.\n\nA **prisão preventiva** exige os requisitos legais e fundamentação; a **temporária** só cabe nas hipóteses de lei específica e tem prazo determinado.\n\nEm **prova**, vigora a vedação às **provas ilícitas**, e a **cadeia de custódia** documenta o rastreamento do vestígio desde a coleta.",
  "P26": "Na **Lei de Drogas (11.343/2006)**, a mudança central é que o **porte para consumo pessoal não comporta pena privativa de liberdade**. As sanções são advertência sobre os efeitos das drogas, prestação de serviços à comunidade e medida educativa de comparecimento a programa ou curso. Item que preveja prisão para o usuário está errado, por mais plausível que soe.\n\nPara distinguir usuário de traficante, o juiz considera a natureza e a quantidade da substância, o local e as condições da ação, as circunstâncias sociais e pessoais, a conduta e os antecedentes.\n\nNo **Estatuto do Desarmamento (10.826/2003)**, a distinção é **territorial** e cai sempre:\n\n• **Posse** irregular — manter a arma **no interior da residência** ou no **local de trabalho**, quando o agente é o titular ou responsável pelo estabelecimento.\n• **Porte** ilegal — **trazer a arma consigo fora** desses limites.\n\nNo uso comum as duas palavras são quase sinônimas, e sem o critério territorial fixado a escolha vira sorteio.\n\nNa **Lei de Organização Criminosa (12.850/2013)**, considera-se organização criminosa a associação de **4 ou mais pessoas**, estruturalmente ordenada e caracterizada pela **divisão de tarefas**, com objetivo de obter vantagem de qualquer natureza mediante a prática de infrações penais cujas penas máximas sejam **superiores a 4 anos**, ou que sejam de **caráter transnacional**. Os dois quatros são reais e independentes. A lei disciplina meios de obtenção de prova como colaboração premiada, ação controlada e infiltração de agentes.\n\nEm **Direito Ambiental**, os princípios que caem:\n\n• **Poluidor-pagador** — quem degrada arca com os custos de prevenção e reparação.\n• **Usuário-pagador** — quem utiliza recurso ambiental paga por isso, **ainda que não haja poluição**.\n• **Prevenção** — risco conhecido. **Precaução** — risco incerto; a dúvida científica não autoriza a omissão.\n• **Desenvolvimento sustentável** e **responsabilidade intergeracional**.\n\nA proteção do meio ambiente e o combate à poluição são de **competência comum** da União, dos estados, do Distrito Federal e dos municípios — não privativa da União.\n\nA **responsabilidade civil por dano ambiental é objetiva**: independe de culpa, bastando conduta, dano e nexo causal. E é possível a responsabilização **penal da pessoa jurídica** por crime ambiental."
 };
+
+/* Conteudo programatico completo do edital, por materia da taxonomia.
+   p = passo estrategico que cobre o topico; null = ainda sem questao no banco. */
+const EDITAL = [
+ {
+  "m": "Informatica",
+  "topicos": [
+   {
+    "a": "Conceitos de hardware: processador, memória, barramentos, dispositivos de E/S",
+    "p": null
+   },
+   {
+    "a": "Conceitos de software: sistema operacional, aplicativos, licenciamento",
+    "p": null
+   },
+   {
+    "a": "Sistema operacional Windows: interface, arquivos e pastas, permissões, atalhos",
+    "p": "P07"
+   },
+   {
+    "a": "Sistema operacional Linux: estrutura de diretórios, permissões, comandos básicos",
+    "p": "P07"
+   },
+   {
+    "a": "Edição de textos (Word e LibreOffice Writer)",
+    "p": "P07"
+   },
+   {
+    "a": "Planilhas eletrônicas (Excel e LibreOffice Calc): fórmulas, funções, referências",
+    "p": "P07"
+   },
+   {
+    "a": "Apresentações (PowerPoint e LibreOffice Impress)",
+    "p": null
+   },
+   {
+    "a": "Redes de computadores: conceitos, topologias, meios de transmissão",
+    "p": "P02"
+   },
+   {
+    "a": "Modelo OSI: as sete camadas e suas funções",
+    "p": "P01"
+   },
+   {
+    "a": "Arquitetura TCP/IP: camadas, correspondência com o OSI",
+    "p": "P01"
+   },
+   {
+    "a": "Protocolos: IP, TCP, UDP, HTTP, HTTPS, DNS, DHCP, FTP, SMTP, POP3, IMAP",
+    "p": "P01"
+   },
+   {
+    "a": "Endereçamento: IPv4, IPv6, máscara, sub-redes, NAT",
+    "p": "P02"
+   },
+   {
+    "a": "Equipamentos de rede: hub, switch, roteador, access point",
+    "p": "P02"
+   },
+   {
+    "a": "Internet, intranet e extranet",
+    "p": "P03"
+   },
+   {
+    "a": "Arquitetura cliente-servidor e computação em nuvem (IaaS, PaaS, SaaS)",
+    "p": "P03"
+   },
+   {
+    "a": "Navegadores: funcionamento, cache, cookies, navegação anônima",
+    "p": "P03"
+   },
+   {
+    "a": "Correio eletrônico: protocolos, webmail, anexos",
+    "p": "P03"
+   },
+   {
+    "a": "Segurança da informação: pilares (confidencialidade, integridade, disponibilidade, autenticidade, não repúdio)",
+    "p": "P04"
+   },
+   {
+    "a": "Malware: vírus, worm, trojan, ransomware, spyware, rootkit, botnet",
+    "p": "P04"
+   },
+   {
+    "a": "Ataques: phishing, engenharia social, DoS/DDoS, man-in-the-middle, força bruta",
+    "p": "P04"
+   },
+   {
+    "a": "Criptografia simétrica e assimétrica",
+    "p": "P05"
+   },
+   {
+    "a": "Assinatura digital, certificado digital, ICP-Brasil, funções de hash",
+    "p": "P05"
+   },
+   {
+    "a": "Firewall, IDS/IPS, VPN, proxy",
+    "p": "P06"
+   },
+   {
+    "a": "Autenticação e controle de acesso: senhas, MFA, biometria",
+    "p": "P05"
+   },
+   {
+    "a": "Backup: tipos (completo, incremental, diferencial), políticas, RPO/RTO",
+    "p": "P06"
+   },
+   {
+    "a": "Noções de banco de dados e big data",
+    "p": null
+   }
+  ]
+ },
+ {
+  "m": "ContabilidadeGeral",
+  "topicos": [
+   {
+    "a": "Conceito, objeto, campo de aplicação e finalidade da contabilidade",
+    "p": null
+   },
+   {
+    "a": "Usuários da informação contábil",
+    "p": null
+   },
+   {
+    "a": "Princípios e características qualitativas da informação contábil",
+    "p": null
+   },
+   {
+    "a": "Patrimônio: bens, direitos e obrigações",
+    "p": "P08"
+   },
+   {
+    "a": "Equação patrimonial e patrimônio líquido",
+    "p": "P08"
+   },
+   {
+    "a": "Contas: conceito, classificação, teoria das contas",
+    "p": "P08"
+   },
+   {
+    "a": "Método das partidas dobradas: débito, crédito e saldo",
+    "p": "P08"
+   },
+   {
+    "a": "Escrituração: livros, lançamentos, fórmulas",
+    "p": "P09"
+   },
+   {
+    "a": "Fatos contábeis: permutativos, modificativos e mistos",
+    "p": "P09"
+   },
+   {
+    "a": "Regimes contábeis: caixa e competência",
+    "p": "P09"
+   },
+   {
+    "a": "Balanço Patrimonial: estrutura, ativo e passivo, critérios de classificação",
+    "p": "P10"
+   },
+   {
+    "a": "Demonstração do Resultado do Exercício (DRE)",
+    "p": "P10"
+   },
+   {
+    "a": "Demonstração das Mutações do Patrimônio Líquido (DMPL)",
+    "p": null
+   },
+   {
+    "a": "Demonstração dos Fluxos de Caixa (DFC): métodos direto e indireto",
+    "p": "P10"
+   },
+   {
+    "a": "Ativo imobilizado: reconhecimento, depreciação, amortização, exaustão",
+    "p": "P11"
+   },
+   {
+    "a": "Estoques: critérios de avaliação (PEPS, média ponderada)",
+    "p": "P11"
+   },
+   {
+    "a": "Contas a receber, provisão para perdas e duplicatas descontadas",
+    "p": null
+   },
+   {
+    "a": "Provisões, passivos contingentes e ativos contingentes",
+    "p": "P11"
+   },
+   {
+    "a": "Conciliação bancária",
+    "p": null
+   },
+   {
+    "a": "Operações com mercadorias e apuração do resultado",
+    "p": null
+   },
+   {
+    "a": "Análise de balanços: índices de liquidez",
+    "p": "P11"
+   },
+   {
+    "a": "Análise de balanços: índices de endividamento e estrutura de capital",
+    "p": null
+   },
+   {
+    "a": "Análise de balanços: índices de rentabilidade",
+    "p": null
+   },
+   {
+    "a": "Análise horizontal e vertical",
+    "p": "P11"
+   }
+  ]
+ },
+ {
+  "m": "Portugues",
+  "topicos": [
+   {
+    "a": "Compreensão e interpretação de textos",
+    "p": "P15"
+   },
+   {
+    "a": "Tipologia e gêneros textuais",
+    "p": null
+   },
+   {
+    "a": "Coesão e coerência textual",
+    "p": "P15"
+   },
+   {
+    "a": "Ortografia oficial",
+    "p": "P13"
+   },
+   {
+    "a": "Acentuação gráfica",
+    "p": "P13"
+   },
+   {
+    "a": "Emprego das classes de palavras",
+    "p": "P14"
+   },
+   {
+    "a": "Emprego do sinal indicativo de crase",
+    "p": "P13"
+   },
+   {
+    "a": "Sintaxe da oração e do período",
+    "p": "P14"
+   },
+   {
+    "a": "Pontuação",
+    "p": "P14"
+   },
+   {
+    "a": "Concordância nominal e verbal",
+    "p": "P12"
+   },
+   {
+    "a": "Regência nominal e verbal",
+    "p": "P12"
+   },
+   {
+    "a": "Colocação pronominal",
+    "p": "P13"
+   },
+   {
+    "a": "Significação das palavras: sinonímia, antonímia, polissemia",
+    "p": "P15"
+   },
+   {
+    "a": "Reescrita de frases e substituição de palavras",
+    "p": "P15"
+   },
+   {
+    "a": "Vozes verbais e transformação de estruturas",
+    "p": "P14"
+   }
+  ]
+ },
+ {
+  "m": "RLM",
+  "topicos": [
+   {
+    "a": "Proposições: conceito, valor lógico, proposições simples e compostas",
+    "p": "P16"
+   },
+   {
+    "a": "Conectivos e tabelas-verdade",
+    "p": "P16"
+   },
+   {
+    "a": "Tautologia, contradição e contingência",
+    "p": "P16"
+   },
+   {
+    "a": "Equivalências lógicas (condicional, contrapositiva, De Morgan)",
+    "p": "P17"
+   },
+   {
+    "a": "Negação de proposições compostas",
+    "p": "P17"
+   },
+   {
+    "a": "Negação de quantificadores (todo, algum, nenhum)",
+    "p": "P17"
+   },
+   {
+    "a": "Lógica de argumentação: validade, premissas e conclusão",
+    "p": "P17"
+   },
+   {
+    "a": "Diagramas lógicos e lógica de primeira ordem",
+    "p": null
+   },
+   {
+    "a": "Teoria dos conjuntos e diagramas de Venn",
+    "p": null
+   },
+   {
+    "a": "Problemas de raciocínio: ordenação, associação, verdades e mentiras",
+    "p": null
+   }
+  ]
+ },
+ {
+  "m": "Matematica",
+  "topicos": [
+   {
+    "a": "Análise combinatória: arranjo, combinação, permutação",
+    "p": "P19"
+   },
+   {
+    "a": "Probabilidade: conceitos, eventos, probabilidade condicional",
+    "p": "P19"
+   },
+   {
+    "a": "Sequências e séries numéricas",
+    "p": null
+   },
+   {
+    "a": "Razão, proporção, regra de três, porcentagem",
+    "p": "P18"
+   },
+   {
+    "a": "Juros simples e compostos",
+    "p": "P18"
+   },
+   {
+    "a": "Equações, sistemas lineares, matrizes e determinantes",
+    "p": null
+   },
+   {
+    "a": "Geometria básica: áreas, perímetros, volumes",
+    "p": null
+   }
+  ]
+ },
+ {
+  "m": "RedacaoOficial",
+  "topicos": [
+   {
+    "a": "Redação oficial: características fundamentais (clareza, concisão, formalidade, impessoalidade, padronização)",
+    "p": "P21"
+   },
+   {
+    "a": "Redação oficial: pronomes de tratamento e concordância",
+    "p": "P20"
+   },
+   {
+    "a": "Redação oficial: vocativos, endereçamento e fechos",
+    "p": "P20"
+   },
+   {
+    "a": "Redação oficial: o padrão ofício — estrutura e partes",
+    "p": "P21"
+   },
+   {
+    "a": "Redação oficial: demais expedientes (exposição de motivos, mensagem, correio eletrônico)",
+    "p": "P21"
+   },
+   {
+    "a": "Redação oficial: formatação e apresentação dos documentos",
+    "p": "P21"
+   }
+  ]
+ },
+ {
+  "m": "Estatistica",
+  "topicos": [
+   {
+    "a": "População, amostra e tipos de amostragem",
+    "p": null
+   },
+   {
+    "a": "Tipos de variáveis: qualitativas e quantitativas",
+    "p": "P22"
+   },
+   {
+    "a": "Distribuições de frequência, histogramas e representações gráficas",
+    "p": null
+   },
+   {
+    "a": "Medidas de posição: média, mediana, moda, quartis e percentis",
+    "p": "P22"
+   },
+   {
+    "a": "Medidas de dispersão: amplitude, variância, desvio padrão, coeficiente de variação",
+    "p": "P22"
+   },
+   {
+    "a": "Medidas de assimetria e curtose",
+    "p": null
+   },
+   {
+    "a": "Probabilidade: axiomas, eventos, independência, teorema de Bayes",
+    "p": null
+   },
+   {
+    "a": "Variáveis aleatórias discretas e contínuas",
+    "p": null
+   },
+   {
+    "a": "Distribuições: binomial, Poisson, normal",
+    "p": "P22"
+   },
+   {
+    "a": "Distribuição amostral da média e teorema central do limite",
+    "p": null
+   },
+   {
+    "a": "Estimação pontual e intervalos de confiança",
+    "p": null
+   },
+   {
+    "a": "Testes de hipóteses: erros tipo I e II, nível de significância",
+    "p": "P22"
+   },
+   {
+    "a": "Correlação e regressão linear simples",
+    "p": null
+   },
+   {
+    "a": "Números-índice",
+    "p": null
+   }
+  ]
+ },
+ {
+  "m": "ContabilidadePublica",
+  "topicos": [
+   {
+    "a": "Orçamento público: princípios e ciclo orçamentário",
+    "p": "P23"
+   },
+   {
+    "a": "Receita pública: classificação e estágios",
+    "p": "P23"
+   },
+   {
+    "a": "Despesa pública: classificação e estágios",
+    "p": "P23"
+   },
+   {
+    "a": "Restos a pagar e regime contábil público",
+    "p": "P23"
+   },
+   {
+    "a": "Exercício financeiro e Lei 4.320/1964",
+    "p": null
+   }
+  ]
+ },
+ {
+  "m": "DireitoConstitucional",
+  "topicos": [
+   {
+    "a": "Princípios fundamentais",
+    "p": null
+   },
+   {
+    "a": "Direitos e garantias fundamentais: direitos individuais e coletivos",
+    "p": "P24"
+   },
+   {
+    "a": "Direitos sociais, nacionalidade e direitos políticos",
+    "p": null
+   },
+   {
+    "a": "Organização do Estado: União, estados, municípios e competências",
+    "p": null
+   },
+   {
+    "a": "Administração pública na Constituição (arts. 37 a 41)",
+    "p": null
+   },
+   {
+    "a": "Organização dos Poderes",
+    "p": null
+   },
+   {
+    "a": "Segurança pública (art. 144) e atribuições da Polícia Federal",
+    "p": "P24"
+   }
+  ]
+ },
+ {
+  "m": "DireitoAdministrativo",
+  "topicos": [
+   {
+    "a": "Administração pública: conceito, princípios expressos e implícitos",
+    "p": "P24"
+   },
+   {
+    "a": "Organização administrativa: administração direta e indireta",
+    "p": null
+   },
+   {
+    "a": "Poderes administrativos e abuso de poder",
+    "p": "P24"
+   },
+   {
+    "a": "Atos administrativos: conceito, requisitos, atributos, espécies, extinção",
+    "p": "P24"
+   },
+   {
+    "a": "Agentes públicos e regime jurídico (Lei 8.112/1990)",
+    "p": null
+   },
+   {
+    "a": "Processo administrativo disciplinar",
+    "p": null
+   },
+   {
+    "a": "Improbidade administrativa (Lei 8.429/1992)",
+    "p": null
+   },
+   {
+    "a": "Licitações e contratos (Lei 14.133/2021)",
+    "p": null
+   },
+   {
+    "a": "Controle da administração e responsabilidade civil do Estado",
+    "p": null
+   },
+   {
+    "a": "Processo administrativo federal (Lei 9.784/1999)",
+    "p": null
+   }
+  ]
+ },
+ {
+  "m": "DireitoPenal",
+  "topicos": [
+   {
+    "a": "Aplicação da lei penal no tempo e no espaço",
+    "p": "P25"
+   },
+   {
+    "a": "Teoria do crime: fato típico, ilicitude, culpabilidade",
+    "p": "P25"
+   },
+   {
+    "a": "Excludentes de ilicitude e de culpabilidade",
+    "p": null
+   },
+   {
+    "a": "Concurso de pessoas e concurso de crimes",
+    "p": null
+   },
+   {
+    "a": "Penas: espécies, aplicação e dosimetria",
+    "p": null
+   },
+   {
+    "a": "Extinção da punibilidade e prescrição",
+    "p": null
+   },
+   {
+    "a": "Crimes contra a pessoa e contra o patrimônio",
+    "p": null
+   },
+   {
+    "a": "Crimes contra a fé pública",
+    "p": null
+   },
+   {
+    "a": "Crimes contra a administração pública",
+    "p": null
+   }
+  ]
+ },
+ {
+  "m": "DireitoProcessualPenal",
+  "topicos": [
+   {
+    "a": "Inquérito policial: natureza, características, atribuições",
+    "p": "P25"
+   },
+   {
+    "a": "Ação penal pública e privada",
+    "p": null
+   },
+   {
+    "a": "Prova: meios, ônus, provas ilícitas, cadeia de custódia",
+    "p": "P25"
+   },
+   {
+    "a": "Prisão em flagrante, preventiva e temporária",
+    "p": "P25"
+   },
+   {
+    "a": "Medidas cautelares diversas da prisão",
+    "p": null
+   },
+   {
+    "a": "Audiência de custódia",
+    "p": null
+   },
+   {
+    "a": "Competência e jurisdição",
+    "p": null
+   },
+   {
+    "a": "Habeas corpus e demais ações de impugnação",
+    "p": null
+   }
+  ]
+ },
+ {
+  "m": "LegislacaoFederal",
+  "topicos": [
+   {
+    "a": "Lei 10.826/2003 — Estatuto do Desarmamento",
+    "p": "P26"
+   },
+   {
+    "a": "Lei 11.343/2006 — Lei de Drogas",
+    "p": "P26"
+   },
+   {
+    "a": "Lei 9.455/1997 — Crimes de tortura",
+    "p": null
+   },
+   {
+    "a": "Lei 13.869/2019 — Abuso de autoridade",
+    "p": null
+   },
+   {
+    "a": "Lei 12.850/2013 — Organização criminosa",
+    "p": "P26"
+   },
+   {
+    "a": "Lei 9.613/1998 — Lavagem de dinheiro",
+    "p": null
+   },
+   {
+    "a": "Lei 12.830/2013 — Investigação criminal conduzida por delegado",
+    "p": null
+   },
+   {
+    "a": "Lei 8.069/1990 — ECA (disposições penais)",
+    "p": null
+   },
+   {
+    "a": "Lei 13.445/2017 — Lei de Migração",
+    "p": null
+   },
+   {
+    "a": "Lei 7.716/1989 — Crimes de preconceito e racismo",
+    "p": null
+   }
+  ]
+ },
+ {
+  "m": "DireitoAmbiental",
+  "topicos": [
+   {
+    "a": "Direito Ambiental: princípios e competências",
+    "p": "P26"
+   },
+   {
+    "a": "Direito Ambiental: crimes ambientais",
+    "p": "P26"
+   }
+  ]
+ }
+];

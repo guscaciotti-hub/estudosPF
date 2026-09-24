@@ -222,7 +222,7 @@ assunto. Índice que cai abaixo de 0,60 devolve o assunto para `[~]`.
 
 ## Contabilidade Pública — 4 itens
 
-- [ ] Orçamento público: princípios e ciclo orçamentário (PPA, LDO, LOA)
+- [ ] Orçamento público: princípios e ciclo orçamentário
 - [ ] Receita pública: classificação e estágios
 - [ ] Despesa pública: classificação e estágios
 - [ ] Restos a pagar e regime contábil público
@@ -231,4 +231,4 @@ assunto. Índice que cai abaixo de 0,60 devolve o assunto para `[~]`.
 ## Direito Ambiental — 1 item
 
 - [ ] Direito Ambiental: princípios e competências
-- [ ] Direito Ambiental: crimes ambientais e responsabilidade
+- [ ] Direito Ambiental: crimes ambientais

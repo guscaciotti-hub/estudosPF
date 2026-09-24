@@ -243,6 +243,25 @@ indice_liquido = (certas − erradas) ÷ respondidas
 
 Varia de −1 a +1. Replica a regra de pontuação da prova.
 
+### Percentual é permitido, mas só o do aproveitamento líquido
+
+O Gustavo pediu percentuais na plataforma, e eles existem — mas há **duas
+medidas distintas**, e confundi-las engana:
+
+| Medida | Fórmula | O que diz |
+|---|---|---|
+| **Estudo** | questões distintas respondidas ÷ questões do tópico no banco | quanto do material disponível foi consumido |
+| **Aproveitamento** | (certas − erradas) ÷ respondidas × 100 | o índice líquido em escala de −100 a +100 |
+
+**Aproveitamento não é percentual de acerto.** Chutar metade de um bloco dá
+50% de acerto e **0 de aproveitamento** — que é exatamente o que valeria na
+prova. O percentual bruto continua proibido, porque premia chute.
+
+**Estudo alto com aproveitamento baixo não é progresso.** Um tópico com 100%
+estudado e −33% de aproveitamento significa que o material acabou e o conceito
+continua torto. Dizer "já estudei tudo isso" com base na primeira medida, sem
+olhar a segunda, é o autoengano que essas duas colunas existem para impedir.
+
 **Nunca use percentual bruto de acerto em lugar nenhum** — nem em relatório,
 nem em conversa, nem em gráfico, nem "só para dar uma ideia". Percentual
 bruto mente para quem chuta, e a prova não perdoa chute.
@@ -268,7 +287,8 @@ Publicada pelo GitHub Pages. É onde se estuda.
 |---|---|
 | `docs/banco.js` | `const BANCO`. Toda alteração passa pela validação da tabela cruzada da seção 2. |
 | `docs/dados.js` | `MATERIAS` (pesos em itens), `PASSOS` (os 26, com peso e assuntos) e `CADERNO` (um resumo por passo). |
-| `docs/app.js` | perfil derivado do histórico, fila de prioridade, seleção, revisão espaçada, painel. |
+| `docs/app.js` | perfil derivado do histórico, fila de prioridade, seleção, revisão espaçada, painel, aba Conteúdo. |
+| `docs/dados.js` → `EDITAL` | **os 153 tópicos do programa**, por matéria, cada um apontando o passo que o cobre ou `null`. É o que a aba Conteúdo lista. Ao criar questão de assunto novo, acrescente o tópico aqui e no verticalizado, com a redação **idêntica** ao campo `a` da questão. |
 | `docs/sw.js` | **Ao mexer em banco, dados, app ou css, incremente `VERSAO`.** Sem isso, quem já abriu o site continua no cache antigo. |
 
 O histórico do Gustavo vive no `localStorage` do aparelho dele — nunca neste

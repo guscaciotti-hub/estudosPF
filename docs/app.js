@@ -249,13 +249,13 @@ function barras(linhas){
 }
 
 /* ---------- navegacao ---------- */
-var VIEWS = ['painel','passos','sessao','simulado','caderno','dados'];
+var VIEWS = ['painel','conteudo','passos','sessao','simulado','caderno','dados'];
 function ir(v){
   VIEWS.forEach(function(x){ $('v-'+x).classList.toggle('hide', x !== v); });
   document.querySelectorAll('nav button').forEach(function(b){
     b.setAttribute('aria-current', b.dataset.v === v ? 'true' : 'false'); });
-  ({painel:painel, passos:passosView, sessao:sessaoInicio, simulado:simuladoInicio,
-    caderno:cadernoView, dados:dadosView})[v]();
+  ({painel:painel, conteudo:conteudoView, passos:passosView, sessao:sessaoInicio,
+    simulado:simuladoInicio, caderno:cadernoView, dados:dadosView})[v]();
   window.scrollTo(0,0);
 }
 document.querySelectorAll('nav button').forEach(function(b){ b.onclick = function(){ ir(b.dataset.v); }; });
@@ -408,6 +408,132 @@ function linhaDoTempo(){
     ? 'Um simulado só não faz trajetória — o que aparece é o ponto de partida e a régua do corte. O segundo ponto é que transforma isso em evolução.'
     : 'Índice líquido por simulado. A linha tracejada é o corte de 2025 convertido em índice (' + CORTE_PONTOS + ' ÷ 120).') + '</p>';
 }
+
+/* ---------- conteudo da prova ----------
+   Todo o programa, topico por topico. Duas medidas distintas, que nao devem
+   ser confundidas:
+   - ESTUDO: questoes distintas ja respondidas / questoes que o banco tem do
+     topico. Mede quanto do material disponivel foi consumido, nao quanto do
+     assunto foi dominado.
+   - APROVEITAMENTO: (certas - erradas) / respondidas, em percentual. E o
+     indice liquido numa escala de -100 a +100. NAO e percentual bruto de
+     acerto: chutar metade de um bloco daria 50% de acerto e 0 de
+     aproveitamento, que e exatamente o que valeria na prova.              */
+var cnFiltro = 'todos';
+
+function metricasTopico(t){
+  var banco = BANCO.filter(function(q){ return q.a === t.a; });
+  var ids = {}; banco.forEach(function(q){ ids[q.id] = 1; });
+  var feitas = {}, c = 0, e = 0, b = 0;
+  S.hist.forEach(function(h){
+    if (!ids[h.q]) return;
+    feitas[h.q] = 1;
+    if (h.res === 1) c++; else if (h.res === -1) e++; else b++;
+  });
+  var resp = c + e + b, nf = Object.keys(feitas).length;
+  return {a:t.a, p:t.p, banco:banco.length, feitas:nf, resp:resp, c:c, e:e, b:b,
+    estudo: banco.length ? Math.round(nf / banco.length * 100) : null,
+    aprov: resp ? Math.round((c - e) / resp * 100) : null};
+}
+function corAprov(v){ return v === null ? 'var(--muted)' : v < 0 ? 'var(--neg)'
+  : v >= 60 ? 'var(--good)' : v >= 30 ? 'var(--pos)' : 'var(--warn)'; }
+
+function conteudoView(){
+  var mats = EDITAL.map(function(bl){
+    var tops = bl.topicos.map(metricasTopico);
+    var banco = 0, feitas = 0, c = 0, e = 0, b = 0;
+    tops.forEach(function(t){ banco += t.banco; feitas += t.feitas; c += t.c; e += t.e; b += t.b; });
+    var resp = c + e + b;
+    return {m:bl.m, d:MAT[bl.m].d, itens:MAT[bl.m].itens, tops:tops, banco:banco, feitas:feitas,
+      resp:resp, c:c, e:e, b:b,
+      estudo: banco ? Math.round(feitas/banco*100) : null,
+      aprov: resp ? Math.round((c-e)/resp*100) : null,
+      comQ: tops.filter(function(t){ return t.banco; }).length,
+      iniciados: tops.filter(function(t){ return t.resp; }).length};
+  });
+  var T = {tops:0, comQ:0, ini:0, banco:0, feitas:0, c:0, e:0, b:0};
+  mats.forEach(function(x){ T.tops += x.tops.length; T.comQ += x.comQ; T.ini += x.iniciados;
+    T.banco += x.banco; T.feitas += x.feitas; T.c += x.c; T.e += x.e; T.b += x.b; });
+  var resp = T.c + T.e + T.b;
+  var aprov = resp ? Math.round((T.c - T.e)/resp*100) : null;
+
+  $('cnTiles').innerHTML = [
+    ['<span style="color:var(--ink)">' + T.tops + '</span>', 'tópicos no edital', '153 do programa verticalizado'],
+    [T.comQ + '<span style="font-size:15px;color:var(--muted)"> · ' + Math.round(T.comQ/T.tops*100) + '%</span>',
+     'com questão no banco', (T.tops - T.comQ) + ' ainda sem material'],
+    ['<span style="color:' + (T.ini ? 'var(--pos)' : 'var(--muted)') + '">' + T.ini + '</span>',
+     'tópicos iniciados', T.ini ? Math.round(T.ini/T.tops*100) + '% do edital tocado' : 'nenhum ainda'],
+    [aprov === null ? '<span style="color:var(--muted);font-size:17px">sem medição</span>'
+      : '<span style="color:' + corAprov(aprov) + '">' + (aprov>0?'+':'') + aprov + '%</span>',
+     'aproveitamento líquido', resp ? resp + ' questões respondidas' : 'nenhuma questão ainda']
+  ].map(function(t){ return '<div class="tile"><div class="v">' + t[0] + '</div><div class="k">'
+      + t[1] + '</div><div class="s">' + t[2] + '</div></div>'; }).join('');
+
+  var pct = T.banco ? Math.round(T.feitas/T.banco*100) : 0;
+  $('cnBar').style.width = pct + '%';
+  $('cnBar').style.background = 'var(--pos)';
+  $('cnBarL').textContent = T.feitas + ' de ' + T.banco + ' questões do banco já respondidas (' + pct + '%)';
+  $('cnAviso').innerHTML = 'Duas medidas diferentes, e confundi-las engana: <strong>estudo</strong> é quanto '
+    + 'do material disponível você já consumiu; <strong>aproveitamento</strong> é (certas − erradas) ÷ respondidas, '
+    + 'em percentual — o índice líquido numa escala de −100 a +100. Não é percentual bruto de acerto: '
+    + 'chutar metade de um bloco daria 50% de acerto e <strong>0 de aproveitamento</strong>, que é exatamente '
+    + 'o que valeria na prova.<br><br>'
+    + '<span class="flag2">' + (T.tops - T.comQ) + ' dos ' + T.tops + ' tópicos ainda não têm nenhuma questão '
+    + 'no banco. Eles aparecem na lista marcados, para você ver o buraco em vez de achar que o edital está coberto. '
+    + 'O banco cresce escrevendo questões pelo Claude Code.</span>';
+
+  var filtros = {
+    todos:  function(){ return true; },
+    nao:    function(t){ return t.banco && !t.resp; },
+    fracos: function(t){ return t.aprov !== null && t.aprov < 60; },
+    sem:    function(t){ return !t.banco; }   // inclui os cobertos por passo vizinho
+  };
+  var rotulo = {todos:'', nao:'Tópicos que já têm questão no banco e você ainda não respondeu nenhuma.',
+    fracos:'Tópicos com aproveitamento abaixo de 60%. É onde há ponto a recuperar.',
+    sem:'Tópicos do edital sem questão própria. Os que trazem um passo são estudados junto com os vizinhos daquele passo; os demais a plataforma ainda não cobre.'};
+  $('cnFiltroTxt').textContent = rotulo[cnFiltro];
+
+  var html = '';
+  mats.forEach(function(x){
+    var tops = x.tops.filter(filtros[cnFiltro]);
+    if (!tops.length) return;
+    html += '<details class="mat" open><summary>'
+      + '<div class="mat-h"><span class="nome">' + x.d + '</span>'
+      + '<span class="peso">' + x.itens + ' itens na prova · ' + x.tops.length + ' tópicos · '
+      + x.comQ + ' com questão</span>'
+      + '<span class="apv" style="color:' + corAprov(x.aprov) + '">'
+      + (x.aprov === null ? '—' : (x.aprov>0?'+':'') + x.aprov + '%') + '</span></div>'
+      + '<div class="mat-sub"><div class="meter"><i style="width:' + (x.estudo||0)
+      + '%;background:var(--pos)"></i></div><span class="pct">' + (x.estudo === null ? '—' : x.estudo + '% estudado')
+      + '</span></div></summary>';
+    tops.forEach(function(t){
+      var clic = t.p ? ' clicavel' : '';
+      html += '<div class="top' + clic + '"' + (t.p ? ' data-passo="' + t.p + '"' : '') + '>'
+        + '<div class="nome">' + esc(t.a)
+        + '<small>' + (t.banco
+            ? t.banco + (t.banco === 1 ? ' questão' : ' questões') + (t.p ? ' · passo ' + t.p : '')
+            : t.p
+              ? '<span style="color:var(--warn)">sem questão própria</span> · estudado dentro do passo ' + t.p
+              : '<span style="color:var(--warn)">sem questão no banco</span>') + '</small>'
+        + (t.banco ? '<div class="barra"><i style="width:' + (t.estudo||0) + '%"></i></div>' : '')
+        + '</div>'
+        + '<div class="est">' + (t.banco ? t.feitas + '/' + t.banco + '<br>' + t.estudo + '%' : '—') + '</div>'
+        + '<div class="apv" style="color:' + corAprov(t.aprov) + '">'
+        + (t.aprov === null ? '—' : (t.aprov>0?'+':'') + t.aprov + '%') + '</div></div>';
+    });
+    html += '</details>';
+  });
+  $('cnLista').innerHTML = html || '<div class="card"><p class="note">Nenhum tópico neste filtro.</p></div>';
+  $('cnLista').querySelectorAll('[data-passo]').forEach(function(el){
+    el.onclick = function(){ iniciaSessao(el.dataset.passo); ir('sessao'); }; });
+}
+$('cnFiltros').querySelectorAll('button').forEach(function(b){
+  b.onclick = function(){
+    cnFiltro = b.dataset.f;
+    $('cnFiltros').querySelectorAll('button').forEach(function(x){ x.classList.toggle('sel', x === b); });
+    conteudoView();
+  };
+});
 
 /* ---------- passo estrategico ---------- */
 function passosView(){

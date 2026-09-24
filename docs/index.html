@@ -19,6 +19,7 @@
   </div>
   <nav>
     <button data-v="painel" aria-current="true">Painel</button>
+    <button data-v="conteudo">Conteúdo</button>
     <button data-v="passos">Passo estratégico</button>
     <button data-v="sessao">Sessão</button>
     <button data-v="simulado">Simulado</button>
@@ -87,6 +88,32 @@
         <div id="pnRev"></div>
       </div>
     </div>
+  </section>
+
+  <!-- CONTEUDO DA PROVA -->
+  <section id="v-conteudo" class="hide">
+    <div class="card">
+      <h1>Conteúdo da prova</h1>
+      <p class="sub">Todo o programa, tópico por tópico, com quanto de cada um já foi estudado
+         e quanto está rendendo.</p>
+      <div class="tiles" id="cnTiles"></div>
+      <h3>Progresso no banco de questões</h3>
+      <div class="meter big"><i id="cnBar"></i><span class="meter-l" id="cnBarL"></span></div>
+      <p class="note" id="cnAviso" style="margin-top:22px"></p>
+    </div>
+
+    <div class="card">
+      <h3>Filtrar</h3>
+      <div class="btns row" id="cnFiltros">
+        <button class="b sel" data-f="todos">Todos</button>
+        <button class="b" data-f="nao">Não estudados</button>
+        <button class="b" data-f="fracos">Rendendo pouco</button>
+        <button class="b" data-f="sem">Sem questão no banco</button>
+      </div>
+      <p class="note" id="cnFiltroTxt" style="margin-top:12px"></p>
+    </div>
+
+    <div id="cnLista"></div>
   </section>
 
   <!-- PASSO ESTRATEGICO -->
