@@ -269,16 +269,112 @@ $('tema').onclick = function(){
 try { var tm = localStorage.getItem('pfagente.tema'); if (tm) document.documentElement.setAttribute('data-theme', tm); } catch(e){}
 
 /* ---------- painel ---------- */
+/* Progresso e rendimento por materia, direto do banco:
+   estudo  = questoes distintas ja respondidas / questoes da materia no banco
+   aprov   = (certas - erradas) / respondidas x 100  (indice liquido em escala %)
+   As duas coisas sao diferentes e as duas precisam aparecer: estudo alto com
+   aproveitamento baixo significa que o material acabou e o conceito nao entrou. */
+function progressoMaterias(){
+  var banco = {}, feitas = {}, cont = {};
+  MATK.forEach(function(k){ banco[k] = 0; feitas[k] = {}; cont[k] = {c:0,e:0,b:0}; });
+  BANCO.forEach(function(q){ if (banco[q.m] !== undefined) banco[q.m]++; });
+  S.hist.forEach(function(h){
+    var q = QID[h.q]; if (!q || !cont[q.m]) return;
+    feitas[q.m][h.q] = 1;
+    cont[q.m][h.res === 1 ? 'c' : h.res === -1 ? 'e' : 'b']++;
+  });
+  return MATERIAS.map(function(m){
+    var k = m.k, o = cont[k], resp = o.c + o.e + o.b, nf = Object.keys(feitas[k]).length;
+    return {k:k, d:m.d, itens:m.itens, banco:banco[k], feitas:nf, resp:resp,
+      c:o.c, e:o.e, b:o.b,
+      estudo: banco[k] ? Math.round(nf/banco[k]*100) : 0,
+      aprov: resp ? Math.round((o.c - o.e)/resp*100) : null};
+  });
+}
+function corAprov2(v){ return v === null ? 'var(--muted)' : v < 0 ? 'var(--neg)'
+  : v >= 60 ? 'var(--good)' : v >= 30 ? 'var(--pos)' : 'var(--warn)'; }
+
+/* Evolucao no tempo: uma sessao por ponto, com os simulados destacados.
+   A linha de referencia e 0,60, que e o nivel "aceitavel" de um passo.
+   O corte da prova nao entra aqui: ele se mede sobre 120 itens, nao sobre
+   um bloco de 8 questoes, e desenha-lo nesta escala sugeriria comparacao
+   que nao existe. */
+function linhaEvolucao(){
+  // Duas series numa linha do tempo unica: sessoes (frequentes, ligadas) e
+  // simulados (marcos, isolados). Ordenadas por data; dentro do mesmo dia a
+  // sessao vem antes do simulado, que e a ordem em que acontecem.
+  var pts = S.sessoes.map(function(x){ return {d:x.d, idx:x.idx, tipo:'s'}; })
+    .concat(S.simulados.map(function(x){ return {d:x.d, idx:x.idx, tipo:'m', id:x.id}; }));
+  pts.sort(function(a,b){ return a.d < b.d ? -1 : a.d > b.d ? 1
+    : (a.tipo === b.tipo ? 0 : a.tipo === 's' ? -1 : 1); });
+  pts.forEach(function(p,i){ p.i = i; });
+  if (!pts.length) return '<p class="note">Nenhuma sessão registrada ainda. '
+    + 'Cada sessão vira um ponto aqui — é isso que transforma esforço em trajetória.</p>';
+
+  var W = 320, H = 118, padX = 10, padT = 18, padB = 20;
+  var vals = pts.map(function(p){ return p.idx; }).concat([0.6, 0, -0.2]);
+  var lo = Math.min.apply(null, vals) - 0.12, hi = Math.max.apply(null, vals) + 0.12;
+  var y = function(v){ return padT + (hi - v)/(hi - lo) * (H - padT - padB); };
+  var x = function(i){ return pts.length < 2 ? W/2 : padX + i/(pts.length-1) * (W - 2*padX); };
+
+  var g = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="spark" role="img" '
+    + 'aria-label="Índice líquido por sessão e por simulado ao longo do tempo">';
+  g += '<line x1="0" y1="' + y(0.6) + '" x2="' + W + '" y2="' + y(0.6)
+    + '" stroke="var(--good)" stroke-width="1.5" stroke-dasharray="5 4"/>';
+  g += '<text x="2" y="' + (y(0.6)-5) + '" fill="var(--good)" font-size="10">aceitável +0,60</text>';
+  if (y(0) > padT && y(0) < H-padB+8)
+    g += '<line x1="0" y1="' + y(0) + '" x2="' + W + '" y2="' + y(0) + '" stroke="var(--axis)" stroke-width="1"/>';
+
+  var ses = pts.filter(function(p){ return p.tipo === 's'; });
+  if (ses.length > 1)
+    g += '<polyline fill="none" stroke="var(--pos)" stroke-width="2" stroke-linejoin="round" points="'
+      + ses.map(function(p){ return x(p.i)+','+y(p.idx); }).join(' ') + '"/>';
+  ses.forEach(function(p){
+    g += '<circle cx="' + x(p.i) + '" cy="' + y(p.idx) + '" r="4" fill="var(--pos)" '
+      + 'stroke="var(--surface-1)" stroke-width="2"><title>Sessão de ' + br(p.d) + ' · índice '
+      + fmt(p.idx) + '</title></circle>';
+  });
+  pts.filter(function(p){ return p.tipo === 'm'; }).forEach(function(p){
+    var cx = x(p.i), cy = y(p.idx), r = 6;
+    g += '<polygon points="' + cx + ',' + (cy-r) + ' ' + (cx+r) + ',' + cy + ' '
+      + cx + ',' + (cy+r) + ' ' + (cx-r) + ',' + cy + '" fill="var(--warn)" '
+      + 'stroke="var(--surface-1)" stroke-width="2"><title>Simulado ' + p.id + ' de ' + br(p.d)
+      + ' · índice ' + fmt(p.idx) + '</title></polygon>';
+    g += '<text x="' + cx + '" y="' + Math.max(11, cy-11) + '" fill="var(--warn)" font-size="10" '
+      + 'text-anchor="middle">' + p.id + '</text>';
+  });
+  var ult = pts[pts.length-1];
+  g += '<text x="' + Math.min(W-4, Math.max(20, x(ult.i))) + '" y="' + Math.min(H-padB, y(ult.idx)+16)
+    + '" fill="var(--ink)" font-size="11" text-anchor="middle">' + fmt(ult.idx) + '</text>';
+  g += '<text x="0" y="' + (H-4) + '" fill="var(--muted)" font-size="10">' + br(pts[0].d) + '</text>';
+  if (pts.length > 1)
+    g += '<text x="' + W + '" y="' + (H-4) + '" fill="var(--muted)" font-size="10" text-anchor="end">'
+      + br(ult.d) + '</text>';
+  g += '</svg>';
+
+  var leg = '<div class="legenda"><span><i style="background:var(--pos)"></i>sessão</span>'
+    + (S.simulados.length ? '<span><i class="losango" style="background:var(--warn)"></i>simulado</span>' : '')
+    + '</div>';
+  return g + leg + '<p class="note">Índice líquido de cada sessão'
+    + (S.simulados.length ? ' e de cada simulado' : '') + '. '
+    + (ses.length < 3 ? 'Com ' + ses.length + ' sessão(ões) ainda não há tendência — só o começo da série.'
+       : 'A linha tracejada é o nível aceitável.') + '</p>';
+}
+
+var COBERTURA_MINIMA = 60;   // itens de prova medidos para a projecao valer alguma coisa
 function projecao(P){
   // Projeta o liquido em 120 itens a partir do indice medido de cada materia.
   // Materia sem medicao nao entra: projetar sobre o que nao foi medido seria
-  // inventar numero. A cobertura e informada junto.
+  // inventar numero. E com cobertura baixa a projecao nao e divulgada: dizer
+  // "voce esta 70 pontos abaixo do corte" a partir de 6 questoes de uma unica
+  // materia e ruido apresentado como medicao, que e pior que nao medir.
   var pts = 0, cob = 0;
   MATERIAS.forEach(function(m){
     var o = P.mat[m.k];
     if (o.resp){ pts += m.itens * o.idx; cob += m.itens; }
   });
-  return {pts:pts, cob:cob, parcial: cob < TOTAL_ITENS};
+  return {pts:pts, cob:cob, parcial: cob < TOTAL_ITENS,
+          confiavel: cob >= COBERTURA_MINIMA || S.simulados.length > 0};
 }
 function sequencia(){
   var ds = {}; S.sessoes.forEach(function(x){ ds[x.d] = 1; });
@@ -308,31 +404,48 @@ function painel(){
   $('pnVazio').classList.add('hide');
   $('pnCheio').classList.remove('hide');
 
-  // 1. distancia do corte
+  // 1. distancia do corte, so quando ha cobertura para isso
   var pr = projecao(P), dif = pr.pts - CORTE_PONTOS;
-  $('pnDist').textContent = (dif>0?'+':'−') + num(Math.abs(dif));
-  $('pnDist').className = 'hero ' + (dif >= 0 ? 'pos' : 'neg');
-  $('pnDistTxt').innerHTML = 'Projeção de <strong>' + num(pr.pts) + ' pontos líquidos</strong> em 120 itens, '
-    + 'contra os <strong>' + CORTE_PONTOS + '</strong> do corte informado de 2025. '
-    + (pr.parcial ? '<span class="flag2">A projeção cobre apenas ' + num(pr.cob,0) + ' dos 120 itens — '
-       + 'as matérias sem nenhuma questão respondida ficam de fora, porque projetar sobre o que não foi '
-       + 'medido seria inventar número.</span>' : 'Todas as matérias já têm medição.');
+  if (!pr.confiavel){
+    $('pnDist').textContent = '—';
+    $('pnDist').className = 'hero zero';
+    $('pnDistTxt').innerHTML = 'Ainda não dá para projetar. A projeção só aparece quando houver '
+      + '<strong>' + COBERTURA_MINIMA + ' dos 120 itens</strong> medidos, ou um simulado registrado — '
+      + 'hoje há <strong>' + num(pr.cob,0) + '</strong>. Projetar a prova inteira a partir de '
+      + P.ger.resp + (P.ger.resp === 1 ? ' questão de ' : ' questões de ')
+      + MATERIAS.filter(function(m){ return P.mat[m.k].resp; }).length
+      + ' matéria produziria um número grande e falso, e número falso é pior que número nenhum.';
+  } else {
+    $('pnDist').textContent = (dif>0?'+':'−') + num(Math.abs(dif));
+    $('pnDist').className = 'hero ' + (dif >= 0 ? 'pos' : 'neg');
+    $('pnDistTxt').innerHTML = 'Projeção de <strong>' + num(pr.pts) + ' pontos líquidos</strong> em 120 itens, '
+      + 'contra os <strong>' + CORTE_PONTOS + '</strong> do corte informado de 2025. '
+      + (pr.parcial ? '<span class="flag2">Cobre ' + num(pr.cob,0) + ' dos 120 itens; as matérias sem '
+         + 'nenhuma questão respondida ficam de fora.</span>' : 'Todas as matérias já têm medição.');
+  }
 
   // 2. linha do tempo
-  $('pnLinha').innerHTML = linhaDoTempo();
+  $('pnLinha').innerHTML = linhaEvolucao();
 
-  // 3. barras por materia, ordenadas por prioridade
-  var pesoMat = {};
-  F.forEach(function(x){ x.mats.forEach(function(m){ pesoMat[m] = Math.max(pesoMat[m]||0, 1/x.ordem); }); });
-  var ordem = MATK.slice().sort(function(a,b){ return (pesoMat[b]||0) - (pesoMat[a]||0); });
-  $('pnBars').innerHTML = barras(ordem.map(function(k){
-    var o = P.mat[k];
-    return {lbl:MAT[k].d, sub:MAT[k].itens + ' itens na prova', idx:o.idx, resp:o.resp, c:o.c, e:o.e, b:o.b};
-  }));
-  $('pnTab').innerHTML = ordem.map(function(k){
-    var o = P.mat[k];
-    return '<tr><td>' + MAT[k].d + '</td><td>' + MAT[k].itens + '</td><td>' + o.c + '</td><td>'
-      + o.e + '</td><td>' + o.b + '</td><td>' + (o.resp ? fmt(o.idx) : '—') + '</td></tr>';
+  // 3. progresso por materia: quanto estudou e quanto esta rendendo
+  var pm = progressoMaterias();
+  $('pnBars').innerHTML = pm.map(function(m){
+    return '<div class="mat-linha"' + (m.resp ? ' title="' + esc(m.d + ' — ' + m.feitas + ' de ' + m.banco
+        + ' questões do banco · ' + m.c + 'C ' + m.e + 'E ' + m.b + 'B') + '"' : '') + '>'
+      + '<div class="ml-top"><span class="ml-nome">' + m.d + '</span>'
+      + '<span class="ml-peso">' + m.itens + (m.itens === 1 ? ' item' : ' itens') + '</span>'
+      + '<span class="ml-apv" style="color:' + corAprov2(m.aprov) + '">'
+      + (m.aprov === null ? '—' : (m.aprov>0?'+':'') + m.aprov + '%') + '</span></div>'
+      + '<div class="ml-bar"><i style="width:' + m.estudo + '%;background:'
+      + (m.estudo ? 'var(--pos)' : 'transparent') + '"></i></div>'
+      + '<div class="ml-pe">' + (m.banco
+          ? m.estudo + '% estudado · ' + m.feitas + '/' + m.banco + ' questões'
+          : 'sem questão no banco') + '</div></div>';
+  }).join('');
+  $('pnTab').innerHTML = pm.map(function(m){
+    return '<tr><td>' + m.d + '</td><td>' + m.itens + '</td><td>' + m.estudo + '%</td><td>'
+      + m.c + '</td><td>' + m.e + '</td><td>' + m.b + '</td><td>'
+      + (m.resp ? (m.aprov>0?'+':'') + m.aprov + '%' : '—') + '</td></tr>';
   }).join('');
 
   // 4. sequencia

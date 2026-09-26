@@ -266,6 +266,22 @@ olhar a segunda, é o autoengano que essas duas colunas existem para impedir.
 nem em conversa, nem em gráfico, nem "só para dar uma ideia". Percentual
 bruto mente para quem chuta, e a prova não perdoa chute.
 
+### Não projete a prova com cobertura baixa
+
+A projeção de pontos em 120 itens só é divulgada quando houver **60 dos 120
+itens medidos**, ou ao menos um simulado registrado. Abaixo disso, o painel
+diz que ainda não dá para projetar, e quanto falta.
+
+A razão é concreta: com 6 questões de Informática respondidas, o painel
+chegou a anunciar *"distância do corte: −70,0"*. O número saía de extrapolar
+uma matéria para a prova inteira e tratar as 13 matérias sem medição como
+zero. É ruído apresentado como medição — e isso é pior que não medir, porque
+desanima com base em nada.
+
+A mesma regra vale em conversa: não estime nota final, não diga "no seu ritmo
+você chegaria a X" antes de haver cobertura. Diga o que está medido e o que
+não está.
+
 Referências de leitura do índice:
 
 | Índice | Leitura |
@@ -287,7 +303,7 @@ Publicada pelo GitHub Pages. É onde se estuda.
 |---|---|
 | `docs/banco.js` | `const BANCO`. Toda alteração passa pela validação da tabela cruzada da seção 2. |
 | `docs/dados.js` | `MATERIAS` (pesos em itens), `PASSOS` (os 26, com peso e assuntos) e `CADERNO` (um resumo por passo). |
-| `docs/app.js` | perfil derivado do histórico, fila de prioridade, seleção, revisão espaçada, painel, aba Conteúdo. |
+| `docs/app.js` | perfil derivado do histórico, fila de prioridade, seleção, revisão espaçada, painel, aba Conteúdo. O painel mostra **evolução no tempo** (uma série de sessões e uma de simulados), **progresso por matéria** (barra de estudo + aproveitamento), distância do corte com guarda de cobertura, sequência, preço do chute e fila de revisão. |
 | `docs/dados.js` → `EDITAL` | **os 153 tópicos do programa**, por matéria, cada um apontando o passo que o cobre ou `null`. É o que a aba Conteúdo lista. Ao criar questão de assunto novo, acrescente o tópico aqui e no verticalizado, com a redação **idêntica** ao campo `a` da questão. |
 | `docs/sw.js` | **Ao mexer em banco, dados, app ou css, incremente `VERSAO`.** Sem isso, quem já abriu o site continua no cache antigo. |
 
