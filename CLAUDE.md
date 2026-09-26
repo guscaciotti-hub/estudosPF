@@ -173,15 +173,51 @@ avise o Gustavo na hora. Nunca deixe isso implícito.
 
 ## 5. Progressão de conteúdo
 
-A ordem de ataque cruza **peso na prova** com **déficit medido** e com o
-**tipo de não-acerto**.
+### Tiers fixos — a regra que vem antes da fórmula
+
+**A fórmula ordena DENTRO de cada tier. Nunca entre tiers.** Peso de prova é
+barreira, não fator que o desempenho possa anular.
+
+| Tier | Matérias | Itens | Regra |
+|---|---|---|---|
+| **1** | Informática · Contabilidade Geral | 36 + 20 | núcleo diário, alternando entre as duas |
+| **2** | Redação Oficial | 6 | tarefa única: uma sessão por passo e sai da fila |
+| **3** | RLM · Matemática | 12 + 8 | abre só quando **ambas** do Tier 1 tiverem índice ≥ **+0,40** |
+| **4** | Português | 18 | manutenção: uma sessão a cada **14 dias** |
+| **5** | Estatística · Contabilidade Pública · todos os blocos de Direito | 4+4+12 | **bloqueado** até 6 meses antes da prova |
+
+**Nenhum passo de Tier 5 pode ser sugerido, por nenhum motivo, nem que a
+fórmula mande.** A barreira é estrutural: o passo não entra na fila e o botão
+de questões fica desabilitado. Sem data de prova cadastrada, o Tier 5 fica
+bloqueado — o padrão seguro é não sugerir.
+
+Escalonamento diário, nesta ordem: Tier 2 enquanto houver tarefa pendente →
+Tier 4 quando vencer os 14 dias → Tier 1 como padrão → Tier 3 quando a porta
+abrir. Se um tier esvazia, sobe-se para o seguinte. **Nunca se salta para o
+Tier 5.**
+
+*Por que o escalonamento não é "o menor tier com passo disponível":* o Tier 1
+tem 11 passos e só esvaziaria depois de meses. Com aquela leitura, "tarefa
+única" e "uma sessão a cada 2 semanas" nunca aconteceriam. Tier 2 e Tier 4 são
+interrupções agendadas.
+
+### Por que os tiers existem
+
+Sem eles, o swing permitia que **Estatística — 4 itens de 120 — ultrapassasse
+Contabilidade Geral e Informática**. Errando tudo, um passo de 4 itens chegava
+a score 8,00 contra 6,43 de um passo de Contabilidade nunca tocado. A causa é
+que `swing = 1 + erros/(erros+brancos)` **satura em 2,00 com um único erro**
+quando não há brancos — basta errar uma vez para valer o multiplicador máximo.
+
+### A fórmula, dentro do tier
 
 ```
-prioridade = itens_na_prova × deficit × swing
+prioridade = itens_na_prova × deficit × swing × material
 
-deficit = (1 - indice_liquido) / 2        # indice ∈ [-1,1] → deficit ∈ [0,1]
-deficit = 0.9                             # passo nunca respondido
-swing   = 1 + erros / (erros + brancos)   # 1 quando erros + brancos = 0
+deficit  = (1 - indice_liquido) / 2       # indice ∈ [-1,1] → deficit ∈ [0,1]
+deficit  = 0.9                            # passo nunca respondido
+swing    = 1 + erros / (erros + brancos)  # 1 quando erros + brancos = 0
+material = min(1, ineditas / 6)           # material inédito disponível
 ```
 
 **Por que o swing existe.** Erro e branco não valem a mesma coisa:
@@ -191,21 +227,39 @@ swing   = 1 + erros / (erros + brancos)   # 1 quando erros + brancos = 0
 - **Branco** significa que não sabia e pulou. Aprender transforma 0 em +1:
   **ganho de 1 ponto**.
 
-Um passo em que se erra muito tem mais pontos disponíveis do que um passo em
-que se deixa tudo em branco, com o mesmo índice. Por isso ele sobe na fila.
-
 **Erro é sinal de oportunidade, não de fracasso.** Quando o Gustavo errar
-muito num passo de peso alto, esse passo sobe — e o que se diz a ele é onde
-estão os pontos, não um sermão sobre o erro. A fila é um mapa de onde o
-retorno é maior, não um boletim.
+muito num passo, ele sobe dentro do tier — e o que se diz é onde estão os
+pontos, não um sermão.
 
-Consequências que são regra:
+**Por que o `material` existe.** Um passo que só consegue encher 3 das 6
+questões novas da sessão vale metade de um que enche as 6 — o resto viria
+repetido. Como degrau (penalizar só quando zera) isso nunca disparava: um
+passo de 10 questões ficava preso em 3 inéditas e devolvia 5 repetidas por
+sessão, indefinidamente.
 
-- **Passo nunca tocado entra com déficit 0,9** — abaixo de um passo com
-  índice comprovadamente negativo, que chega a 1,0. Erro medido dói mais que
-  ignorância presumida, porque erro medido significa conceito torto na cabeça.
+Outras consequências que são regra:
+
+- **Passo nunca tocado entra com déficit 0,9** — abaixo de um passo com índice
+  comprovadamente negativo, que chega a 1,0.
 - Passo **aceitável** tem o score multiplicado por 0,15; **consolidado**, por
-  0,05. Sai da frente sem sumir da lista.
+  0,05.
+
+### Tamanho do banco por tier, não por peso de prova
+
+O banco **não** deve espelhar a contagem de itens da prova. Informática vale 36
+itens e é estudada dia sim, dia não: com 36 questões, o núcleo repetiria a
+partir da sexta sessão. O que dimensiona o banco é a **cadência de uso**:
+
+| Tier | Cadência | Banco mínimo desejável |
+|---|---|---|
+| 1 | dia sim, dia não | 20+ sessões de material inédito |
+| 2 | uma vez | 1 sessão por passo |
+| 3 | quando abrir | 10 sessões |
+| 4 | a cada 14 dias | 6 sessões |
+| 5 | bloqueado | o que já existe basta |
+
+Uma sessão consome 6 questões novas. Antes de cortar banco de uma matéria,
+calcule quantas sessões aquilo representa na cadência do tier dela.
 
 ### Níveis do passo
 

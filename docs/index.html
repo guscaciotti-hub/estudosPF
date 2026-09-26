@@ -123,11 +123,12 @@
   <section id="v-passos" class="hide">
     <div class="card">
       <h1>Passo estratégico</h1>
-      <p class="sub">Os 26 passos na ordem em que valem a pena ser atacados. A ordem é recalculada
-         a cada questão respondida: <strong>itens na prova × déficit × swing</strong>.</p>
+      <p class="sub">Os 26 passos em <strong>tiers fixos</strong>. A fórmula
+         (itens na prova × déficit × swing) ordena <strong>dentro</strong> de cada tier —
+         nunca entre tiers. Peso de prova é barreira, não fator que o desempenho anula.</p>
       <p class="note">Um passo fica <strong>aceitável</strong> com índice líquido ≥ 0,60 em pelo menos
-         6 questões respondidas. Marque a teoria como estudada, martele as questões, e ele sai da
-         frente sozinho quando o nível chegar lá.</p>
+         6 questões. O tier ativo é o menor que ainda tenha passo disponível; se um tier esvazia,
+         sobe-se para o seguinte — e nunca se salta para o Tier 5.</p>
       <div id="psResumo" style="margin-top:14px"></div>
     </div>
     <div id="psLista"></div>
@@ -225,6 +226,13 @@
 
   <!-- DADOS -->
   <section id="v-dados" class="hide">
+    <div class="card">
+      <h3>Data da prova</h3>
+      <p class="note" id="dProvaTxt"></p>
+      <input type="date" id="dProva" style="margin-top:12px">
+      <button class="b" id="dProvaOk" style="margin-top:12px">Salvar data</button>
+    </div>
+
     <div class="card">
       <h3>Backup</h3>
       <p class="note">O histórico fica neste navegador, neste aparelho. Limpar os dados do site apaga

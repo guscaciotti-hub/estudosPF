@@ -109,7 +109,7 @@ const PASSOS = [
   "mats": [
    "Informatica"
   ],
-  "n": 7
+  "n": 9
  },
  {
   "id": "P02",
@@ -123,7 +123,7 @@ const PASSOS = [
   "mats": [
    "Informatica"
   ],
-  "n": 7
+  "n": 9
  },
  {
   "id": "P03",
@@ -152,7 +152,7 @@ const PASSOS = [
   "mats": [
    "Informatica"
   ],
-  "n": 6
+  "n": 9
  },
  {
   "id": "P05",
@@ -166,7 +166,7 @@ const PASSOS = [
   "mats": [
    "Informatica"
   ],
-  "n": 6
+  "n": 8
  },
  {
   "id": "P06",
@@ -179,7 +179,7 @@ const PASSOS = [
   "mats": [
    "Informatica"
   ],
-  "n": 7
+  "n": 10
  },
  {
   "id": "P07",
@@ -209,7 +209,7 @@ const PASSOS = [
   "mats": [
    "ContabilidadeGeral"
   ],
-  "n": 6
+  "n": 9
  },
  {
   "id": "P09",
@@ -223,7 +223,7 @@ const PASSOS = [
   "mats": [
    "ContabilidadeGeral"
   ],
-  "n": 6
+  "n": 9
  },
  {
   "id": "P10",
@@ -237,7 +237,7 @@ const PASSOS = [
   "mats": [
    "ContabilidadeGeral"
   ],
-  "n": 6
+  "n": 9
  },
  {
   "id": "P11",
@@ -253,7 +253,7 @@ const PASSOS = [
   "mats": [
    "ContabilidadeGeral"
   ],
-  "n": 11
+  "n": 14
  },
  {
   "id": "P12",

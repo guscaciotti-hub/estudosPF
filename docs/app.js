@@ -24,6 +24,43 @@ var MECD = {'par de conceitos':'par de conceitos','palavra absoluta':'palavra ab
   'premissa e conclusao':'premissa e conclusão','duas metades':'duas metades',
   'numero na hipotese':'número na hipótese','aparencia literal':'aparência literal'};
 
+/* ---------- TIERS DE PRIORIDADE ----------
+   A formula ordena DENTRO do tier. Nunca entre tiers. Sem isso, o swing
+   permitia que Estatistica (4 itens de 120) ultrapassasse Contabilidade Geral
+   (20) e Informatica (36): errando tudo, um passo de 4 itens chegava a score
+   8,00 contra 6,43 de um passo de Contabilidade nunca tocado. Peso de prova
+   passa a ser barreira, nao mais um fator que o desempenho pode anular.      */
+var MESES_ANTES_TIER5 = 6;
+var TIERS = [
+  {n:1, nome:'Núcleo diário', desc:'alternando entre as duas, todo dia',
+   mats:['Informatica','ContabilidadeGeral'], alterna:true},
+  {n:2, nome:'Tarefa única', desc:'faz uma vez e sai da fila',
+   mats:['RedacaoOficial'], saiAoAceitar:true},
+  {n:3, nome:'Formalização', desc:'abre quando as duas do Tier 1 passarem de +0,40',
+   mats:['RLM','Matematica'], porta:'tier1'},
+  {n:4, nome:'Manutenção', desc:'uma sessão a cada 2 semanas',
+   mats:['Portugues'], intervalo:14},
+  {n:5, nome:'Bloqueado', desc:'só ' + MESES_ANTES_TIER5 + ' meses antes da prova',
+   mats:['Estatistica','ContabilidadePublica','DireitoConstitucional','DireitoAdministrativo',
+         'DireitoPenal','DireitoProcessualPenal','LegislacaoFederal','DireitoAmbiental'],
+   bloqueado:true}
+];
+var TIER_DE = {};
+TIERS.forEach(function(t){ t.mats.forEach(function(m){ TIER_DE[m] = t.n; }); });
+function tierDoPasso(p){ return TIER_DE[(PAS[p] || p).mats[0]] || 5; }
+function tierInfo(n){ return TIERS[n-1]; }
+
+/* Data em que o Tier 5 destrava. Sem data de prova definida, fica bloqueado —
+   o padrao seguro e nao sugerir, nunca o contrario. */
+function destravaTier5(){
+  var d = S.config && S.config.dataProva;
+  if (!d) return null;
+  var x = new Date(d + 'T00:00:00');
+  x.setMonth(x.getMonth() - MESES_ANTES_TIER5);
+  return x.getFullYear() + '-' + String(x.getMonth()+1).padStart(2,'0') + '-' + String(x.getDate()).padStart(2,'0');
+}
+function tier5Liberado(){ var d = destravaTier5(); return !!d && hoje() >= d; }
+
 var ESTADOS = {
   nao_iniciado: {r:'não iniciado', cor:'var(--muted)'},
   teoria_lida:  {r:'teoria lida',  cor:'var(--warn)'},
@@ -60,13 +97,13 @@ function md(txt){
 }
 
 /* ---------- estado ---------- */
-var S = {v:2, hist:[], sessoes:[], simulados:[], teoria:{}, revisao:{}};
+var S = {v:2, hist:[], sessoes:[], simulados:[], teoria:{}, revisao:{}, config:{dataProva:null}};
 function carrega(){
   try {
     var raw = localStorage.getItem(CHAVE);
     if (raw){ var o = JSON.parse(raw);
       S = {v:2, hist:o.hist||[], sessoes:o.sessoes||[], simulados:o.simulados||[],
-           teoria:o.teoria||{}, revisao:o.revisao||{}};
+           teoria:o.teoria||{}, revisao:o.revisao||{}, config:o.config||{dataProva:null}};
     } else {
       var v1 = localStorage.getItem(CHAVE_V1);
       if (v1) { migraV1(JSON.parse(v1)); salva(); }
@@ -81,7 +118,7 @@ function carrega(){
   });
 }
 function migraV1(o){
-  S = {v:2, hist:[], sessoes:[], simulados:o.simulados||[], teoria:{}, revisao:{}};
+  S = {v:2, hist:[], sessoes:[], simulados:o.simulados||[], teoria:{}, revisao:{}, config:{dataProva:null}};
   (o.hist||[]).forEach(function(h){ if (QID[h.q]) S.hist.push(h); });
   (o.sessoes||[]).forEach(function(x){
     var q = BANCO.filter(function(b){ return b.a === x.a; })[0];
@@ -126,21 +163,109 @@ function estadoPasso(id, P){
              (de -1 para +1); branco vale 1 (de 0 para +1). Errar muito num
              passo pesado e oportunidade, nao fracasso.                      */
 function fila(){
-  var P = perfil();
+  var P = perfil(), hj = hoje();
+
+  // porta do Tier 3: as duas materias do Tier 1 precisam estar em +0,40
+  var t1 = TIERS[0].mats.map(function(k){ return P.mat[k]; });
+  var portaT1 = t1.every(function(o){ return o.resp > 0 && o.idx >= 0.40; });
+
+  // Tier 4 e manutencao: so entra se fizer 14 dias da ultima sessao da materia
+  var ultT4 = null;
+  S.sessoes.forEach(function(x){
+    if (x.p && PAS[x.p] && tierDoPasso(x.p) === 4 && (!ultT4 || x.d > ultT4)) ultT4 = x.d; });
+  var portaT4 = !ultT4 || dias(ultT4, hj) >= TIERS[3].intervalo;
+
+  // alternancia do Tier 1: a materia da ultima sessao cede a vez
+  var ultMat = null;
+  for (var i = S.sessoes.length - 1; i >= 0; i--){
+    var sp = S.sessoes[i].p;
+    if (sp && PAS[sp] && tierDoPasso(sp) === 1){ ultMat = PAS[sp].mats[0]; break; }
+  }
+  var t5ok = tier5Liberado(), t5data = destravaTier5();
+
   var f = PASSOS.map(function(p){
-    var o = P.passo[p.id], st = estadoPasso(p.id, P);
+    var o = P.passo[p.id], st = estadoPasso(p.id, P), t = tierDoPasso(p.id);
     var deficit = o.resp === 0 ? 0.9 : (1 - o.idx)/2;
     var swing = (o.e + o.b) === 0 ? 1 : 1 + o.e/(o.e + o.b);
     var score = p.itens * deficit * swing;
     if (st === 'aceitavel') score *= 0.15;
     if (st === 'consolidado') score *= 0.05;
+    // Material inedito disponivel, proporcional. Um passo que so consegue
+    // encher 3 das 6 questoes novas da sessao vale metade de um que enche as
+    // 6 — o resto viria repetido, e repetir rende menos que abrir material
+    // novo. Como degrau (so quando zera) isso nunca disparava: um passo com 10
+    // questoes fica preso em ined=3 e devolvia 5 repetidas por sessao.
+    var ined = ineditas(p.id).length;
+    score *= Math.min(1, ined / SESSAO_NOVAS);
+
+    var elegivel = true, motivo = '';
+    if (t === 2 && sessoesNoPasso(p.id) > 0){
+      // "faz uma vez e sai da fila", ao pe da letra: uma sessao e o passo sai.
+      // Nao some de vez — se houve erro, a revisao espacada o traz de volta
+      // nas 3 questoes de revisao, que independem de tier.
+      elegivel = false;
+      motivo = 'tarefa única cumprida em ' + br(ultimaSessaoDoPasso(p.id))
+        + ' — índice ' + fmt(o.idx) + ' em ' + o.resp + ' questões'
+        + (S.revisao[p.id] ? '. Volta na revisão em ' + br(S.revisao[p.id].prox) : '');
+    } else if (t === 3 && !portaT1){
+      elegivel = false;
+      motivo = 'abre quando Informática e Contabilidade Geral passarem de +0,40 (hoje: '
+        + TIERS[0].mats.map(function(k){ return MAT[k].d.split(' ')[0] + ' '
+            + (P.mat[k].resp ? fmt(P.mat[k].idx) : 'sem medição'); }).join(' · ') + ')';
+    } else if (t === 4 && !portaT4){
+      elegivel = false;
+      motivo = 'manutenção quinzenal — próxima em ' + br(maisDias(ultT4, TIERS[3].intervalo));
+    } else if (t === 5 && !t5ok){
+      elegivel = false;
+      motivo = t5data ? 'bloqueado até ' + br(t5data) + ', ' + MESES_ANTES_TIER5 + ' meses antes da prova'
+        : 'bloqueado — defina a data da prova na aba Dados para saber quando abre';
+    }
+    // desempate do Tier 1: quem nao foi a ultima materia vai na frente
+    var alterna = (t === 1 && ultMat && p.mats[0] !== ultMat) ? 1 : 0;
     return {id:p.id, t:p.t, itens:p.itens, n:p.n, mats:p.mats, st:st, score:score,
+            tier:t, elegivel:elegivel, motivo:motivo, alterna:alterna,
             idx:o.idx, resp:o.resp, c:o.c, e:o.e, b:o.b, deficit:deficit, swing:swing,
-            ultima:o.ultima, mec:o.mec, ined:ineditas(p.id).length};
+            ultima:o.ultima, mec:o.mec, ined:ined};
   });
-  f.sort(function(a,b){ return (b.score - a.score) || (b.itens - a.itens) || (a.id < b.id ? -1 : 1); });
+
+  // Qual tier manda hoje.
+  //
+  // "O menor tier com passo elegivel" nao funciona: o Tier 1 tem 11 passos e
+  // so esvazia quando todos estiverem consolidados, o que levaria meses. Com
+  // essa leitura, "tarefa unica" e "uma sessao a cada 2 semanas" nunca
+  // aconteceriam. Entao:
+  //   Tier 2 e uma tarefa fechada de 6 itens: toma os dias ate ser cumprida.
+  //   Tier 4 e manutencao: toma um dia a cada 14.
+  //   Tier 1 e o padrao de todo dia.
+  //   Tier 3 entra depois, quando a porta abre e o Tier 1 nao tiver pendencia.
+  //   Tier 5 nunca, enquanto bloqueado.
+  var tem = function(t){ return f.some(function(x){ return x.tier === t && x.elegivel; }); };
+  var ativo = tem(2) ? 2
+            : tem(4) ? 4
+            : tem(1) ? 1
+            : tem(3) ? 3
+            : (t5ok && tem(5)) ? 5
+            : null;
+  f.forEach(function(x){ x.ativo = (x.tier === ativo && x.elegivel); });
+
+  f.sort(function(a,b){
+    if (a.ativo !== b.ativo) return a.ativo ? -1 : 1;          // o tier ativo primeiro
+    if (a.tier !== b.tier) return a.tier - b.tier;             // depois por tier
+    if (a.elegivel !== b.elegivel) return a.elegivel ? -1 : 1;
+    if (a.alterna !== b.alterna) return b.alterna - a.alterna; // alternancia do Tier 1
+    return (b.score - a.score) || (b.itens - a.itens) || (a.id < b.id ? -1 : 1);
+  });
   f.forEach(function(x,i){ x.ordem = i+1; });
+  f.tierAtivo = ativo;
   return f;
+}
+function passoDoDia(){ var f = fila(); return f.filter(function(x){ return x.ativo; })[0] || f[0]; }
+function sessoesNoPasso(pid){
+  return S.sessoes.filter(function(x){ return x.p === pid; }).length;
+}
+function ultimaSessaoDoPasso(pid){
+  var ds = S.sessoes.filter(function(x){ return x.p === pid; }).map(function(x){ return x.d; });
+  return ds.length ? ds[ds.length-1] : null;
 }
 function vistos(){ var v = {}; S.hist.forEach(function(h){ v[h.q] = h.d; }); return v; }
 function ineditas(pid){ var v = vistos();
@@ -467,7 +592,7 @@ function painel(){
     + 'Esse número precisa cair ao longo dos meses — se não cair, o problema não é conteúdo, é disciplina de branco.';
 
   // proximo passo e simulado
-  var alvo = F[0], prox = proximoSimulado();
+  var alvo = passoDoDia(), prox = proximoSimulado();
   $('pnHoje').innerHTML = (!S.simulados.length
       ? '<strong>Fazer o simulado marco zero.</strong> Sem linha de base não existe evolução, só sensação.'
       : (prox && dias(prox, hj) >= 0
@@ -638,7 +763,7 @@ function conteudoView(){
   });
   $('cnLista').innerHTML = html || '<div class="card"><p class="note">Nenhum tópico neste filtro.</p></div>';
   $('cnLista').querySelectorAll('[data-passo]').forEach(function(el){
-    el.onclick = function(){ iniciaSessao(el.dataset.passo); ir('sessao'); }; });
+    el.onclick = function(){ iniciaSessao(el.dataset.passo); if (se && se.ativa) ir('sessao'); }; });
 }
 $('cnFiltros').querySelectorAll('button').forEach(function(b){
   b.onclick = function(){
@@ -652,20 +777,36 @@ $('cnFiltros').querySelectorAll('button').forEach(function(b){
 function passosView(){
   var F = fila(), hj = hoje();
   var prontos = F.filter(function(x){ return x.st === 'aceitavel' || x.st === 'consolidado'; }).length;
-  $('psResumo').innerHTML = '<div class="kv"><span>Passos aceitáveis</span><b>' + prontos + ' de ' + F.length + '</b></div>'
-    + '<div class="kv"><span>Questões no banco</span><b>' + BANCO.length + '</b></div>'
-    + '<div class="kv"><span>Na fila de revisão</span><b>' + Object.keys(S.revisao).length + '</b></div>';
-  $('psLista').innerHTML = F.map(function(x){
-    var E = ESTADOS[x.st], P = PAS[x.id];
+  var t5 = destravaTier5();
+  $('psResumo').innerHTML = '<div class="kv"><span>Tier ativo agora</span><b>'
+      + (F.tierAtivo ? 'Tier ' + F.tierAtivo + ' — ' + tierInfo(F.tierAtivo).nome : 'nenhum') + '</b></div>'
+    + '<div class="kv"><span>Passos aceitáveis</span><b>' + prontos + ' de ' + F.length + '</b></div>'
+    + '<div class="kv"><span>Na fila de revisão</span><b>' + Object.keys(S.revisao).length + '</b></div>'
+    + '<div class="kv"><span>Tier 5 abre em</span><b>' + (t5 ? br(t5) : 'sem data de prova') + '</b></div>';
+
+  var html = '', tierAtual = 0;
+  F.forEach(function(x){
+    if (x.tier !== tierAtual){
+      tierAtual = x.tier;
+      var T = tierInfo(tierAtual);
+      html += '<div class="tier-h' + (tierAtual === F.tierAtivo ? ' ativo' : '')
+        + '"><span class="tier-n">Tier ' + tierAtual + '</span><span class="tier-t">' + T.nome
+        + '</span><span class="tier-d">' + T.desc + '</span>'
+        + '<span class="tier-m">' + T.mats.map(function(m){ return MAT[m].d + ' ' + MAT[m].itens; }).join(' · ')
+        + ' itens</span></div>';
+    }
+    var E = ESTADOS[x.st];
     var pct = Math.min(100, Math.round(x.resp / ACEITAVEL_N * 100));
     var okIdx = x.resp >= ACEITAVEL_N && x.idx >= ACEITAVEL_IDX;
-    return '<div class="passo" id="ps-' + x.id + '">'
-      + '<div class="passo-h"><span class="ord">' + x.ordem + '</span>'
+    var bloq = !x.elegivel;
+    html += '<div class="passo' + (bloq ? ' bloqueado' : '') + (x.ativo ? ' ativo' : '') + '">'
+      + '<div class="passo-h"><span class="ord">' + (x.ativo ? x.ordem : '·') + '</span>'
       + '<div class="passo-t"><strong>' + esc(x.t) + '</strong>'
       + '<div class="note">' + x.mats.map(function(m){ return MAT[m].d; }).join(' · ')
       + ' · ' + num(x.itens) + ' itens na prova · ' + x.n + ' questões'
       + (x.ined ? '' : ' · <span style="color:var(--warn)">banco esgotado</span>') + '</div></div>'
       + '<span class="badge" style="color:' + E.cor + ';border-color:' + E.cor + '">' + E.r + '</span></div>'
+      + (bloq ? '<p class="motivo">' + esc(x.motivo) + '</p>' : '')
       + '<div class="passo-m">'
       + '<span>' + (x.resp ? 'índice <b style="color:' + (x.idx<0?'var(--neg)':'var(--pos)') + '">' + fmt(x.idx)
           + '</b> em ' + x.resp + ' questões' : 'nunca respondido') + '</span>'
@@ -676,9 +817,12 @@ function passosView(){
       + '<button class="b" data-teoria="' + x.id + '">Ler a teoria</button>'
       + (S.teoria[x.id] ? '<button class="b" data-desmarca="' + x.id + '">✓ estudado em ' + br(S.teoria[x.id]) + '</button>'
          : '<button class="b" data-marca="' + x.id + '">Marcar como estudado</button>')
-      + '<button class="b primary" data-martela="' + x.id + '">Martelar questões</button>'
+      + (x.tier === 5 && bloq
+         ? '<button class="b" disabled title="' + esc(x.motivo) + '">Bloqueado</button>'
+         : '<button class="b' + (x.ativo ? ' primary' : '') + '" data-martela="' + x.id + '">Martelar questões</button>')
       + '</div></div>';
-  }).join('');
+  });
+  $('psLista').innerHTML = html;
   $('psLista').querySelectorAll('[data-teoria]').forEach(function(b){
     b.onclick = function(){ cadernoView(b.dataset.teoria); ir('caderno'); abreTeoria(b.dataset.teoria); }; });
   $('psLista').querySelectorAll('[data-marca]').forEach(function(b){
@@ -686,7 +830,7 @@ function passosView(){
   $('psLista').querySelectorAll('[data-desmarca]').forEach(function(b){
     b.onclick = function(){ delete S.teoria[b.dataset.desmarca]; salva(); passosView(); }; });
   $('psLista').querySelectorAll('[data-martela]').forEach(function(b){
-    b.onclick = function(){ iniciaSessao(b.dataset.martela); ir('sessao'); }; });
+    b.onclick = function(){ iniciaSessao(b.dataset.martela); if (se && se.ativa) ir('sessao'); }; });
 }
 
 /* ---------- caderno ---------- */
@@ -712,7 +856,7 @@ function cadernoView(destaque){
   $('cdLista').querySelectorAll('[data-cmarca]').forEach(function(b){
     b.onclick = function(){ S.teoria[b.dataset.cmarca] = hoje(); salva(); cadernoView(b.dataset.cmarca); }; });
   $('cdLista').querySelectorAll('[data-cmartela]').forEach(function(b){
-    b.onclick = function(){ iniciaSessao(b.dataset.cmartela); ir('sessao'); }; });
+    b.onclick = function(){ iniciaSessao(b.dataset.cmartela); if (se && se.ativa) ir('sessao'); }; });
 }
 function abreTeoria(id){ var el = $('cad-'+id); if (el){ el.open = true; el.scrollIntoView({block:'start'}); } }
 
@@ -723,7 +867,7 @@ function sessaoInicio(){
   se = null;
   $('seInicio').classList.remove('hide'); $('seTeoria').classList.add('hide');
   $('seProva').classList.add('hide'); $('seFim').classList.add('hide');
-  var F = fila(), alvo = F[0], dev = revisaoDevida();
+  var F = fila(), alvo = passoDoDia(), dev = revisaoDevida();
   $('seCab').innerHTML = '<div class="kv"><span>Passo ' + alvo.ordem + ' de hoje<br><strong>'
     + esc(alvo.t) + '</strong><br><span class="note">' + alvo.mats.map(function(m){return MAT[m].d;}).join(' · ')
     + ' · ' + num(alvo.itens) + ' itens na prova · '
@@ -735,9 +879,26 @@ function sessaoInicio(){
       : 'Estrutura de hoje: resumo teórico (~5 min) e ' + SESSAO_SEM_FILA
         + ' questões novas (~20 min). A fila de revisão está vazia.') + '</p>';
   $('seGo').onclick = function(){ iniciaSessao(alvo.id); };
+  $('seCab').innerHTML += '<p class="note">Tier ' + alvo.tier + ' — '
+    + tierInfo(alvo.tier).nome + ': ' + tierInfo(alvo.tier).desc + '.</p>';
   $('seOutro').onclick = function(){ ir('passos'); };
 }
 function iniciaSessao(pid){
+  // Barreira estrutural: o Tier 5 nao roda nem por escolha manual enquanto
+  // estiver bloqueado. "Impossivel de acontecer de novo" nao pode depender de
+  // a formula se comportar.
+  var reg = fila().filter(function(x){ return x.id === pid; })[0];
+  if (reg && reg.tier === 5 && !reg.elegivel){
+    alert('Passo bloqueado.\n\n' + PAS[pid].t + ' — ' + reg.motivo
+      + '.\n\nEle vale ' + num(reg.itens) + ' itens de 120. Informática vale 36 e '
+      + 'Contabilidade Geral 20: é lá que o ponto está agora. A teoria continua '
+      + 'disponível na aba Caderno.');
+    return;
+  }
+  if (reg && !reg.elegivel && reg.tier !== 1){
+    if (!confirm(PAS[pid].t + '\n\nTier ' + reg.tier + ': ' + reg.motivo
+      + '.\n\nQuer estudar assim mesmo?')) return;
+  }
   var dev = revisaoDevida().filter(function(p){ return p !== pid; });
   var nNovas = dev.length ? SESSAO_NOVAS : SESSAO_SEM_FILA;
   var novas = montar(BANCO.filter(function(q){ return q.p === pid; }), nNovas);
@@ -1005,6 +1166,15 @@ function siResultado(){
 
 /* ---------- dados ---------- */
 function dadosView(){
+  var dp = (S.config && S.config.dataProva) || '';
+  $('dProva').value = dp;
+  var t5 = destravaTier5();
+  $('dProvaTxt').innerHTML = dp
+    ? 'Prova em <strong>' + br(dp) + '</strong>. O Tier 5 — Estatística, Contabilidade Pública e os '
+      + 'blocos de Direito, 20 dos 120 itens — abre em <strong>' + br(t5) + '</strong>'
+      + (tier5Liberado() ? ' <span style="color:var(--good)">(já aberto)</span>.' : '.')
+    : 'Sem data definida, o <strong>Tier 5 fica bloqueado</strong>. É o padrão seguro: na dúvida, '
+      + 'não sugerir matéria de peso baixo.';
   $('dVer').textContent = 'Banco com ' + BANCO.length + ' questões em ' + PASSOS.length + ' passos · '
     + S.hist.length + ' respostas · ' + S.sessoes.length + ' sessões · ' + S.simulados.length + ' simulados.';
   var h = '';
@@ -1015,6 +1185,13 @@ function dadosView(){
       + '</span><b>' + fmt(x.idx) + '</b></div>'; }).join('');
   $('dHist').innerHTML = h || '<p class="note">Nada registrado ainda.</p>';
 }
+$('dProvaOk').onclick = function(){
+  var v = $('dProva').value;
+  S.config = S.config || {}; S.config.dataProva = v || null;
+  salva(); dadosView(); painel();
+  $('dMsg').textContent = v ? 'Data da prova salva. O Tier 5 abre em ' + br(destravaTier5()) + '.'
+    : 'Data removida. O Tier 5 volta a ficar bloqueado.';
+};
 $('dExp').onclick = function(){
   var blob = new Blob([JSON.stringify(S,null,1)], {type:'application/json'});
   var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
@@ -1028,7 +1205,7 @@ $('dCopy').onclick = function(){
 };
 $('dReset').onclick = function(){
   if (!confirm('Apagar todo o histórico deste aparelho? Não tem como desfazer.')) return;
-  S = {v:2, hist:[], sessoes:[], simulados:[], teoria:{}, revisao:{}};
+  S = {v:2, hist:[], sessoes:[], simulados:[], teoria:{}, revisao:{}, config:{dataProva:null}};
   salva(); dadosView(); painel(); $('dMsg').textContent = 'Histórico apagado.';
 };
 $('dImp').onclick = function(){
@@ -1040,7 +1217,7 @@ $('dImp').onclick = function(){
       if (!o.hist) throw new Error('backup sem histórico');
       if (o.v === 1 || !o.v) migraV1(o);
       else S = {v:2, hist:o.hist||[], sessoes:o.sessoes||[], simulados:o.simulados||[],
-                teoria:o.teoria||{}, revisao:o.revisao||{}};
+                teoria:o.teoria||{}, revisao:o.revisao||{}, config:o.config||{dataProva:null}};
       carregaSanear(); salva();
       $('dMsg').textContent = 'Backup restaurado: ' + S.hist.length + ' respostas.';
     } else {
