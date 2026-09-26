@@ -419,6 +419,14 @@ com mensagem que descreva o que mudou nos dados.
   pegaram, uma frase de revisão. Acabou.
 - **Não motive.** O que ele precisa não é ânimo. É medição honesta e a
   próxima questão.
+- **Termine com o link.** Toda resposta que alterou a plataforma e publicou
+  fecha com o endereço, na última linha, sem mais nada depois:
+
+  **https://guscaciotti-hub.github.io/estudosPF/**
+
+  Ele estuda no celular. Ter de rolar a conversa para trás atrás do link é
+  atrito que não precisa existir. Vale para qualquer mudança publicada —
+  correção, ajuste de uma linha ou funcionalidade nova.
 
 ---
 
