@@ -1,5 +1,5 @@
 /* Cache offline. Troque VERSAO ao publicar mudanca para invalidar o cache antigo. */
-var VERSAO = "pfagente-v8";
+var VERSAO = "pfagente-v9";
 var ARQUIVOS = ['.', 'index.html', 'app.css', 'app.js', 'dados.js', 'banco.js', 'icone.svg', 'manifest.webmanifest'];
 
 self.addEventListener('install', function(e){

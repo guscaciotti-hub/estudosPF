@@ -3,6 +3,31 @@
    Prioridade: itens_na_prova x deficit x swing. Ver CLAUDE.md. */
 'use strict';
 
+var BUILD = '9';
+
+/* Guarda de versao. O service worker pode servir index.html de uma versao e
+   app.js de outra; quando isso acontece, um elemento novo falta no HTML, o
+   boot lanca "Cannot set properties of null" e tudo que vem depois - inclusive
+   carrega(), que le o historico - nunca roda. O sintoma e a plataforma meio
+   morta, com uma aba ou outra funcionando. Aqui a pagina se cura sozinha:
+   detecta a divergencia, limpa cache e service worker e recarrega uma vez. */
+(function(){
+  var meta = document.querySelector('meta[name="build"]');
+  if (meta && meta.content === BUILD) return;
+  try {
+    if (sessionStorage.getItem('pfagente.curou') === BUILD) return;   // so uma vez por build
+    sessionStorage.setItem('pfagente.curou', BUILD);
+  } catch(e){}
+  var recarrega = function(){ location.reload(); };
+  if ('serviceWorker' in navigator && navigator.serviceWorker.getRegistrations){
+    navigator.serviceWorker.getRegistrations()
+      .then(function(rs){ return Promise.all(rs.map(function(r){ return r.unregister(); })); })
+      .then(function(){ return caches.keys(); })
+      .then(function(ks){ return Promise.all(ks.map(function(k){ return caches.delete(k); })); })
+      .then(recarrega, recarrega);
+  } else recarrega();
+})();
+
 var CHAVE = 'pfagente.v2';
 var CHAVE_V1 = 'pfagente.v1';
 
@@ -71,6 +96,10 @@ var ESTADOS = {
 
 /* ---------- utilitarios ---------- */
 var $ = function(id){ return document.getElementById(id); };
+/* Um elemento ausente nunca pode interromper o boot: o que falta e ignorado,
+   o resto continua registrado. */
+function on(id, fn){ var el = $(id); if (el) el.onclick = fn; return !!el; }
+function each(sel, fn){ document.querySelectorAll(sel).forEach(fn); }
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 function hoje(){ var d = new Date();
@@ -383,14 +412,14 @@ function ir(v){
     simulado:simuladoInicio, caderno:cadernoView, dados:dadosView})[v]();
   window.scrollTo(0,0);
 }
-document.querySelectorAll('nav button').forEach(function(b){ b.onclick = function(){ ir(b.dataset.v); }; });
-$('tema').onclick = function(){
+each('nav button', function(b){ b.onclick = function(){ ir(b.dataset.v); }; });
+on('tema', function(){
   var a = document.documentElement.getAttribute('data-theme');
   var n = a === 'dark' ? 'light' : a === 'light' ? 'dark'
         : (matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark');
   document.documentElement.setAttribute('data-theme', n);
   try { localStorage.setItem('pfagente.tema', n); } catch(e){}
-};
+});
 try { var tm = localStorage.getItem('pfagente.tema'); if (tm) document.documentElement.setAttribute('data-theme', tm); } catch(e){}
 
 /* ---------- painel ---------- */
@@ -765,7 +794,7 @@ function conteudoView(){
   $('cnLista').querySelectorAll('[data-passo]').forEach(function(el){
     el.onclick = function(){ iniciaSessao(el.dataset.passo); if (se && se.ativa) ir('sessao'); }; });
 }
-$('cnFiltros').querySelectorAll('button').forEach(function(b){
+if ($('cnFiltros')) each('#cnFiltros button', function(b){
   b.onclick = function(){
     cnFiltro = b.dataset.f;
     $('cnFiltros').querySelectorAll('button').forEach(function(x){ x.classList.toggle('sel', x === b); });
@@ -934,7 +963,7 @@ function seRender(){
   $('seFb').innerHTML = '';
   window.scrollTo(0,0);
 }
-$('seBtns').querySelectorAll('button').forEach(function(b){
+if ($('seBtns')) each('#seBtns button', function(b){
   b.onclick = function(){ seResponde(b.dataset.r); }; });
 function seResponde(r){
   var q = se.qs[se.i];
@@ -1068,13 +1097,13 @@ function siRender(){
     b.classList.toggle('sel', si.resp[si.i] === b.dataset.r); });
   window.scrollTo(0,0);
 }
-$('siBtns').querySelectorAll('button').forEach(function(b){
+if ($('siBtns')) each('#siBtns button', function(b){
   b.onclick = function(){ si.resp[si.i] = b.dataset.r;
     if (si.i < si.qs.length-1){ si.i++; siRender(); } else siConfirma(); }; });
-$('siPrev').onclick = function(){ if (si.i>0){ si.i--; siRender(); } };
-$('siVolta').onclick = function(){ si.i = si.qs.length-1;
-  $('siConf').classList.add('hide'); $('siProva').classList.remove('hide'); siRender(); };
-$('siFin').onclick = function(){ if (si.tick) clearInterval(si.tick); siResultado(); };
+on('siPrev', function(){ if (si.i>0){ si.i--; siRender(); } });
+on('siVolta', function(){ si.i = si.qs.length-1;
+  $('siConf').classList.add('hide'); $('siProva').classList.remove('hide'); siRender(); });
+on('siFin', function(){ if (si.tick) clearInterval(si.tick); siResultado(); });
 function siConfirma(){
   var nb = si.resp.filter(function(r){ return r === 'B' || r === null; }).length;
   $('siConfTxt').textContent = 'Respondidas: ' + (si.qs.length-nb) + ' · em branco: ' + nb
@@ -1185,30 +1214,30 @@ function dadosView(){
       + '</span><b>' + fmt(x.idx) + '</b></div>'; }).join('');
   $('dHist').innerHTML = h || '<p class="note">Nada registrado ainda.</p>';
 }
-$('dProvaOk').onclick = function(){
+on('dProvaOk', function(){
   var v = $('dProva').value;
   S.config = S.config || {}; S.config.dataProva = v || null;
   salva(); dadosView(); painel();
   $('dMsg').textContent = v ? 'Data da prova salva. O Tier 5 abre em ' + br(destravaTier5()) + '.'
     : 'Data removida. O Tier 5 volta a ficar bloqueado.';
-};
-$('dExp').onclick = function(){
+});
+on('dExp', function(){
   var blob = new Blob([JSON.stringify(S,null,1)], {type:'application/json'});
   var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
   a.download = 'pf-agente-backup-' + hoje() + '.json'; a.click();
   setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
-};
-$('dCopy').onclick = function(){
+});
+on('dCopy', function(){
   var t = JSON.stringify(S), ok = function(){ $('dMsg').textContent = 'Histórico copiado.'; };
   if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, function(){ $('dTxt').value = t; });
   else $('dTxt').value = t;
-};
-$('dReset').onclick = function(){
+});
+on('dReset', function(){
   if (!confirm('Apagar todo o histórico deste aparelho? Não tem como desfazer.')) return;
   S = {v:2, hist:[], sessoes:[], simulados:[], teoria:{}, revisao:{}, config:{dataProva:null}};
   salva(); dadosView(); painel(); $('dMsg').textContent = 'Histórico apagado.';
-};
-$('dImp').onclick = function(){
+});
+on('dImp', function(){
   var t = $('dTxt').value.trim();
   if (!t){ $('dMsg').textContent = 'Nada para importar.'; return; }
   try {
@@ -1226,7 +1255,7 @@ $('dImp').onclick = function(){
     }
     $('dTxt').value = ''; dadosView(); painel();
   } catch(err){ $('dMsg').textContent = 'Não consegui ler: ' + err.message + '. Nada foi alterado.'; }
-};
+});
 function carregaSanear(){
   S.hist = S.hist.filter(function(h){ var q = QID[h.q];
     if (q){ h.m=q.m; h.a=q.a; h.p=q.p; h.mec=q.mec; return true; }
