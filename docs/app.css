@@ -264,3 +264,26 @@ input[type=date]{background:var(--plane);color:var(--ink);border:1px solid var(-
   border-radius:4px;opacity:.5;z-index:0;text-decoration:none}
 .ml-bar i{position:relative;z-index:1}
 .ml-pe.fraco{color:var(--muted);opacity:.8;font-size:11.5px;margin-top:2px}
+
+/* ---- progresso expansivel no painel ---- */
+details.mprog{border-bottom:1px solid var(--grid)}
+details.mprog:last-child{border-bottom:0}
+details.mprog summary{cursor:pointer;list-style:none;padding:12px 4px}
+details.mprog summary::-webkit-details-marker{display:none}
+details.mprog summary .ml-nome::before{content:"▸ ";color:var(--muted);font-weight:400}
+details.mprog[open] summary .ml-nome::before{content:"▾ "}
+details.mprog summary:hover{background:var(--grid);border-radius:8px}
+.mprog-b{padding:2px 4px 14px 14px;border-left:2px solid var(--grid);margin:0 0 10px 6px}
+.mprog-b .top{grid-template-columns:1fr 58px 52px;font-size:13.5px;padding:8px 2px}
+.mprog-b .top .nome{line-height:1.3}
+.mprog-b .top:first-of-type{border-top:0}
+/* nomes longos de topico nao podem empurrar a pagina */
+.top .nome{min-width:0;overflow-wrap:anywhere}
+.mprog-b{padding-left:10px;margin-left:4px}
+@media (max-width:480px){
+  .mprog-b{padding-left:8px;margin-left:2px}
+  .mprog-b .top{grid-template-columns:1fr 50px 46px;gap:6px}
+}
+/* tabela larga rola dentro de si, nunca empurra a pagina */
+table{display:block;overflow-x:auto;white-space:nowrap}
+table thead,table tbody{display:table;width:100%}

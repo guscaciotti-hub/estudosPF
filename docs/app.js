@@ -3,7 +3,7 @@
    Prioridade: itens_na_prova x deficit x swing. Ver CLAUDE.md. */
 'use strict';
 
-var BUILD = '10';
+var BUILD = '14';
 
 /* Guarda de versao. O service worker pode servir index.html de uma versao e
    app.js de outra; quando isso acontece, um elemento novo falta no HTML, o
@@ -447,15 +447,17 @@ function progressoMaterias(){
     var bl = EDITAL.filter(function(x){ return x.m === m.k; })[0];
     var tops = bl ? bl.topicos : [];
     var tocados = 0, praticados = 0, cobertos = 0, banco = 0, resp = 0, c = 0, e = 0, b = 0;
-    tops.forEach(function(t){
-      var o = porTopico[t.a];
-      if (!o) return;
+    var lista = tops.map(function(t){
+      var o = porTopico[t.a] || {banco:0, resp:0, c:0, e:0, b:0};
       banco += o.banco; if (o.banco) cobertos++;
       resp += o.resp; c += o.c; e += o.e; b += o.b;
       if (o.resp >= 1) tocados++;
       if (o.resp >= 3) praticados++;
+      return {a:t.a, p:t.p, banco:o.banco, resp:o.resp, c:o.c, e:o.e, b:o.b,
+        pct: o.banco ? Math.round(Math.min(o.resp, o.banco)/o.banco*100) : null,
+        aprov: (o.c+o.e+o.b) ? Math.round((o.c - o.e)/(o.c+o.e+o.b)*100) : null};
     });
-    return {k:m.k, d:m.d, itens:m.itens,
+    return {k:m.k, d:m.d, itens:m.itens, lista:lista,
       topicos:tops.length, tocados:tocados, praticados:praticados, cobertos:cobertos,
       banco:banco, resp:resp, c:c, e:e, b:b,
       prog: tops.length ? Math.round(tocados/tops.length*100) : 0,
@@ -603,36 +605,36 @@ function painel(){
   // 3. progresso por materia: quanto estudou e quanto esta rendendo
   var pm = progressoMaterias();
   $('pnBars').innerHTML = pm.map(function(m){
-    var raso = m.dens < 3;
-    return '<div class="mat-linha">'
+    var linhas = m.lista.map(function(t){
+      return '<div class="top' + (t.p ? ' clicavel' : '') + '"'
+        + (t.p ? ' data-passo="' + t.p + '"' : '') + '>'
+        + '<div class="nome">' + esc(t.a)
+        + (t.banco ? '<div class="barra"><i style="width:' + (t.pct||0) + '%"></i></div>'
+           : '<small style="color:var(--warn)">sem questão no banco</small>') + '</div>'
+        + '<div class="est">' + (t.banco ? t.resp + '/' + t.banco + '<br>' + t.pct + '%' : '—') + '</div>'
+        + '<div class="apv" style="color:' + corAprov2(t.aprov) + '">'
+        + (t.aprov === null ? '—' : (t.aprov>0?'+':'') + t.aprov + '%') + '</div></div>';
+    }).join('');
+    return '<details class="mprog"><summary>'
       + '<div class="ml-top"><span class="ml-nome">' + m.d + '</span>'
       + '<span class="ml-peso">' + m.itens + (m.itens === 1 ? ' item' : ' itens') + '</span>'
       + '<span class="ml-apv" style="color:' + corAprov2(m.aprov) + '">'
       + (m.aprov === null ? '—' : (m.aprov>0?'+':'') + m.aprov + '%') + '</span></div>'
       + '<div class="ml-bar"><i style="width:' + m.prog + '%;background:'
-      + (m.prog ? 'var(--pos)' : 'transparent') + '"></i>'
-      + '<u style="width:' + m.cob + '%"></u></div>'
-      + '<div class="ml-pe">' + m.tocados + ' de ' + m.topicos + ' tópicos tocados ('
-      + m.prog + '%)' + (m.praticados ? ' · ' + m.praticados + ' com 3+ questões' : '')
-      + '</div>'
-      + '<div class="ml-pe fraco">banco cobre ' + m.cobertos + '/' + m.topicos + ' tópicos · '
-      + num(m.dens) + ' questões por tópico' + (raso ? ' <span style="color:var(--warn)">· raso</span>' : '')
-      + ' · ' + m.resp + ' respondidas</div></div>';
+      + (m.prog ? 'var(--pos)' : 'transparent') + '"></i><u style="width:' + m.cob + '%"></u></div>'
+      + '<div class="ml-pe">' + m.tocados + ' de ' + m.topicos + ' tópicos ('
+      + m.prog + '%) · ' + num(m.dens) + ' questões por tópico'
+      + (m.dens < 3 ? ' <span style="color:var(--warn)">· raso</span>' : '') + '</div>'
+      + '</summary><div class="mprog-b">' + linhas + '</div></details>';
   }).join('');
-  $('pnTab').innerHTML = pm.map(function(m){
-    return '<tr><td>' + m.d + '</td><td>' + m.itens + '</td><td>' + m.tocados + '/' + m.topicos
-      + '</td><td>' + m.cobertos + '/' + m.topicos + '</td><td>' + num(m.dens) + '</td><td>'
-      + m.resp + '</td><td>' + (m.resp ? (m.aprov>0?'+':'') + m.aprov + '%' : '—') + '</td></tr>';
-  }).join('');
+  each('#pnBars [data-passo]', function(el){
+    el.onclick = function(){ iniciaSessao(el.dataset.passo); if (se && se.ativa) ir('sessao'); }; });
   var gT = 0, gTo = 0, gC = 0, gQ = 0;
   pm.forEach(function(m){ gT += m.topicos; gTo += m.tocados; gC += m.cobertos; gQ += m.banco; });
-  $('pnCobertura').innerHTML = 'Você tocou <strong>' + gTo + ' dos ' + gT + ' tópicos</strong> do edital ('
-    + Math.round(gTo/gT*100) + '%). O banco tem questão para <strong>' + gC + '</strong> deles ('
-    + Math.round(gC/gT*100) + '%), com <strong>' + num(gQ/gT) + ' questões por tópico</strong> em média. '
-    + '<span class="flag2">Esse é o teto do que a plataforma consegue medir hoje. Um banco de preparação '
-    + 'sério teria 10 a 15 questões por tópico — algo perto de ' + (gT*12) + '. O banco tem ' + gQ + '. '
-    + 'Progresso aqui significa "passei por esse tópico", não "domino esse tópico".</span>';
-
+  $('pnCobertura').innerHTML = 'Toque na matéria para abrir os tópicos. Você tocou <strong>'
+    + gTo + ' de ' + gT + ' tópicos</strong> do edital. O banco cobre <strong>' + gC + '</strong> deles, '
+    + 'com <strong>' + num(gQ/gT) + ' questões por tópico</strong>'
+    + (gQ/gT < 3 ? ' — <span style="color:var(--warn)">raso para afirmar domínio</span>.' : '.');
   // 4. sequencia
   var sq = sequencia();
   $('pnSeq').textContent = sq.seq;
