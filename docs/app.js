@@ -3,7 +3,7 @@
    Prioridade: itens_na_prova x deficit x swing. Ver CLAUDE.md. */
 'use strict';
 
-var BUILD = '9';
+var BUILD = '10';
 
 /* Guarda de versao. O service worker pode servir index.html de uma versao e
    app.js de outra; quando isso acontece, um elemento novo falta no HTML, o
@@ -429,20 +429,39 @@ try { var tm = localStorage.getItem('pfagente.tema'); if (tm) document.documentE
    As duas coisas sao diferentes e as duas precisam aparecer: estudo alto com
    aproveitamento baixo significa que o material acabou e o conceito nao entrou. */
 function progressoMaterias(){
-  var banco = {}, feitas = {}, cont = {};
-  MATK.forEach(function(k){ banco[k] = 0; feitas[k] = {}; cont[k] = {c:0,e:0,b:0}; });
-  BANCO.forEach(function(q){ if (banco[q.m] !== undefined) banco[q.m]++; });
+  /* O denominador do progresso e o EDITAL, nao o banco.
+     Medir "respondidas / questoes do banco" inflava tudo: 9 questoes de
+     Informatica davam "17% estudado" quando o banco tem 2,5 questoes por
+     topico e aquelas 9 tocam 2 topicos de 26 — 8%. Progresso agora e topico
+     tocado sobre topico do edital, e a profundidade do banco fica a vista,
+     porque ela e o teto do que a plataforma consegue medir. */
+  var porTopico = {};                       // assunto -> {banco, resp}
+  BANCO.forEach(function(q){
+    (porTopico[q.a] = porTopico[q.a] || {banco:0, resp:0, c:0, e:0, b:0}).banco++; });
   S.hist.forEach(function(h){
-    var q = QID[h.q]; if (!q || !cont[q.m]) return;
-    feitas[q.m][h.q] = 1;
-    cont[q.m][h.res === 1 ? 'c' : h.res === -1 ? 'e' : 'b']++;
+    var q = QID[h.q]; if (!q || !porTopico[q.a]) return;
+    var o = porTopico[q.a];
+    o.resp++; o[h.res === 1 ? 'c' : h.res === -1 ? 'e' : 'b']++;
   });
   return MATERIAS.map(function(m){
-    var k = m.k, o = cont[k], resp = o.c + o.e + o.b, nf = Object.keys(feitas[k]).length;
-    return {k:k, d:m.d, itens:m.itens, banco:banco[k], feitas:nf, resp:resp,
-      c:o.c, e:o.e, b:o.b,
-      estudo: banco[k] ? Math.round(nf/banco[k]*100) : 0,
-      aprov: resp ? Math.round((o.c - o.e)/resp*100) : null};
+    var bl = EDITAL.filter(function(x){ return x.m === m.k; })[0];
+    var tops = bl ? bl.topicos : [];
+    var tocados = 0, praticados = 0, cobertos = 0, banco = 0, resp = 0, c = 0, e = 0, b = 0;
+    tops.forEach(function(t){
+      var o = porTopico[t.a];
+      if (!o) return;
+      banco += o.banco; if (o.banco) cobertos++;
+      resp += o.resp; c += o.c; e += o.e; b += o.b;
+      if (o.resp >= 1) tocados++;
+      if (o.resp >= 3) praticados++;
+    });
+    return {k:m.k, d:m.d, itens:m.itens,
+      topicos:tops.length, tocados:tocados, praticados:praticados, cobertos:cobertos,
+      banco:banco, resp:resp, c:c, e:e, b:b,
+      prog: tops.length ? Math.round(tocados/tops.length*100) : 0,
+      cob:  tops.length ? Math.round(cobertos/tops.length*100) : 0,
+      dens: tops.length ? banco/tops.length : 0,
+      aprov: (c+e+b) ? Math.round((c - e)/(c+e+b)*100) : null};
   });
 }
 function corAprov2(v){ return v === null ? 'var(--muted)' : v < 0 ? 'var(--neg)'
@@ -584,23 +603,35 @@ function painel(){
   // 3. progresso por materia: quanto estudou e quanto esta rendendo
   var pm = progressoMaterias();
   $('pnBars').innerHTML = pm.map(function(m){
-    return '<div class="mat-linha"' + (m.resp ? ' title="' + esc(m.d + ' — ' + m.feitas + ' de ' + m.banco
-        + ' questões do banco · ' + m.c + 'C ' + m.e + 'E ' + m.b + 'B') + '"' : '') + '>'
+    var raso = m.dens < 3;
+    return '<div class="mat-linha">'
       + '<div class="ml-top"><span class="ml-nome">' + m.d + '</span>'
       + '<span class="ml-peso">' + m.itens + (m.itens === 1 ? ' item' : ' itens') + '</span>'
       + '<span class="ml-apv" style="color:' + corAprov2(m.aprov) + '">'
       + (m.aprov === null ? '—' : (m.aprov>0?'+':'') + m.aprov + '%') + '</span></div>'
-      + '<div class="ml-bar"><i style="width:' + m.estudo + '%;background:'
-      + (m.estudo ? 'var(--pos)' : 'transparent') + '"></i></div>'
-      + '<div class="ml-pe">' + (m.banco
-          ? m.estudo + '% estudado · ' + m.feitas + '/' + m.banco + ' questões'
-          : 'sem questão no banco') + '</div></div>';
+      + '<div class="ml-bar"><i style="width:' + m.prog + '%;background:'
+      + (m.prog ? 'var(--pos)' : 'transparent') + '"></i>'
+      + '<u style="width:' + m.cob + '%"></u></div>'
+      + '<div class="ml-pe">' + m.tocados + ' de ' + m.topicos + ' tópicos tocados ('
+      + m.prog + '%)' + (m.praticados ? ' · ' + m.praticados + ' com 3+ questões' : '')
+      + '</div>'
+      + '<div class="ml-pe fraco">banco cobre ' + m.cobertos + '/' + m.topicos + ' tópicos · '
+      + num(m.dens) + ' questões por tópico' + (raso ? ' <span style="color:var(--warn)">· raso</span>' : '')
+      + ' · ' + m.resp + ' respondidas</div></div>';
   }).join('');
   $('pnTab').innerHTML = pm.map(function(m){
-    return '<tr><td>' + m.d + '</td><td>' + m.itens + '</td><td>' + m.estudo + '%</td><td>'
-      + m.c + '</td><td>' + m.e + '</td><td>' + m.b + '</td><td>'
-      + (m.resp ? (m.aprov>0?'+':'') + m.aprov + '%' : '—') + '</td></tr>';
+    return '<tr><td>' + m.d + '</td><td>' + m.itens + '</td><td>' + m.tocados + '/' + m.topicos
+      + '</td><td>' + m.cobertos + '/' + m.topicos + '</td><td>' + num(m.dens) + '</td><td>'
+      + m.resp + '</td><td>' + (m.resp ? (m.aprov>0?'+':'') + m.aprov + '%' : '—') + '</td></tr>';
   }).join('');
+  var gT = 0, gTo = 0, gC = 0, gQ = 0;
+  pm.forEach(function(m){ gT += m.topicos; gTo += m.tocados; gC += m.cobertos; gQ += m.banco; });
+  $('pnCobertura').innerHTML = 'Você tocou <strong>' + gTo + ' dos ' + gT + ' tópicos</strong> do edital ('
+    + Math.round(gTo/gT*100) + '%). O banco tem questão para <strong>' + gC + '</strong> deles ('
+    + Math.round(gC/gT*100) + '%), com <strong>' + num(gQ/gT) + ' questões por tópico</strong> em média. '
+    + '<span class="flag2">Esse é o teto do que a plataforma consegue medir hoje. Um banco de preparação '
+    + 'sério teria 10 a 15 questões por tópico — algo perto de ' + (gT*12) + '. O banco tem ' + gQ + '. '
+    + 'Progresso aqui significa "passei por esse tópico", não "domino esse tópico".</span>';
 
   // 4. sequencia
   var sq = sequencia();
@@ -713,8 +744,9 @@ function conteudoView(){
     var resp = c + e + b;
     return {m:bl.m, d:MAT[bl.m].d, itens:MAT[bl.m].itens, tops:tops, banco:banco, feitas:feitas,
       resp:resp, c:c, e:e, b:b,
-      estudo: banco ? Math.round(feitas/banco*100) : null,
+      estudo: tops.length ? Math.round(tops.filter(function(t){ return t.resp; }).length/tops.length*100) : null,
       aprov: resp ? Math.round((c-e)/resp*100) : null,
+      dens: tops.length ? banco/tops.length : 0,
       comQ: tops.filter(function(t){ return t.banco; }).length,
       iniciados: tops.filter(function(t){ return t.resp; }).length};
   });
@@ -740,8 +772,9 @@ function conteudoView(){
   $('cnBar').style.width = pct + '%';
   $('cnBar').style.background = 'var(--pos)';
   $('cnBarL').textContent = T.feitas + ' de ' + T.banco + ' questões do banco já respondidas (' + pct + '%)';
-  $('cnAviso').innerHTML = 'Duas medidas diferentes, e confundi-las engana: <strong>estudo</strong> é quanto '
-    + 'do material disponível você já consumiu; <strong>aproveitamento</strong> é (certas − erradas) ÷ respondidas, '
+  $('cnAviso').innerHTML = 'O progresso é medido em <strong>tópicos do edital tocados</strong>, não em questões '
+    + 'do banco consumidas — medir pelo banco inflava o número, porque o banco é uma fração do edital. '
+    + '<strong>Aproveitamento</strong> é (certas − erradas) ÷ respondidas, '
     + 'em percentual — o índice líquido numa escala de −100 a +100. Não é percentual bruto de acerto: '
     + 'chutar metade de um bloco daria 50% de acerto e <strong>0 de aproveitamento</strong>, que é exatamente '
     + 'o que valeria na prova.<br><br>'
@@ -778,7 +811,9 @@ function conteudoView(){
       html += '<div class="top' + clic + '"' + (t.p ? ' data-passo="' + t.p + '"' : '') + '>'
         + '<div class="nome">' + esc(t.a)
         + '<small>' + (t.banco
-            ? t.banco + (t.banco === 1 ? ' questão' : ' questões') + (t.p ? ' · passo ' + t.p : '')
+            ? t.banco + (t.banco === 1 ? ' questão' : ' questões')
+              + (t.banco < 3 ? ' <span style="color:var(--warn)">· raso</span>' : '')
+              + (t.p ? ' · passo ' + t.p : '')
             : t.p
               ? '<span style="color:var(--warn)">sem questão própria</span> · estudado dentro do passo ' + t.p
               : '<span style="color:var(--warn)">sem questão no banco</span>') + '</small>'

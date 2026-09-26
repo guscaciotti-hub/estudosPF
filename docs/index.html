@@ -6,7 +6,7 @@
 <title>Agente PF — plataforma de estudo</title>
 <meta name="description" content="Preparação para Agente da Polícia Federal, banca Cebraspe. Passo estratégico, teoria, questões certo/errado com penalidade e simulados de etapa.">
 <meta name="theme-color" content="#0d0d0d">
-<meta name="build" content="9">
+<meta name="build" content="10">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
 <link rel="stylesheet" href="app.css">
@@ -58,13 +58,14 @@
 
       <div class="card">
         <h3>Progresso por matéria</h3>
-        <p class="note" style="margin-bottom:16px">A barra é <strong>quanto do material você já
-           consumiu</strong>. O número à direita é o <strong>aproveitamento líquido</strong>
-           — (certas − erradas) ÷ respondidas. São coisas diferentes: barra cheia com número
-           baixo significa que o material acabou e o conceito não entrou.</p>
+        <p class="note" style="margin-bottom:14px">A barra é <strong>quantos tópicos do edital
+           você já tocou</strong>. O traço claro atrás dela é até onde o banco alcança — o resto
+           do edital ainda não tem questão. O número à direita é o <strong>aproveitamento
+           líquido</strong>, (certas − erradas) ÷ respondidas.</p>
+        <p class="note" id="pnCobertura" style="margin-bottom:18px"></p>
         <div id="pnBars"></div>
         <h3>Os mesmos números em tabela</h3>
-        <table><thead><tr><th>Matéria</th><th>Itens</th><th>Estudo</th><th>C</th><th>E</th><th>B</th><th>Aprov.</th></tr></thead>
+        <table><thead><tr><th>Matéria</th><th>Itens</th><th>Tocados</th><th>No banco</th><th>Q/tóp.</th><th>Resp.</th><th>Aprov.</th></tr></thead>
           <tbody id="pnTab"></tbody></table>
       </div>
 

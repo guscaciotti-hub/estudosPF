@@ -307,6 +307,33 @@ medidas distintas**, e confundi-las engana:
 | **Estudo** | questões distintas respondidas ÷ questões do tópico no banco | quanto do material disponível foi consumido |
 | **Aproveitamento** | (certas − erradas) ÷ respondidas × 100 | o índice líquido em escala de −100 a +100 |
 
+### O denominador do progresso é o edital, nunca o banco
+
+**Progresso = tópicos do edital tocados ÷ tópicos do edital.** Nunca
+"questões respondidas ÷ questões do banco".
+
+O erro foi cometido e custou confiança: o painel anunciava *"Informática 17%
+estudado"* depois de uma sessão. O número era 9 respondidas de 53 no banco —
+17% do **meu material**, apresentado como 17% da **matéria**. Na verdade
+aquelas 9 questões tocavam 2 dos 26 tópicos de Informática: 8%.
+
+O banco é uma fração do edital e precisa ser tratado como tal:
+
+- 153 tópicos no programa; o banco cobre **84** deles.
+- **1,4 questões por tópico** em média. Um banco de preparação sério teria 10
+  a 15 — algo perto de 1.800 questões.
+- Tópico com menos de 3 questões é marcado **raso**: ele não sustenta um
+  julgamento de domínio.
+
+Por isso toda tela que mostra progresso mostra junto **a cobertura e a
+densidade do banco**, e a palavra usada é *tocado*, não *estudado* nem
+*dominado*. "Passei por esse tópico" e "domino esse tópico" são afirmações
+diferentes, e a plataforma só consegue sustentar a primeira.
+
+**Em conversa vale o mesmo.** Nunca diga que uma matéria está X% estudada com
+base em quantas questões do banco foram respondidas. Diga quantos tópicos
+foram tocados, de quantos, e com que profundidade.
+
 **Aproveitamento não é percentual de acerto.** Chutar metade de um bloco dá
 50% de acerto e **0 de aproveitamento** — que é exatamente o que valeria na
 prova. O percentual bruto continua proibido, porque premia chute.
