@@ -1,5 +1,10 @@
 # Plataforma de estudo — Agente da Polícia Federal
 
+> **Briefing completo do sistema:** [`SISTEMA.md`](SISTEMA.md) — arquitetura,
+> modelo de dados, regras, estado atual com números, limitações e o histórico
+> de erros já corrigidos. É o documento para entregar a quem for assumir ou
+> auditar o sistema.
+
 Preparação para o concurso de Agente da PF, banca Cebraspe. Duas partes que
 usam as mesmas regras:
 
