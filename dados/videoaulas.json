@@ -1,0 +1,1419 @@
+{
+ "gerado": "2026-11-03",
+ "fonte": "busca web restrita a youtube.com",
+ "aviso": "Nenhum video foi aberto. youtube.com esta bloqueado pelo proxy desta sessao (HTTP 403 no CONNECT), inclusive o endpoint oEmbed, entao a existencia e a disponibilidade dos videos NAO foram verificadas. Os links sao resultados reais de busca cujo titulo bate com o topico; conteudo, duracao e qualidade tambem nao foram verificados.",
+ "total": 141,
+ "com_link": 140,
+ "itens": [
+  {
+   "id": "T001",
+   "materia": "Informática",
+   "topico": "Conceitos de hardware: processador, memória, barramentos, dispositivos de E/S",
+   "video": "1P1LIA0QeHw",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=1P1LIA0QeHw",
+   "titulo": "Aula 006 — Hardware (Informática para Concursos)",
+   "ressalva": null
+  },
+  {
+   "id": "T002",
+   "materia": "Contabilidade Geral",
+   "topico": "Conceito, objeto, campo de aplicação e finalidade da contabilidade",
+   "video": "rlNcN1C4miI",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=rlNcN1C4miI",
+   "titulo": "Conceito, Objeto, Finalidade, Técnicas Contábeis, Equação Patrimonial",
+   "ressalva": null
+  },
+  {
+   "id": "T003",
+   "materia": "Língua Portuguesa",
+   "topico": "Compreensão e interpretação de textos",
+   "video": "DvDXfVkpatM",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=DvDXfVkpatM",
+   "titulo": "Interpretação — banca CESPE/CEBRASPE (INSS/PF/PRF)",
+   "ressalva": null
+  },
+  {
+   "id": "T004",
+   "materia": "Raciocínio Lógico",
+   "topico": "Proposições: conceito, valor lógico, proposições simples e compostas",
+   "video": "PltqUuwR9ec",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=PltqUuwR9ec",
+   "titulo": "Lógica: proposições, valor lógico, princípios lógicos e negação",
+   "ressalva": null
+  },
+  {
+   "id": "T005",
+   "materia": "Raciocínio Lógico",
+   "topico": "Conectivos e tabelas-verdade",
+   "video": "L73yZkTQ9pE",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=L73yZkTQ9pE",
+   "titulo": "Conectivos e tabela-verdade — Prof. Gui, aula 2",
+   "ressalva": null
+  },
+  {
+   "id": "T006",
+   "materia": "Estatística",
+   "topico": "População, amostra e tipos de amostragem",
+   "video": "kd6w9_G8Z5w",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=kd6w9_G8Z5w",
+   "titulo": "Estatística aula 1: população, amostra, métodos de amostragem",
+   "ressalva": null
+  },
+  {
+   "id": "T007",
+   "materia": "Estatística",
+   "topico": "Tipos de variáveis: qualitativas e quantitativas",
+   "video": "fhUo_GKtZHo",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=fhUo_GKtZHo",
+   "titulo": "Variáveis qualitativas e quantitativas: nominal, ordinal, discreta, contínua",
+   "ressalva": null
+  },
+  {
+   "id": "T008",
+   "materia": "Direito Administrativo",
+   "topico": "Administração pública: conceito, princípios expressos e implícitos",
+   "video": "EPEcPAa_quo",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=EPEcPAa_quo",
+   "titulo": "Princípios expressos e implícitos aplicáveis à administração pública",
+   "ressalva": null
+  },
+  {
+   "id": "T009",
+   "materia": "Direito Administrativo",
+   "topico": "Organização administrativa: administração direta e indireta",
+   "video": "OgoRR4eePtA",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=OgoRR4eePtA",
+   "titulo": "PF 2025 — Organização administrativa: direta e indireta (aula 58)",
+   "ressalva": null
+  },
+  {
+   "id": "T010",
+   "materia": "Direito Constitucional",
+   "topico": "Princípios fundamentais",
+   "video": "ypNuEbiWysw",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=ypNuEbiWysw",
+   "titulo": "Princípios fundamentais (arts. 1º ao 4º da CF)",
+   "ressalva": null
+  },
+  {
+   "id": "T011",
+   "materia": "Direito Constitucional",
+   "topico": "Direitos e garantias fundamentais: direitos individuais e coletivos",
+   "video": "9XDXxP0ACG0",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=9XDXxP0ACG0",
+   "titulo": "Artigo 5º da Constituição COMPLETO — direitos e garantias fundamentais",
+   "ressalva": null
+  },
+  {
+   "id": "T012",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Aplicação da lei penal no tempo e no espaço",
+   "video": "wDWH2gcw9Kc",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=wDWH2gcw9Kc",
+   "titulo": "Aplicação da lei penal no tempo e no espaço — aula 01",
+   "ressalva": null
+  },
+  {
+   "id": "T013",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Teoria do crime: fato típico, ilicitude, culpabilidade",
+   "video": "hjG9QOLCsHM",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=hjG9QOLCsHM",
+   "titulo": "Conceito analítico de crime: tipicidade, ilicitude e culpabilidade",
+   "ressalva": null
+  },
+  {
+   "id": "T014",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Excludentes de ilicitude e de culpabilidade",
+   "video": "9bO5WRZ5MyQ",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=9bO5WRZ5MyQ",
+   "titulo": "Tipicidade, ilicitude, culpabilidade, punibilidade + excludentes",
+   "ressalva": null
+  },
+  {
+   "id": "T015",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Concurso de pessoas e concurso de crimes",
+   "video": "UFiw10ByKEg",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=UFiw10ByKEg",
+   "titulo": "Concurso de pessoas: aula completa (Direito Penal, parte geral)",
+   "ressalva": null
+  },
+  {
+   "id": "T016",
+   "materia": "Legislação Especial",
+   "topico": "Lei 10.826/2003 — Estatuto do Desarmamento",
+   "video": "6WqqpOA5qKs",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=6WqqpOA5qKs",
+   "titulo": "Aula gratuita: Estatuto do Desarmamento (Legislação Penal Especial)",
+   "ressalva": null
+  },
+  {
+   "id": "T017",
+   "materia": "Legislação Especial",
+   "topico": "Lei 11.343/2006 — Lei de Drogas",
+   "video": "i5lcZyzzP_k",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=i5lcZyzzP_k",
+   "titulo": "Aula gratuita: Lei de Drogas (Legislação Penal Especial)",
+   "ressalva": null
+  },
+  {
+   "id": "T018",
+   "materia": "Legislação Especial",
+   "topico": "Lei 9.455/1997 — Crimes de tortura",
+   "video": "gr7tf8O8O6M",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=gr7tf8O8O6M",
+   "titulo": "Lei 9.455/97 — Lei de Tortura: teoria + questões",
+   "ressalva": null
+  },
+  {
+   "id": "T019",
+   "materia": "Legislação Especial",
+   "topico": "Lei 13.869/2019 — Abuso de autoridade",
+   "video": "rtxcS849Dlk",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=rtxcS849Dlk",
+   "titulo": "Nova Lei de Abuso de Autoridade — Concurso PF",
+   "ressalva": null
+  },
+  {
+   "id": "T020",
+   "materia": "Direitos Humanos",
+   "topico": "(aguardando o edital)",
+   "video": null,
+   "playlist": null,
+   "url": null,
+   "titulo": "aguardando o edital",
+   "ressalva": null
+  },
+  {
+   "id": "T021",
+   "materia": "Contabilidade Geral",
+   "topico": "Usuários da informação contábil",
+   "video": "vSB_X0BWeBA",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=vSB_X0BWeBA",
+   "titulo": "Contabilidade Geral para PF — aula 1: conceitos, objetivos e finalidades",
+   "ressalva": null
+  },
+  {
+   "id": "T022",
+   "materia": "Informática",
+   "topico": "Conceitos de software: sistema operacional, aplicativos, licenciamento",
+   "video": "DX8yEy7nctg",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=DX8yEy7nctg",
+   "titulo": "Noções de sistemas operacionais para concurso — aula 1",
+   "ressalva": null
+  },
+  {
+   "id": "T023",
+   "materia": "Informática",
+   "topico": "Sistema operacional Windows: interface, arquivos e pastas, permissões, atalhos",
+   "video": "Pk98075GVMM",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=Pk98075GVMM",
+   "titulo": "Sistema operacional Windows para concursos (pastas, arquivos, atalhos)",
+   "ressalva": null
+  },
+  {
+   "id": "T024",
+   "materia": "Contabilidade Geral",
+   "topico": "Princípios e características qualitativas da informação contábil",
+   "video": "JDLLNqa0CHI",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=JDLLNqa0CHI",
+   "titulo": "Características qualitativas — CPC 00 (fundamentais e de melhoria)",
+   "ressalva": null
+  },
+  {
+   "id": "T025",
+   "materia": "Língua Portuguesa",
+   "topico": "Tipologia e gêneros textuais",
+   "video": "VpgB5RNfmhI",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=VpgB5RNfmhI",
+   "titulo": "PRF 02 — reconhecimento de tipos e gêneros textuais (CESPE)",
+   "ressalva": null
+  },
+  {
+   "id": "T026",
+   "materia": "Raciocínio Lógico",
+   "topico": "Tautologia, contradição e contingência",
+   "video": "0sC4UM_Mnxk",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=0sC4UM_Mnxk",
+   "titulo": "Tautologia, contradição e contingência — teoria + questões",
+   "ressalva": null
+  },
+  {
+   "id": "T027",
+   "materia": "Raciocínio Lógico",
+   "topico": "Equivalências lógicas (condicional, contrapositiva, De Morgan)",
+   "video": "j_JbaQWvL4o",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=j_JbaQWvL4o",
+   "titulo": "Como decorar as equivalências lógicas — Prof. Joselias",
+   "ressalva": null
+  },
+  {
+   "id": "T028",
+   "materia": "Contabilidade Geral",
+   "topico": "Patrimônio: bens, direitos e obrigações",
+   "video": "LhslWBz5R7w",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=LhslWBz5R7w",
+   "titulo": "Contabilidade Geral aula 02 — estudo do patrimônio",
+   "ressalva": null
+  },
+  {
+   "id": "T029",
+   "materia": "Informática",
+   "topico": "Sistema operacional Linux: estrutura de diretórios, permissões, comandos básicos",
+   "video": null,
+   "playlist": "PLM2kqWhoolXFA7hFytx_7dwiKquwJiSKT",
+   "url": "https://www.youtube.com/playlist?list=PLM2kqWhoolXFA7hFytx_7dwiKquwJiSKT",
+   "titulo": "Playlist: Linux para concursos 2026 (diretórios, comandos, permissões)",
+   "ressalva": null
+  },
+  {
+   "id": "T030",
+   "materia": "Estatística",
+   "topico": "Distribuições de frequência, histogramas e representações gráficas",
+   "video": "a2holH0wN1U",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=a2holH0wN1U",
+   "titulo": "Distribuição de frequências e histograma com polígono",
+   "ressalva": null
+  },
+  {
+   "id": "T031",
+   "materia": "Estatística",
+   "topico": "Medidas de posição: média, mediana, moda, quartis e percentis",
+   "video": "sD3T3ZUzIQs",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=sD3T3ZUzIQs",
+   "titulo": "Medidas de posição e quartis",
+   "ressalva": null
+  },
+  {
+   "id": "T032",
+   "materia": "Informática",
+   "topico": "Edição de textos (Word e LibreOffice Writer)",
+   "video": "q05m0j1M1ko",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=q05m0j1M1ko",
+   "titulo": "Word para concursos: interface, faixa de opções, atalhos e edição",
+   "ressalva": null
+  },
+  {
+   "id": "T033",
+   "materia": "Contabilidade Geral",
+   "topico": "Equação patrimonial e patrimônio líquido",
+   "video": "xN7hLjhaqnM",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=xN7hLjhaqnM",
+   "titulo": "Equação fundamental do patrimônio",
+   "ressalva": null
+  },
+  {
+   "id": "T034",
+   "materia": "Língua Portuguesa",
+   "topico": "Coesão e coerência textual",
+   "video": "DKeV0lUyVqY",
+   "playlist": null,
+   "url": "https://www.youtube.com/live/DKeV0lUyVqY",
+   "titulo": "CEBRASPE — domínio dos mecanismos de coesão textual",
+   "ressalva": null
+  },
+  {
+   "id": "T035",
+   "materia": "Informática",
+   "topico": "Planilhas eletrônicas (Excel e LibreOffice Calc): fórmulas, funções, referências",
+   "video": "oCui9Egbym8",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=oCui9Egbym8",
+   "titulo": "Fórmulas e funções do Excel para concursos — aula 65",
+   "ressalva": null
+  },
+  {
+   "id": "T036",
+   "materia": "Direito Administrativo",
+   "topico": "Poderes administrativos e abuso de poder",
+   "video": "PTq_f8l4IFY",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=PTq_f8l4IFY",
+   "titulo": "Aula gratuita: poderes administrativos",
+   "ressalva": null
+  },
+  {
+   "id": "T037",
+   "materia": "Direito Administrativo",
+   "topico": "Atos administrativos: conceito, requisitos, atributos, espécies, extinção",
+   "video": "HxtYLsY0loM",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=HxtYLsY0loM",
+   "titulo": "Ato administrativo: requisitos, atributos, anulação",
+   "ressalva": null
+  },
+  {
+   "id": "T038",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Penas: espécies, aplicação e dosimetria",
+   "video": "_x49m2vHTTM",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=_x49m2vHTTM",
+   "titulo": "Dosimetria da pena passo a passo — aula completa para concursos",
+   "ressalva": null
+  },
+  {
+   "id": "T039",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Extinção da punibilidade e prescrição",
+   "video": "2uAnYIM5-xc",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=2uAnYIM5-xc",
+   "titulo": "Extinção da punibilidade e prescrição — efeitos e causas",
+   "ressalva": null
+  },
+  {
+   "id": "T040",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Crimes contra a pessoa e contra o patrimônio",
+   "video": "YJRQGQGfwtA",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=YJRQGQGfwtA",
+   "titulo": "Crimes contra a pessoa e contra o patrimônio (art. 121 a 183)",
+   "ressalva": null
+  },
+  {
+   "id": "T041",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Crimes contra a fé pública",
+   "video": "-8Sv_ihekQA",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=-8Sv_ihekQA",
+   "titulo": "Crimes contra a fé pública — aula de Direito Penal",
+   "ressalva": null
+  },
+  {
+   "id": "T042",
+   "materia": "Contabilidade Geral",
+   "topico": "Contas: conceito, classificação, teoria das contas",
+   "video": "Q-9yGUwxQAg",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=Q-9yGUwxQAg",
+   "titulo": "Teoria das contas (Contabilidade Geral)",
+   "ressalva": null
+  },
+  {
+   "id": "T043",
+   "materia": "Língua Portuguesa",
+   "topico": "Ortografia oficial",
+   "video": "BcF-pFHtnFY",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=BcF-pFHtnFY",
+   "titulo": "Ortografia oficial descomplicada: letras, hífen e acentuação que mais caem",
+   "ressalva": null
+  },
+  {
+   "id": "T044",
+   "materia": "Raciocínio Lógico",
+   "topico": "Negação de proposições compostas",
+   "video": "5jIkG7zH_WI",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=5jIkG7zH_WI",
+   "titulo": "Negação de proposições compostas",
+   "ressalva": null
+  },
+  {
+   "id": "T045",
+   "materia": "Raciocínio Lógico",
+   "topico": "Negação de quantificadores (todo, algum, nenhum)",
+   "video": "AAyQOogdCn0",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=AAyQOogdCn0",
+   "titulo": "Quantificadores lógicos: todo, algum e nenhum (equivalência e negação)",
+   "ressalva": null
+  },
+  {
+   "id": "T046",
+   "materia": "Informática",
+   "topico": "Apresentações (PowerPoint e LibreOffice Impress)",
+   "video": "6Dbn6s-P7vg",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=6Dbn6s-P7vg",
+   "titulo": "PowerPoint para concursos — editores de apresentação, aula 1",
+   "ressalva": null
+  },
+  {
+   "id": "T047",
+   "materia": "Contabilidade Geral",
+   "topico": "Método das partidas dobradas: débito, crédito e saldo",
+   "video": "oO9V2DPmOUE",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=oO9V2DPmOUE",
+   "titulo": "Método das partidas dobradas (aula 01) — débito e crédito",
+   "ressalva": null
+  },
+  {
+   "id": "T048",
+   "materia": "Direito Constitucional",
+   "topico": "Direitos sociais, nacionalidade e direitos políticos",
+   "video": "LlEKrSk0LFw",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=LlEKrSk0LFw",
+   "titulo": "Direitos sociais (CF/88, arts. 6º a 11)",
+   "ressalva": null
+  },
+  {
+   "id": "T049",
+   "materia": "Direito Constitucional",
+   "topico": "Organização do Estado: União, estados, municípios e competências",
+   "video": "imshXOmBWXE",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=imshXOmBWXE",
+   "titulo": "Organização do Estado: competências da União, estados e municípios",
+   "ressalva": null
+  },
+  {
+   "id": "T050",
+   "materia": "Informática",
+   "topico": "Redes de computadores: conceitos, topologias, meios de transmissão",
+   "video": "7U6mXX9HykM",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=7U6mXX9HykM",
+   "titulo": "Informática para concursos — aula 01.1: redes de computadores",
+   "ressalva": null
+  },
+  {
+   "id": "T051",
+   "materia": "Língua Portuguesa",
+   "topico": "Acentuação gráfica",
+   "video": "nWQVPQmxWTk",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=nWQVPQmxWTk",
+   "titulo": "Acentuação para concurso: oxítona, paroxítona, proparoxítona",
+   "ressalva": null
+  },
+  {
+   "id": "T052",
+   "materia": "Estatística",
+   "topico": "Medidas de dispersão: amplitude, variância, desvio padrão, coeficiente de variação",
+   "video": "JmVyFb7yfJk",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=JmVyFb7yfJk",
+   "titulo": "Medidas de dispersão: variância, desvio padrão, coeficiente de variação",
+   "ressalva": null
+  },
+  {
+   "id": "T053",
+   "materia": "Estatística",
+   "topico": "Medidas de assimetria e curtose",
+   "video": "AHLvdbNM7oM",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=AHLvdbNM7oM",
+   "titulo": "Assimetria e curtose — Estatística para concursos",
+   "ressalva": null
+  },
+  {
+   "id": "T054",
+   "materia": "Contabilidade Geral",
+   "topico": "Escrituração: livros, lançamentos, fórmulas",
+   "video": "SJkouzsGTIU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=SJkouzsGTIU",
+   "titulo": "Escrituração contábil — parte 1",
+   "ressalva": null
+  },
+  {
+   "id": "T055",
+   "materia": "Informática",
+   "topico": "Modelo OSI: as sete camadas e suas funções",
+   "video": "SMK9ybXsbfw",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=SMK9ybXsbfw",
+   "titulo": "OSI/ISO nas redes — o que as bancas consideram certo",
+   "ressalva": null
+  },
+  {
+   "id": "T056",
+   "materia": "Informática",
+   "topico": "Arquitetura TCP/IP: camadas, correspondência com o OSI",
+   "video": "c5vfwNBbl4g",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=c5vfwNBbl4g",
+   "titulo": "Modelo OSI x TCP/IP — comparação detalhada",
+   "ressalva": null
+  },
+  {
+   "id": "T057",
+   "materia": "Contabilidade Geral",
+   "topico": "Fatos contábeis: permutativos, modificativos e mistos",
+   "video": "K0-xREBmXoc",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=K0-xREBmXoc",
+   "titulo": "Fatos contábeis: permutativos, modificativos, mistos + razonetes",
+   "ressalva": null
+  },
+  {
+   "id": "T058",
+   "materia": "Língua Portuguesa",
+   "topico": "Emprego das classes de palavras",
+   "video": "ltrzPijgKi4",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=ltrzPijgKi4",
+   "titulo": "Morfologia: classes de palavras (para concurso)",
+   "ressalva": null
+  },
+  {
+   "id": "T059",
+   "materia": "Raciocínio Lógico",
+   "topico": "Lógica de argumentação: validade, premissas e conclusão",
+   "video": "i26VKRCyi9o",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=i26VKRCyi9o",
+   "titulo": "Argumentação lógica e silogismos — Prof. Gui, aula 5",
+   "ressalva": null
+  },
+  {
+   "id": "T060",
+   "materia": "Raciocínio Lógico",
+   "topico": "Diagramas lógicos e lógica de primeira ordem",
+   "video": "YTPaDTDzpb4",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=YTPaDTDzpb4",
+   "titulo": "Lógica de primeira ordem facilitada — RLM para concursos",
+   "ressalva": null
+  },
+  {
+   "id": "T061",
+   "materia": "Legislação Especial",
+   "topico": "Lei 12.850/2013 — Organização criminosa",
+   "video": "r_N3qFRQT1c",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=r_N3qFRQT1c",
+   "titulo": "Cebraspe na mira — Lei 12.850/2013 (organização criminosa)",
+   "ressalva": null
+  },
+  {
+   "id": "T062",
+   "materia": "Legislação Especial",
+   "topico": "Lei 9.613/1998 — Lavagem de dinheiro",
+   "video": "UaMAsy-YvOk",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=UaMAsy-YvOk",
+   "titulo": "Aula gratuita: Lei de Lavagem de Dinheiro (Legislação Penal Especial)",
+   "ressalva": null
+  },
+  {
+   "id": "T063",
+   "materia": "Legislação Especial",
+   "topico": "Lei 12.830/2013 — Investigação criminal conduzida por delegado",
+   "video": "JTVWtsDxYh0",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=JTVWtsDxYh0",
+   "titulo": "Lei esquematizada: investigação criminal conduzida pelo delegado (12.830/13)",
+   "ressalva": null
+  },
+  {
+   "id": "T064",
+   "materia": "Legislação Especial",
+   "topico": "Lei 8.069/1990 — ECA (disposições penais)",
+   "video": "ktOj5Ztv8Eg",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=ktOj5Ztv8Eg",
+   "titulo": "Crimes do ECA (Lei 8.069/90) — parte 1",
+   "ressalva": null
+  },
+  {
+   "id": "T065",
+   "materia": "Informática",
+   "topico": "Protocolos: IP, TCP, UDP, HTTP, HTTPS, DNS, DHCP, FTP, SMTP, POP3, IMAP",
+   "video": "DjXDPfyIJP0",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=DjXDPfyIJP0",
+   "titulo": "Protocolos: TCP, UDP, SMTP, HTTP, FTP, DNS, DHCP, POP, IMAP",
+   "ressalva": null
+  },
+  {
+   "id": "T066",
+   "materia": "Contabilidade Geral",
+   "topico": "Regimes contábeis: caixa e competência",
+   "video": "07sA7BIcsPY",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=07sA7BIcsPY",
+   "titulo": "Regimes contábeis: competência, caixa e misto",
+   "ressalva": null
+  },
+  {
+   "id": "T067",
+   "materia": "Informática",
+   "topico": "Endereçamento: IPv4, IPv6, máscara, sub-redes, NAT",
+   "video": "n08GDRy8SDU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=n08GDRy8SDU",
+   "titulo": "Endereçamento IPv4 e IPv6 simplificado",
+   "ressalva": null
+  },
+  {
+   "id": "T068",
+   "materia": "Língua Portuguesa",
+   "topico": "Emprego do sinal indicativo de crase",
+   "video": "JBALZYWrOXg",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=JBALZYWrOXg",
+   "titulo": "Crase para concursos: questões comentadas CESPE",
+   "ressalva": null
+  },
+  {
+   "id": "T069",
+   "materia": "Direito Administrativo",
+   "topico": "Agentes públicos e regime jurídico (Lei 8.112/1990)",
+   "video": "_5irvphXdAs",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=_5irvphXdAs",
+   "titulo": "Lei 8.112/1990 — regime jurídico dos servidores da União, aula 01",
+   "ressalva": null
+  },
+  {
+   "id": "T070",
+   "materia": "Direito Administrativo",
+   "topico": "Processo administrativo disciplinar",
+   "video": "XzJLyCF-LfE",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=XzJLyCF-LfE",
+   "titulo": "PAD — processo administrativo disciplinar (Lei 8.112/90)",
+   "ressalva": null
+  },
+  {
+   "id": "T071",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Crimes contra a administração pública",
+   "video": "ptr8RnQuwYU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=ptr8RnQuwYU",
+   "titulo": "Crimes contra a administração pública: peculato, corrupção, prevaricação, concussão",
+   "ressalva": null
+  },
+  {
+   "id": "T072",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Inquérito policial: natureza, características, atribuições",
+   "video": "LKC-WndRbEU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=LKC-WndRbEU",
+   "titulo": "Inquérito policial esquematizado",
+   "ressalva": null
+  },
+  {
+   "id": "T073",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Ação penal pública e privada",
+   "video": "ftGw2uVK8HI",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=ftGw2uVK8HI",
+   "titulo": "Ação penal — aula esquematizada + resumão e questões",
+   "ressalva": null
+  },
+  {
+   "id": "T074",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Prova: meios, ônus, provas ilícitas, cadeia de custódia",
+   "video": "HahRu2pHntY",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=HahRu2pHntY",
+   "titulo": "Prova no processo penal — parte 02 (apreciação, provas ilícitas)",
+   "ressalva": null
+  },
+  {
+   "id": "T075",
+   "materia": "Contabilidade Geral",
+   "topico": "Balanço Patrimonial: estrutura, ativo e passivo, critérios de classificação",
+   "video": "4jznWh3QZ7g",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=4jznWh3QZ7g",
+   "titulo": "Balanço patrimonial: introdução, ativo, passivo, obrigações exigíveis",
+   "ressalva": null
+  },
+  {
+   "id": "T076",
+   "materia": "Estatística",
+   "topico": "Probabilidade: axiomas, eventos, independência, teorema de Bayes",
+   "video": "8MP2zJZI0rU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=8MP2zJZI0rU",
+   "titulo": "Teorema de Bayes e probabilidade condicional — exercícios de concurso",
+   "ressalva": null
+  },
+  {
+   "id": "T077",
+   "materia": "Estatística",
+   "topico": "Variáveis aleatórias discretas e contínuas",
+   "video": "qN_K0NuJPs8",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=qN_K0NuJPs8",
+   "titulo": "Variáveis aleatórias — aula 4",
+   "ressalva": null
+  },
+  {
+   "id": "T078",
+   "materia": "Informática",
+   "topico": "Equipamentos de rede: hub, switch, roteador, access point",
+   "video": "u2LeXY07vrE",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=u2LeXY07vrE",
+   "titulo": "Equipamentos de rede: switch, roteador, repetidor, access point",
+   "ressalva": null
+  },
+  {
+   "id": "T079",
+   "materia": "Língua Portuguesa",
+   "topico": "Sintaxe da oração e do período",
+   "video": "ZVfeDI6gPb0",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=ZVfeDI6gPb0",
+   "titulo": "Sintaxe da oração — conceitos mais cobrados (teoria + questões)",
+   "ressalva": null
+  },
+  {
+   "id": "T080",
+   "materia": "Raciocínio Lógico",
+   "topico": "Teoria dos conjuntos e diagramas de Venn",
+   "video": "EuoEl992v34",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=EuoEl992v34",
+   "titulo": "Diagrama de Venn e teoria dos conjuntos",
+   "ressalva": null
+  },
+  {
+   "id": "T081",
+   "materia": "Raciocínio Lógico",
+   "topico": "Problemas de raciocínio: ordenação, associação, verdades e mentiras",
+   "video": "0sDKO4U9UtY",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=0sDKO4U9UtY",
+   "titulo": "Associação lógica — como resolver todos os problemas",
+   "ressalva": null
+  },
+  {
+   "id": "T082",
+   "materia": "Contabilidade Geral",
+   "topico": "Demonstração do Resultado do Exercício (DRE)",
+   "video": "OGxATbGK_o8",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=OGxATbGK_o8",
+   "titulo": "Estrutura da DRE (CPC 26 / Lei das S.A.)",
+   "ressalva": null
+  },
+  {
+   "id": "T083",
+   "materia": "Informática",
+   "topico": "Internet, intranet e extranet",
+   "video": "Xho87CMk2QU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=Xho87CMk2QU",
+   "titulo": "Conceitos de intranet, extranet e internet (informática para concursos)",
+   "ressalva": null
+  },
+  {
+   "id": "T084",
+   "materia": "Contabilidade Geral",
+   "topico": "Demonstração das Mutações do Patrimônio Líquido (DMPL)",
+   "video": "TI3c4mx3X2Y",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=TI3c4mx3X2Y",
+   "titulo": "DMPL — demonstração das mutações do patrimônio líquido, aula 18",
+   "ressalva": null
+  },
+  {
+   "id": "T085",
+   "materia": "Língua Portuguesa",
+   "topico": "Pontuação",
+   "video": "G8Stjzy-87k",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=G8Stjzy-87k",
+   "titulo": "Pontuação — aulão completo para concurso público",
+   "ressalva": null
+  },
+  {
+   "id": "T086",
+   "materia": "Direito Constitucional",
+   "topico": "Administração pública na Constituição (arts. 37 a 41)",
+   "video": "EGD2phq-x3g",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=EGD2phq-x3g",
+   "titulo": "Da administração pública na CF/88 (arts. 37 a 41)",
+   "ressalva": null
+  },
+  {
+   "id": "T087",
+   "materia": "Direito Constitucional",
+   "topico": "Organização dos Poderes",
+   "video": "9Wo79oHd_EU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=9Wo79oHd_EU",
+   "titulo": "Organização dos poderes — videoaula",
+   "ressalva": null
+  },
+  {
+   "id": "T088",
+   "materia": "Informática",
+   "topico": "Arquitetura cliente-servidor e computação em nuvem (IaaS, PaaS, SaaS)",
+   "video": "z6mCskr1Nts",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=z6mCskr1Nts",
+   "titulo": "Informática para PF — modalidades de serviço em nuvem (SaaS, PaaS, IaaS)",
+   "ressalva": null
+  },
+  {
+   "id": "T089",
+   "materia": "Contabilidade Geral",
+   "topico": "Demonstração dos Fluxos de Caixa (DFC): métodos direto e indireto",
+   "video": "FeD893hNeDY",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=FeD893hNeDY",
+   "titulo": "Fluxo de caixa — método direto e indireto",
+   "ressalva": null
+  },
+  {
+   "id": "T090",
+   "materia": "Informática",
+   "topico": "Navegadores: funcionamento, cache, cookies, navegação anônima",
+   "video": "awlDxCI56rw",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=awlDxCI56rw",
+   "titulo": "Navegadores: Edge, Firefox e Chrome (para concursos)",
+   "ressalva": null
+  },
+  {
+   "id": "T091",
+   "materia": "Língua Portuguesa",
+   "topico": "Concordância nominal e verbal",
+   "video": "kFVQOkfV9sk",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=kFVQOkfV9sk",
+   "titulo": "Questões comentadas de concordância verbal e nominal",
+   "ressalva": null
+  },
+  {
+   "id": "T092",
+   "materia": "Raciocínio Lógico",
+   "topico": "Análise combinatória: arranjo, combinação, permutação",
+   "video": "K0sqRZhb1sU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=K0sqRZhb1sU",
+   "titulo": "Arranjo, combinação e permutação simples",
+   "ressalva": null
+  },
+  {
+   "id": "T093",
+   "materia": "Raciocínio Lógico",
+   "topico": "Probabilidade: conceitos, eventos, probabilidade condicional",
+   "video": "qX9QiHDooRU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=qX9QiHDooRU",
+   "titulo": "Probabilidade condicional e independência de eventos — aula 05",
+   "ressalva": null
+  },
+  {
+   "id": "T094",
+   "materia": "Estatística",
+   "topico": "Distribuições: binomial, Poisson, normal",
+   "video": "kJZ9vcik8Jk",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=kJZ9vcik8Jk",
+   "titulo": "Distribuição binomial e normal — Estatística (SEFA-PA 2022)",
+   "ressalva": null
+  },
+  {
+   "id": "T095",
+   "materia": "Estatística",
+   "topico": "Distribuição amostral da média e teorema central do limite",
+   "video": "ieocO73N5lg",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=ieocO73N5lg",
+   "titulo": "Distribuição amostral da média e teorema do limite central",
+   "ressalva": null
+  },
+  {
+   "id": "T096",
+   "materia": "Contabilidade Geral",
+   "topico": "Ativo imobilizado: reconhecimento, depreciação, amortização, exaustão",
+   "video": "-yYgbqqxiMA",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=-yYgbqqxiMA",
+   "titulo": "Depreciação, amortização e exaustão (Contabilidade Geral)",
+   "ressalva": null
+  },
+  {
+   "id": "T097",
+   "materia": "Direito Administrativo",
+   "topico": "Improbidade administrativa (Lei 8.429/1992)",
+   "video": "VwwNpee93z4",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=VwwNpee93z4",
+   "titulo": "Improbidade administrativa — aula completa e resumida (Lei 8.429/92)",
+   "ressalva": null
+  },
+  {
+   "id": "T098",
+   "materia": "Direito Administrativo",
+   "topico": "Licitações e contratos (Lei 14.133/2021)",
+   "video": "QPbq4DMOFF4",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=QPbq4DMOFF4",
+   "titulo": "Licitações — Lei 14.133/2021, curso completo parte 1",
+   "ressalva": null
+  },
+  {
+   "id": "T099",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Prisão em flagrante, preventiva e temporária",
+   "video": "K2Q8dEsJ9vU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=K2Q8dEsJ9vU",
+   "titulo": "Diferenças entre prisão em flagrante, temporária e preventiva",
+   "ressalva": null
+  },
+  {
+   "id": "T100",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Medidas cautelares diversas da prisão",
+   "video": "L-nswRvdUNI",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=L-nswRvdUNI",
+   "titulo": "Medidas cautelares diversas da prisão",
+   "ressalva": null
+  },
+  {
+   "id": "T101",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Audiência de custódia",
+   "video": "SqD6qO5BGWk",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=SqD6qO5BGWk",
+   "titulo": "Audiência de custódia — aula completa",
+   "ressalva": null
+  },
+  {
+   "id": "T102",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Competência e jurisdição",
+   "video": "HfGjb_Uae0k",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=HfGjb_Uae0k",
+   "titulo": "Processo penal — jurisdição e competência",
+   "ressalva": null
+  },
+  {
+   "id": "T103",
+   "materia": "Informática",
+   "topico": "Correio eletrônico: protocolos, webmail, anexos",
+   "video": "1S_LrhFyj6k",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=1S_LrhFyj6k",
+   "titulo": "Informática para concursos: protocolos de e-mail",
+   "ressalva": null
+  },
+  {
+   "id": "T104",
+   "materia": "Língua Portuguesa",
+   "topico": "Regência nominal e verbal",
+   "video": "FFgJMolH0CE",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=FFgJMolH0CE",
+   "titulo": "Regência verbal e nominal — banca CEBRASPE",
+   "ressalva": null
+  },
+  {
+   "id": "T105",
+   "materia": "Contabilidade Geral",
+   "topico": "Estoques: critérios de avaliação (PEPS, média ponderada)",
+   "video": "zkyoZLATPS0",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=zkyoZLATPS0",
+   "titulo": "Critérios de avaliação do estoque (PEPS, UEPS, média ponderada)",
+   "ressalva": null
+  },
+  {
+   "id": "T106",
+   "materia": "Informática",
+   "topico": "Segurança da informação: pilares (confidencialidade, integridade, disponibilidade, autenticidade, não repúdio)",
+   "video": "uL92aKf-Osk",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=uL92aKf-Osk",
+   "titulo": "Pilares da segurança da informação: confidencialidade, integridade, disponibilidade, autenticidade",
+   "ressalva": null
+  },
+  {
+   "id": "T107",
+   "materia": "Contabilidade Geral",
+   "topico": "Contas a receber, provisão para perdas e duplicatas descontadas",
+   "video": "8ZtoxXEqqDg",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=8ZtoxXEqqDg",
+   "titulo": "Duplicatas descontadas (Contabilidade Geral)",
+   "ressalva": null
+  },
+  {
+   "id": "T108",
+   "materia": "Língua Portuguesa",
+   "topico": "Colocação pronominal",
+   "video": "6zsVwix7Uh0",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=6zsVwix7Uh0",
+   "titulo": "Colocação pronominal (para concurso)",
+   "ressalva": null
+  },
+  {
+   "id": "T109",
+   "materia": "Raciocínio Lógico",
+   "topico": "Sequências e séries numéricas",
+   "video": "oztKXOtGiCo",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=oztKXOtGiCo",
+   "titulo": "Sequências numéricas em exercícios — RLM para concursos",
+   "ressalva": null
+  },
+  {
+   "id": "T110",
+   "materia": "Raciocínio Lógico",
+   "topico": "Razão, proporção, regra de três, porcentagem",
+   "video": "aCjc5HAy3_M",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=aCjc5HAy3_M",
+   "titulo": "Razão, proporção, regra de três e porcentagem",
+   "ressalva": null
+  },
+  {
+   "id": "T111",
+   "materia": "Legislação Especial",
+   "topico": "Lei 13.445/2017 — Lei de Migração",
+   "video": "kmNCNUyApJ0",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=kmNCNUyApJ0",
+   "titulo": "Concurso PF 2024 — Lei 13.445/17 (Lei de Migração)",
+   "ressalva": null
+  },
+  {
+   "id": "T112",
+   "materia": "Legislação Especial",
+   "topico": "Lei 7.716/1989 — Crimes de preconceito e racismo",
+   "video": "jHuMZKo_1yk",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=jHuMZKo_1yk",
+   "titulo": "Aula gratuita: Racismo (Lei 7.716/89) — Legislação Penal Especial",
+   "ressalva": "confira se cobre a alteracao da Lei 14.532/2023"
+  },
+  {
+   "id": "T113",
+   "materia": "Informática",
+   "topico": "Malware: vírus, worm, trojan, ransomware, spyware, rootkit, botnet",
+   "video": "1tVxzd7id7A",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=1tVxzd7id7A",
+   "titulo": "Informática para concursos — malware e vírus",
+   "ressalva": null
+  },
+  {
+   "id": "T114",
+   "materia": "Contabilidade Geral",
+   "topico": "Provisões, passivos contingentes e ativos contingentes",
+   "video": "meKwKNWyglo",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=meKwKNWyglo",
+   "titulo": "Provisões, passivos e ativos contingentes (CPC 25)",
+   "ressalva": null
+  },
+  {
+   "id": "T115",
+   "materia": "Estatística",
+   "topico": "Estimação pontual e intervalos de confiança",
+   "video": "xkmKDNkSIMo",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=xkmKDNkSIMo",
+   "titulo": "Estimação pontual e intervalar da média e da proporção",
+   "ressalva": null
+  },
+  {
+   "id": "T116",
+   "materia": "Estatística",
+   "topico": "Testes de hipóteses: erros tipo I e II, nível de significância",
+   "video": "8wo6u6RzRHw",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=8wo6u6RzRHw",
+   "titulo": "Teste de hipóteses: tipos de erro e nível de significância",
+   "ressalva": null
+  },
+  {
+   "id": "T117",
+   "materia": "Informática",
+   "topico": "Ataques: phishing, engenharia social, DoS/DDoS, man-in-the-middle, força bruta",
+   "video": "DVlIcW9YYCc",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=DVlIcW9YYCc",
+   "titulo": "Tipos de ataque que caem em concursos: phishing",
+   "ressalva": "cobre phishing e engenharia social; DDoS e MITM nao achei em aula de concurso"
+  },
+  {
+   "id": "T118",
+   "materia": "Língua Portuguesa",
+   "topico": "Significação das palavras: sinonímia, antonímia, polissemia",
+   "video": "XHR9TPAlz1E",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=XHR9TPAlz1E",
+   "titulo": "Semântica para concursos: sinonímia, antonímia, polissemia",
+   "ressalva": null
+  },
+  {
+   "id": "T119",
+   "materia": "Contabilidade Geral",
+   "topico": "Conciliação bancária",
+   "video": "PYTJVbT48dE",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=PYTJVbT48dE",
+   "titulo": "Conta Bancos — reconciliação bancária (aula 2)",
+   "ressalva": "nao achei aula de conciliacao bancaria voltada a concurso"
+  },
+  {
+   "id": "T120",
+   "materia": "Direito Constitucional",
+   "topico": "Segurança pública (art. 144) e atribuições da Polícia Federal",
+   "video": "p9UR6jdQbys",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=p9UR6jdQbys",
+   "titulo": "Art. 144 da Constituição Federal — segurança pública",
+   "ressalva": null
+  },
+  {
+   "id": "T121",
+   "materia": "Informática",
+   "topico": "Criptografia simétrica e assimétrica",
+   "video": "sD5sOq5zYHE",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=sD5sOq5zYHE",
+   "titulo": "Concurso PF — criptografia simétrica e assimétrica",
+   "ressalva": null
+  },
+  {
+   "id": "T122",
+   "materia": "Raciocínio Lógico",
+   "topico": "Juros simples e compostos",
+   "video": "M8FjTDx44Qw",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=M8FjTDx44Qw",
+   "titulo": "Comparação entre juros simples e juros compostos",
+   "ressalva": null
+  },
+  {
+   "id": "T123",
+   "materia": "Raciocínio Lógico",
+   "topico": "Equações, sistemas lineares, matrizes e determinantes",
+   "video": "Qu3Sh5KaHbU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=Qu3Sh5KaHbU",
+   "titulo": "Matrizes, determinantes e sistemas lineares — primeiros conceitos",
+   "ressalva": null
+  },
+  {
+   "id": "T124",
+   "materia": "Contabilidade Geral",
+   "topico": "Operações com mercadorias e apuração do resultado",
+   "video": "1RfzaHxVRak",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=1RfzaHxVRak",
+   "titulo": "Operações com mercadorias — teoria resumida e questões",
+   "ressalva": null
+  },
+  {
+   "id": "T125",
+   "materia": "Direito Administrativo",
+   "topico": "Controle da administração e responsabilidade civil do Estado",
+   "video": "cmgB7eq7I5E",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=cmgB7eq7I5E",
+   "titulo": "Controle e responsabilização da administração (INSS 2022)",
+   "ressalva": null
+  },
+  {
+   "id": "T126",
+   "materia": "Direito Administrativo",
+   "topico": "Processo administrativo federal (Lei 9.784/1999)",
+   "video": "GZ8FSzQK9Y0",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=GZ8FSzQK9Y0",
+   "titulo": "Lei 9.784/99 — processo administrativo federal",
+   "ressalva": null
+  },
+  {
+   "id": "T127",
+   "materia": "Direito Penal e Proc. Penal",
+   "topico": "Habeas corpus e demais ações de impugnação",
+   "video": "Be5lm2hNjmc",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=Be5lm2hNjmc",
+   "titulo": "Habeas corpus no processo penal — CPP para concursos",
+   "ressalva": null
+  },
+  {
+   "id": "T128",
+   "materia": "Informática",
+   "topico": "Assinatura digital, certificado digital, ICP-Brasil, funções de hash",
+   "video": "C_BnOxYZhrU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=C_BnOxYZhrU",
+   "titulo": "ICP-Brasil e certificado digital — o que as bancas cobram",
+   "ressalva": "nao cobre funcoes de hash"
+  },
+  {
+   "id": "T129",
+   "materia": "Informática",
+   "topico": "Firewall, IDS/IPS, VPN, proxy",
+   "video": "xsBqFKOHx_c",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=xsBqFKOHx_c",
+   "titulo": "Conceitos de DMZ, firewall, proxy e VPN",
+   "ressalva": "IDS/IPS ficam de fora; ha aula separada em tab8UIC94Hk"
+  },
+  {
+   "id": "T130",
+   "materia": "Contabilidade Geral",
+   "topico": "Análise de balanços: índices de liquidez",
+   "video": "OPlGmFWhxPM",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=OPlGmFWhxPM",
+   "titulo": "Análise das demonstrações contábeis — índices de liquidez",
+   "ressalva": null
+  },
+  {
+   "id": "T131",
+   "materia": "Estatística",
+   "topico": "Correlação e regressão linear simples",
+   "video": "ZrfhEOdglzY",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=ZrfhEOdglzY",
+   "titulo": "Análise de regressão linear — questão de Estatística da Polícia Federal",
+   "ressalva": null
+  },
+  {
+   "id": "T132",
+   "materia": "Estatística",
+   "topico": "Números-índice",
+   "video": "8pbaI3nTWNs",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=8pbaI3nTWNs",
+   "titulo": "Índices ponderados: Laspeyres, Paasche, Fisher, Marshall-Edgeworth, Divisia",
+   "ressalva": null
+  },
+  {
+   "id": "T133",
+   "materia": "Informática",
+   "topico": "Autenticação e controle de acesso: senhas, MFA, biometria",
+   "video": "1uQOuteFfoY",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=1uQOuteFfoY",
+   "titulo": "Mecanismos de autenticação e autorização de acesso",
+   "ressalva": null
+  },
+  {
+   "id": "T134",
+   "materia": "Contabilidade Geral",
+   "topico": "Análise de balanços: índices de endividamento e estrutura de capital",
+   "video": "qhtSHAZCMGk",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=qhtSHAZCMGk",
+   "titulo": "Estrutura de capital e índices de endividamento",
+   "ressalva": null
+  },
+  {
+   "id": "T135",
+   "materia": "Língua Portuguesa",
+   "topico": "Reescrita de frases e substituição de palavras",
+   "video": "Dh3bcc_7Z1s",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=Dh3bcc_7Z1s",
+   "titulo": "Intensivão de questões CEBRASPE — reescrita, aula 1",
+   "ressalva": null
+  },
+  {
+   "id": "T136",
+   "materia": "Raciocínio Lógico",
+   "topico": "Geometria básica: áreas, perímetros, volumes",
+   "video": "kbIgKKPdN6g",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=kbIgKKPdN6g",
+   "titulo": "Perímetro, área e volume — aula 12",
+   "ressalva": null
+  },
+  {
+   "id": "T137",
+   "materia": "Informática",
+   "topico": "Backup: tipos (completo, incremental, diferencial), políticas, RPO/RTO",
+   "video": "S7B8H_CuOvU",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=S7B8H_CuOvU",
+   "titulo": "Informática para concursos: backup completo, incremental e diferencial",
+   "ressalva": null
+  },
+  {
+   "id": "T138",
+   "materia": "Contabilidade Geral",
+   "topico": "Análise de balanços: índices de rentabilidade",
+   "video": "lj5tOIWjtaE",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=lj5tOIWjtaE",
+   "titulo": "Índices de rentabilidade",
+   "ressalva": null
+  },
+  {
+   "id": "T139",
+   "materia": "Língua Portuguesa",
+   "topico": "Vozes verbais e transformação de estruturas",
+   "video": "oOEUGvWauK0",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=oOEUGvWauK0",
+   "titulo": "Vozes do verbo: ativa, passiva e reflexiva, para concursos",
+   "ressalva": null
+  },
+  {
+   "id": "T140",
+   "materia": "Contabilidade Geral",
+   "topico": "Análise horizontal e vertical",
+   "video": "saSi9_2-vrs",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=saSi9_2-vrs",
+   "titulo": "Análise vertical e horizontal das demonstrações contábeis",
+   "ressalva": null
+  },
+  {
+   "id": "T141",
+   "materia": "Informática",
+   "topico": "Noções de banco de dados e big data",
+   "video": "3wqqTzmK8to",
+   "playlist": null,
+   "url": "https://www.youtube.com/watch?v=3wqqTzmK8to",
+   "titulo": "Noções de big data (Informática para PF — escrivão)",
+   "ressalva": null
+  }
+ ]
+}

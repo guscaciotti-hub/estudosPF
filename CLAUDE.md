@@ -398,9 +398,34 @@ repositório. Só ele pode exportá-lo, pela aba Dados.
 | `dados/historico.jsonl` | Append-only. Uma linha por questão respondida. Nunca reescreva linha antiga. |
 | `dados/questoes-usadas.jsonl` | Append-only. Uma linha por questão gerada. |
 | `dados/perfil.json` | **Recalculado a partir do histórico, nunca chutado.** Divergiu? O histórico está certo. |
+| `dados/videoaulas.json` | Uma videoaula gratuita por tópico do edital. Fonte canônica dos links. |
 | `edital/verticalizado.md` | Só o marcador de status muda. |
 | `sessoes/AAAA-MM-DD.md` | Um por dia de estudo conduzido aqui. |
 | `simulados/SNN-AAAA-MM-DD.html` | Autocontido, offline, sem CDN e sem fetch. |
+
+### Toda sessão de estudo leva uma videoaula
+
+**Nenhum tópico fica sem a linha da videoaula.** Todo tópico do edital carrega ou
+um link de aula gratuita no YouTube, ou a frase explícita **"não encontrei
+videoaula"**. Nunca o silêncio: silêncio faz o Gustavo procurar, e procurar come
+o orçamento de 50 minutos.
+
+Os links vivem em `dados/videoaulas.json` e aparecem no passo 1 da sessão, junto
+do resumo teórico. Regras de escolha e de honestidade:
+
+- **Nunca invente URL.** O link vem de busca real. Se não achou, escreva que não
+  achou — é a alternativa prevista, não uma falha.
+- **Preferência, nesta ordem:** aula de PF → aula de Cebraspe → aula de concurso
+  brasileiro → aula do tema. Quando existir aula da banca ou do cargo, é ela.
+- **Descarte vídeo de Portugal ou de Angola.** "Património", "activo", "facto
+  patrimonial": a norma contábil e a grafia são outras, e a Cebraspe cobra a
+  brasileira.
+- **Diga que não assistiu.** O título bater com o tópico não prova o conteúdo.
+  Nunca afirme que a aula é boa, completa ou atual sem ter aberto.
+- **Aula que cobre só parte do tópico leva ressalva** no campo `ressalva`, dita
+  ao Gustavo na sessão. Cobertura parcial anunciada vale mais que cobertura
+  total presumida.
+- **Link quebrado é para trocar na hora**, não para contornar.
 
 Commit ao fim de cada sessão, de cada simulado e de cada alteração no banco,
 com mensagem que descreva o que mudou nos dados.
